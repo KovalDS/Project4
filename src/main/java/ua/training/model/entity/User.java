@@ -9,9 +9,9 @@ public class User {
     private String firstName;
     private String secondName;
     private int balance;
+    private List<Article> unreadArticles;
     private List<Order> orders;
     private List<Role> roles;
-    private List<Periodical> periodicals;
 
     public int getId() {
         return id;
@@ -61,6 +61,14 @@ public class User {
         this.balance = balance;
     }
 
+    public List<Article> getUnreadArticles() {
+        return unreadArticles;
+    }
+
+    public void setUnreadArticles(List<Article> unreadArticles) {
+        this.unreadArticles = unreadArticles;
+    }
+
     public List<Order> getOrders() {
         return orders;
     }
@@ -77,14 +85,6 @@ public class User {
         this.roles = roles;
     }
 
-    public List<Periodical> getPeriodicals() {
-        return periodicals;
-    }
-
-    public void setPeriodicals(List<Periodical> periodicals) {
-        this.periodicals = periodicals;
-    }
-
     public static class UserBuilder {
         private int id;
         private String email;
@@ -92,9 +92,9 @@ public class User {
         private String firstName;
         private String secondName;
         private int balance;
+        private List<Article> unreadArticles;
         private List<Order> orders;
         private List<Role> roles;
-        private List<Periodical> periodicals;
 
         public UserBuilder buildId(int id) {
             this.id = id;
@@ -126,6 +126,11 @@ public class User {
             return this;
         }
 
+        public UserBuilder buildUnreadArticles(List<Article> unreadArticles) {
+            this.unreadArticles = unreadArticles;
+            return this;
+        }
+
         public UserBuilder buildOrders(List<Order> orders) {
             this.orders = orders;
             return this;
@@ -136,10 +141,6 @@ public class User {
             return this;
         }
 
-        public UserBuilder buildPeriodicals(List<Periodical> periodicals) {
-            this.periodicals = periodicals;
-            return this;
-        }
 
         public User buildUser() {
             User user = new User();
@@ -149,9 +150,9 @@ public class User {
             user.setFirstName(firstName);
             user.setSecondName(secondName);
             user.setBalance(balance);
+            user.setUnreadArticles(unreadArticles);
             user.setOrders(orders);
             user.setRoles(roles);
-            user.setPeriodicals(periodicals);
             return user;
         }
     }

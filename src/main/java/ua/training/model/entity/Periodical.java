@@ -4,12 +4,11 @@ import java.util.List;
 
 public class Periodical {
     private int id;
-    private int name;
-    private int description;
+    private String name;
+    private String description;
     private int price;
     private List<Article> articles;
     private List<Order> orders;
-    private List<User> users;
 
     public int getId() {
         return id;
@@ -19,19 +18,19 @@ public class Periodical {
         this.id = id;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public int getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(int description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -59,34 +58,25 @@ public class Periodical {
         this.orders = orders;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
     public static class PeriodicalBuilder {
         private int id;
-        private int name;
-        private int description;
+        private String name;
+        private String description;
         private int price;
         private List<Article> articles;
         private List<Order> orders;
-        private List<User> users;
 
         public PeriodicalBuilder buildId(int id) {
             this.id = id;
             return this;
         }
 
-        public PeriodicalBuilder buildName(int name) {
+        public PeriodicalBuilder buildName(String name) {
             this.name = name;
             return this;
         }
 
-        public PeriodicalBuilder buildDescription(int description) {
+        public PeriodicalBuilder buildDescription(String description) {
             this.description = description;
             return this;
         }
@@ -106,10 +96,6 @@ public class Periodical {
             return this;
         }
 
-        public PeriodicalBuilder buildUsers(List<User> users) {
-            this.users = users;
-            return this;
-        }
 
         public Periodical buildPeriodical() {
             Periodical periodical = new Periodical();
@@ -119,7 +105,6 @@ public class Periodical {
             periodical.setPrice(price);
             periodical.setArticles(articles);
             periodical.setOrders(orders);
-            periodical.setUsers(users);
             return periodical;
         }
     }
