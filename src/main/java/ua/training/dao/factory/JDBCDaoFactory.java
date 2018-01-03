@@ -10,17 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
-    private DataSource dataSource;
-
-    public JDBCDaoFactory() {
-        try {
-            InitialContext initialContext = new InitialContext();
-            dataSource = (DataSource) initialContext.lookup("java:comp/env/jdbc/project4db");
-        } catch (NamingException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
+    private DataSource dataSource = ConnectionPoolHolder.getDataSource();;
 
     @Override
     public ArticleDao createArticleDao() {

@@ -13,18 +13,17 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-fixed-top">
-            <div class="containe
-            r-fluid">
+        <nav class="navbar">
+            <div class="container-fluid bg-info">
                 <div class="navbar-header">
-                  <a class="navbar-brand" href="#" class="text-white">WebSiteName</a>
+                  <a class="navbar-brand" href="#">WebSiteName</a>
                 </div>
 
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#" class="text-white">Home</a></li>
-                <li><a href="#" class="text-white">Page 1</a></li>
-                <li><a href="#" class="text-white">Page 2</a></li>
-                <li><a href="#" class="text-white">Page 3</a></li>
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#" >Page 1</a></li>
+                <li><a href="#" >Page 2</a></li>
+                <li><a href="#" >Page 3</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -34,5 +33,17 @@
           </div>
         </nav>
 
+        <div class="container">
+                    <div class = "page-header text-center">
+                        <h2>All images</h2>
+                    </div>
+
+            <c:forEach items = "${requestScope.periodical_list}" var = "periodical">
+                <c:out value = "${periodical.name}"/>
+                <c:out value = "${periodical.name}"/>
+                <c:out value = "${periodical.name}"/>
+                <c:out value = "${periodical.name}"/>
+            </c:forEach>
+        </div>
     </body>
 </html>
