@@ -1,10 +1,15 @@
 package ua.training.dao.impl;
 
 import ua.training.dao.UserDao;
+import ua.training.dao.mapper.RoleMapper;
+import ua.training.dao.mapper.UserMapper;
+import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JDBCUserDao implements UserDao {
     private Connection connection;
@@ -52,6 +57,34 @@ public class JDBCUserDao implements UserDao {
     @Override
     public void delete(int id) {
 
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM project4db.user LEFT JOIN user_has_role USING (iduser) LEFT JOIN role USING (idrole) WHERE email = (?)")) {
+            User user = null;
+            Role role;
+            Map<Integer, User> userMap = new HashMap<>();
+            Map<Integer, Role> roleMap = new HashMap<>();
+            UserMapper userMapper = new UserMapper();
+            RoleMapper roleMapper = new RoleMapper();
+
+            preparedStatement.setString(1, email);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                user = userMapper.extractFromResultSet(rs);
+                role = roleMapper.extractFromResultSet(rs);
+                user = userMapper.makeUnique(userMap, user);
+                role = roleMapper.makeUnique(roleMap, role);
+
+                user.getRoles().add(role);
+            }
+
+            return user;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

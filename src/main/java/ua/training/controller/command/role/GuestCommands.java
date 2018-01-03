@@ -2,12 +2,11 @@ package ua.training.controller.command.role;
 
 import ua.training.controller.command.Command;
 import ua.training.controller.command.DefaultCommand;
+import ua.training.controller.command.LoginCommand;
 import ua.training.model.service.PeriodicalService;
+import ua.training.model.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-import java.util.Map;
 
 public class GuestCommands extends CommandHolder {
 
@@ -20,6 +19,7 @@ public class GuestCommands extends CommandHolder {
         commands = new HashMap<>();
 
         addCommand("default_command", new DefaultCommand(new PeriodicalService()));
+        addCommand("login_command", new LoginCommand(new UserService()));
     }
     private void addCommand(String name, Command command) {
         commands.put(name, command);

@@ -19,4 +19,14 @@ public class Servlet extends HttpServlet {
 
         httpServletRequest.getRequestDispatcher(page).forward(httpServletRequest, httpServletResponse);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        String page;
+
+        CommandHolder commands = (CommandHolder)httpServletRequest.getSession().getAttribute("available_commands");
+        page = commands.executeCommand(httpServletRequest, httpServletResponse);
+
+        httpServletRequest.getRequestDispatcher(page).forward(httpServletRequest, httpServletResponse);
+    }
 }
