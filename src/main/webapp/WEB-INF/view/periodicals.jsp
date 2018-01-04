@@ -16,14 +16,14 @@
         <nav class="navbar">
             <div class="container-fluid bg-info">
                 <div class="navbar-header">
-                  <a class="navbar-brand" href="#">WebSiteName</a>
+                  <a class="navbar-brand" href="/">WebSiteName</a>
                 </div>
 
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#" >Page 1</a></li>
-					<li><a href="#" >Page 2</a></li>
-					<li><a href="#" >Page 3</a></li>
+					<li class="active"><a href="/">Home</a></li>
+					<li><a href="/" >Page 1</a></li>
+					<li><a href="/" >Page 2</a></li>
+					<li><a href="/" >Page 3</a></li>
 				</ul>
 
 				<c:if test = "${sessionScope.user_role.name eq 'guest'}">
@@ -73,21 +73,21 @@
 										<form action="/" method = "POST">
 											<div class="form-group">
 												<label for="email">Email address:</label>
-												<input type="email" class="form-control" id="email">
+												<input type="email" class="form-control" id="email" name = "email">
 											</div>
 											<div class="form-group">
 												<label for="pwd">Password:</label>
-												<input type="password" class="form-control" id="pwd">
+												<input type="password" class="form-control" id="pwd" name = "password">
 											</div>
 											<div class="form-group">
 												<label for="fname">First Name:</label>
-												<input type="text" class="form-control" id="fname">
+												<input type="text" class="form-control" id="fname" name = "first_name">
 											</div>
 											<div class="form-group">
 												<label for="sname">Second Name:</label>
-												<input type="text" class="form-control" id="sname">
+												<input type="text" class="form-control" id="sname" name = "second_name">
 											</div>
-											<button type="submit" class="btn btn-primary ">Sign up</button>
+											<button type="submit" class="btn btn-primary " name = "command" value = "register_command">Sign up</button>
 										</form>
 									</div>
 									<div class="modal-footer">
@@ -112,18 +112,26 @@
         </nav>
 
         <div class="container">
-                    <div class = "page-header text-center">
-                        <h2>All images</h2>
-                    </div>
 
             <c:forEach items = "${sessionScope.periodical_list}" var = "periodical">
-                <c:out value = "${periodical.name}"/>
-                <c:out value = "${periodical.description}"/>
-                <c:set var = "price" target = "periodical" property = "price" value = "${periodical.price/100}"/>
-                <c:out value = "${price}"/>
+				<div>
+					<h2><c:out value = "${periodical.name}"/></h2>
+					<hr/>
+					<div>
+					    <c:out value = "${periodical.description}"/>
+					</div><br/>
+					<form action="/">
+						<div>
+							<span class = "text-warning lead">Subscribe now for $
+								<c:set var = "price" target = "periodical" property = "price" value = "${periodical.price/100}"/>
+								<c:out value = "${price}"/>
+							</span>
+							<button type="submit" class="btn btn-info pull-right">Subscribe</button>
+						</div>
+					</form>
+				</div>
             </c:forEach>
 
-            <c:out value = "${sessionScope.user_role.name}"/>
             <c:out value = "${requestScope.message}"/>
         </div>
     </body>

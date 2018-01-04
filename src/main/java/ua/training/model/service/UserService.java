@@ -3,10 +3,26 @@ package ua.training.model.service;
 import ua.training.dao.UserDao;
 import ua.training.dao.factory.DaoFactory;
 import ua.training.model.entity.User;
+import ua.training.model.exception.NotUniqueEmailException;
+
+import java.sql.SQLIntegrityConstraintViolationException;
 
 public class UserService {
     public User findByEmail(String email) {
-        UserDao userDao = DaoFactory.getInstance().createUserDao();
-        return userDao.findByEmail(email);
+        try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
+            return userDao.findByEmail(email);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void registerUser(User user) {
+        try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
+            userDao.create(user);
+        } catch (SQLIntegrityConstraintViolationException e) {  //TODO exception rises here
+            throw new NotUniqueEmailException("Not unique login");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

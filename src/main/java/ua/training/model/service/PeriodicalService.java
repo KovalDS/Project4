@@ -8,7 +8,11 @@ import java.util.List;
 
 public class PeriodicalService {
     public List<Periodical> getAllPeriodicals() {
-        PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao();
-        return periodicalDao.findAll();
+        try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
+            return periodicalDao.findAll();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
