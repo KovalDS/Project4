@@ -60,6 +60,25 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
     }
 
     @Override
+    public List<Periodical> findByUser(int userId) {
+        List<Periodical> periodicals = new ArrayList<>();
+        PeriodicalMapper periodicalMapper = new PeriodicalMapper();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM project4db.periodical LEFT JOIN order_has_periodical USING (idperiodical) LEFT JOIN project4db.order USING (idorder) LEFT JOIN project4db.user USING (iduser) WHERE iduser = (?)")) {
+            preparedStatement.setInt(1, userId);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                periodicals.add(periodicalMapper.extractFromResultSet(rs));
+            }
+
+            return periodicals;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void close() {
         try {
             connection.close();

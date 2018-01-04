@@ -13,6 +13,13 @@ public class PeriodicalService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public List<Periodical> getPeriodicalsOfUser(int userId) {
+        try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
+            return periodicalDao.findByUser(userId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

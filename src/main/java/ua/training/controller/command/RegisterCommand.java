@@ -2,6 +2,7 @@ package ua.training.controller.command;
 
 import ua.training.model.entity.User;
 import ua.training.model.exception.NotUniqueEmailException;
+import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +36,7 @@ public class RegisterCommand implements Command {
             req.setAttribute("message", "Email already registered");
         }
 
-        return page;
+        return new DefaultCommand(new PeriodicalService()).execute(req, resp);
 
     }
 }

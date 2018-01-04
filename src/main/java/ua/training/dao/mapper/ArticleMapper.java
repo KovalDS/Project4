@@ -11,6 +11,7 @@ public class ArticleMapper implements ObjectMapper<Article> {
     public Article extractFromResultSet(ResultSet rs) throws SQLException {
         return new Article.ArticleBuilder()
                 .buildId(rs.getInt("idarticle"))
+                .buildName(rs.getString("article_name"))
                 .buildText(rs.getString("text"))
                 .buildDateOfPublication(rs.getDate("date_of_publication").toLocalDate())
                 .buildArticle();

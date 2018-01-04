@@ -58,6 +58,28 @@ public class Periodical {
         this.orders = orders;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Periodical that = (Periodical) o;
+
+        if (id != that.id) return false;
+        if (price != that.price) return false;
+        if (!name.equals(that.name)) return false;
+        return description.equals(that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + price;
+        return result;
+    }
+
     public static class PeriodicalBuilder {
         private int id;
         private String name;

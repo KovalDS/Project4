@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class Article {
     private int id;
+    private String name;
     private String text;
     private LocalDate dateOfPublication;
     private Periodical periodical;
@@ -14,6 +15,14 @@ public class Article {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getText() {
@@ -42,12 +51,18 @@ public class Article {
 
     public static class ArticleBuilder {
         private int id;
+        private String name;
         private String text;
         private LocalDate dateOfPublication;
         private Periodical periodical;
 
         public ArticleBuilder buildId(int id) {
             this.id = id;
+            return this;
+        }
+
+        public ArticleBuilder buildName(String name) {
+            this.name = name;
             return this;
         }
 
@@ -69,6 +84,7 @@ public class Article {
         public Article buildArticle() {
             Article article = new Article();
             article.setId(id);
+            article.setName(name);
             article.setText(text);
             article.setDateOfPublication(dateOfPublication);
             article.setPeriodical(periodical);

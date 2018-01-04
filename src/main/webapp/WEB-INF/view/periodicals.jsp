@@ -1,5 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="func" uri="taglib" %>
 
 <html>
     <head>
@@ -18,13 +19,6 @@
                 <div class="navbar-header">
                   <a class="navbar-brand" href="/">WebSiteName</a>
                 </div>
-
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="/">Home</a></li>
-					<li><a href="/" >Page 1</a></li>
-					<li><a href="/" >Page 2</a></li>
-					<li><a href="/" >Page 3</a></li>
-				</ul>
 
 				<c:if test = "${sessionScope.user_role.name eq 'guest'}">
 					<ul class="nav navbar-nav navbar-right">
@@ -103,8 +97,19 @@
 					</ul>
 				</c:if>
 
+
+				
 				<c:if test = "${sessionScope.user_role.name ne 'guest'}">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="/">My account</a></li>
+						<li><a href="/" >My subscriptions</a></li>
+					</ul>
 					<ul class="nav navbar-nav navbar-right">
+						<p class="navbar-text text-warning">
+							Balance: $
+							<c:set var = "balance" target = "user" property = "balance" value = "${user.balance/100}"/>
+							<c:out value = "${balance}"/>
+						</p>
 						<li><a href="/?command=logout_command"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 					</ul>
 				</c:if>
@@ -122,16 +127,27 @@
 					</div><br/>
 					<form action="/">
 						<div>
-							<span class = "text-warning lead">Subscribe now for $
-								<c:set var = "price" target = "periodical" property = "price" value = "${periodical.price/100}"/>
-								<c:out value = "${price}"/>
-							</span>
-							<button type="submit" class="btn btn-info pull-right">Subscribe</button>
+							
+							<c:choose>
+								<c:when test = "${func:contains(requestScope.available_periodicals, periodical)}">
+									<button type="submit" class="btn btn-success pull-right">Read</button>
+								</c:when>
+								<c:otherwise>
+									<span class = "text-warning lead">Subscribe now for $
+										<c:set var = "price" target = "periodical" property = "price" value = "${periodical.price/100}"/>
+										<c:out value = "${price}"/>
+									</span>
+									<button type="submit" class="btn btn-info pull-right">Subscribe</button>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</form>
 				</div>
             </c:forEach>
 
+			<c:forEach items = "${sessionScope.periodical_list}" var = "periodical">
+				<c:out value = "${func:contains(sessionScope.periodical_list, periodical)}"/>
+			</c:forEach>
             <c:out value = "${requestScope.message}"/>
         </div>
     </body>

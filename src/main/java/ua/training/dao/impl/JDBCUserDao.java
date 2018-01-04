@@ -5,6 +5,7 @@ import ua.training.dao.mapper.RoleMapper;
 import ua.training.dao.mapper.UserMapper;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
+import ua.training.model.exception.NotUniqueEmailException;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -34,6 +35,8 @@ public class JDBCUserDao implements UserDao {
             insertUserRoleStatement.setInt(1, rs.getInt(1));
             insertUserRoleStatement.setInt(2, 2);
             insertUserRoleStatement.executeUpdate();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            throw new NotUniqueEmailException("Not unique email");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -1,6 +1,7 @@
 package ua.training.controller.command;
 
 import ua.training.model.entity.User;
+import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,6 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String page = "/WEB-INF/view/periodicals.jsp";
-
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
@@ -25,11 +24,11 @@ public class LoginCommand implements Command {
         if (user != null && user.getPassword().equals(password)) {
             req.getSession().setAttribute("user", user);
             req.getSession().setAttribute("user_role", user.getRoles().get(0)); //TODO very wrong here
-            return page;
+            return new DefaultCommand(new PeriodicalService()).execute(req, resp);
         }
 
         req.setAttribute("message", "No such user");  //TODO
-        return page;
+        return new DefaultCommand(new PeriodicalService()).execute(req, resp);
 
 
     }

@@ -19,8 +19,8 @@ public class UserService {
     public void registerUser(User user) {
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
             userDao.create(user);
-        } catch (SQLIntegrityConstraintViolationException e) {  //TODO exception rises here
-            throw new NotUniqueEmailException("Not unique login");
+        } catch (NotUniqueEmailException e){
+            throw new NotUniqueEmailException("Not unique email");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
