@@ -6,5 +6,5 @@ import ua.training.model.entity.Periodical;
 import java.util.List;
 
 public interface ArticleDao extends GenericDao<Article> {
-    List<Article> findArticlesOfPeriodical(int periodicalId);
+
 }

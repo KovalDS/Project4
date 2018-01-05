@@ -1,7 +1,9 @@
 package ua.training.dao.impl;
 
 import ua.training.dao.PeriodicalDao;
+import ua.training.dao.mapper.ArticleMapper;
 import ua.training.dao.mapper.PeriodicalMapper;
+import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 
 import java.sql.*;
@@ -30,7 +32,26 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
 
     @Override
     public Periodical findById(int id) {
-        return null;
+        Periodical periodical;
+        List<Article> articles = new ArrayList<>();
+        PeriodicalMapper periodicalMapper = new PeriodicalMapper();
+        ArticleMapper articleMapper = new ArticleMapper();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM project4db.periodical LEFT JOIN article USING (idperiodical) WHERE idperiodical = (?)")) {
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            rs.next();
+            periodical = periodicalMapper.extractFromResultSet(rs);
+            articles.add(articleMapper.extractFromResultSet(rs));
+            while (rs.next()) {
+                articles.add(articleMapper.extractFromResultSet(rs));
+            }
+            periodical.setArticles(articles);
+            return periodical;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

@@ -27,7 +27,7 @@ public class DefaultCommand implements Command {
         User user =  (User) req.getSession().getAttribute("user");
         Role role = (Role) req.getSession().getAttribute("user_role");
 
-        if (user != null && !role.getName().equals("admin")) {
+        if (user != null && !role.getName().equals("admin")) {  //TODO refactor using map
             List<Periodical> purchasedPeriodicals = periodicalService.getPeriodicalsOfUser(user.getId());
             req.setAttribute("available_periodicals", purchasedPeriodicals);
         } else if (role.getName().equals("admin")) {

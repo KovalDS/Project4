@@ -125,23 +125,26 @@
 					<div>
 					    <c:out value = "${periodical.description}"/>
 					</div><br/>
-					<form action="/">
 						<div>
-							
+							<input type = "hidden" value = "${periodical.id}" name = "periodicalId">
 							<c:choose>
 								<c:when test = "${func:contains(requestScope.available_periodicals, periodical)}">
-									<button type="submit" class="btn btn-success pull-right">Read</button>
+                                    <form action = "/" method = "GET">
+										<input type = "hidden" value = "${periodical.id}" name = "periodicalId">
+                                        <button type="submit" class="btn btn-success pull-right" name = "command" value = "show_articles_list_command">Read</button>
+                                    </form>
 								</c:when>
 								<c:otherwise>
 									<span class = "text-warning lead">Subscribe now for $
 										<c:set var = "price" target = "periodical" property = "price" value = "${periodical.price/100}"/>
 										<c:out value = "${price}"/>
 									</span>
-									<button type="submit" class="btn btn-info pull-right">Subscribe</button>
+									<form action = "/" method = "POST">
+										<button type="submit" class="btn btn-info pull-right">Subscribe</button>
+									</form>
 								</c:otherwise>
 							</c:choose>
 						</div>
-					</form>
 				</div>
             </c:forEach>
 

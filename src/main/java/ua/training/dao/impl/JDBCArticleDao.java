@@ -61,23 +61,6 @@ public class JDBCArticleDao implements ArticleDao {
     }
 
     @Override
-    public List<Article> findArticlesOfPeriodical(int periodicalId) {
-        List<Article> result = new ArrayList<>();
-        ArticleMapper articleMapper = new ArticleMapper();
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM article WHERE idperiodical = (?)")) {
-            preparedStatement.setInt(1, periodicalId);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                result.add(articleMapper.extractFromResultSet(rs));
-            }
-            return result;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public void close() {
         try {
             connection.close();

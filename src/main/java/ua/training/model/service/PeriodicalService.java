@@ -22,4 +22,12 @@ public class PeriodicalService {
             throw new RuntimeException(e);
         }
     }
+
+    public Periodical getPeriodicalById(int periodicalId) {
+        try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
+            return periodicalDao.findById(periodicalId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
