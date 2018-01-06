@@ -36,7 +36,6 @@ public class ShowArticleCommand implements Command {
             return null;
         }
 
-        System.out.println(article.getText());
         req.setAttribute("article", article);
         return "/WEB-INF/view/article.jsp";
     }

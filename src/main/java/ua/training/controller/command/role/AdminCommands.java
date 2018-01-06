@@ -21,6 +21,7 @@ public class AdminCommands extends CommandHolder {
         addCommand("show_articles_list_command", new ShowArticlesListCommand(new PeriodicalService()));
         addCommand("show_article_command", new ShowArticleCommand(new ArticleService()));
         addCommand("add_to_basket_command", new AddToBasketCommand(new PeriodicalService()));
+        addCommand("delete_from_basket", new DeleteFromBasket(new PeriodicalService()));
     }
 
     private void addCommand(String name, Command command) {

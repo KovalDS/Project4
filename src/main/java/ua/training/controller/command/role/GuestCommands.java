@@ -20,6 +20,7 @@ public class GuestCommands extends CommandHolder {
         addCommand("login_command", new LoginCommand(new UserService()));
         addCommand("register_command", new RegisterCommand(new UserService()));
         addCommand("add_to_basket_command", new AddToBasketCommand(new PeriodicalService()));
+        addCommand("delete_from_basket", new DeleteFromBasket(new PeriodicalService()));
     }
     private void addCommand(String name, Command command) {
         commands.put(name, command);

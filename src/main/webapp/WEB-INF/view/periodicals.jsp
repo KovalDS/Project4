@@ -34,8 +34,10 @@
 								<c:forEach items = "${sessionScope.basket}" var = "item">
 									<li>
 										<c:out value = "${item.name}"/>
-										<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									</li>
+										<form action = "/" method = "POST">
+											<input type = "hidden" value = "${item.id}" name = "periodical_id">
+											<button type="submit" class="close" aria-label="Close" name = "command" value = "delete_from_basket"><span aria-hidden="true">&times;</span></button>
+										</form>									</li>
 								</c:forEach>
 							</ul>
 						</li>
@@ -134,7 +136,10 @@
 								<c:forEach items = "${sessionScope.basket}" var = "item">
 									<li>
 										<c:out value = "${item.name}"/>
-										<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<form action = "/" method = "POST">
+											<input type = "hidden" value = "${periodical.id}">
+											<button type="submit" class="close" aria-label="Close" name = "command" value = "delete_from_basket"><span aria-hidden="true">&times;</span></button>
+										</form>
 									</li>
 								</c:forEach>
 							</ul>
@@ -186,6 +191,7 @@
 				<c:out value = "${func:contains(sessionScope.periodical_list, periodical)}"/>
 			</c:forEach>
             <c:out value = "${requestScope.message}"/>
+
         </div>
     </body>
 </html>

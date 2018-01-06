@@ -39,7 +39,6 @@ public class ShowArticlesListCommand implements Command {
         req.setAttribute("articles", periodical.getArticles());
         req.setAttribute("periodical", periodical);
 
-        System.out.println(req.getRequestURI());
         return "/WEB-INF/view/articles.jsp";
     }
 }
