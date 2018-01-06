@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LoginCommand implements Command {
-    UserService userService;
+    private UserService userService;
 
     public LoginCommand(UserService userService) {
         this.userService = userService;

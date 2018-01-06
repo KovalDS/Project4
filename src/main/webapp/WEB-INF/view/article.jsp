@@ -36,31 +36,9 @@
 
         <div class="container">
 			<div class="page-header">
-			    <h1 class = "text-center"><c:out value = "${requestScope.periodical.name}"/></h1>
+			    <h1 class = "text-center"><c:out value = "${requestScope.article.name}"/></h1>
 			</div>
-			<h3>Choose article, please</h3>
-			<table class = "table table-hover">
-				<thead>
-					<tr>
-						<th>Article name</th>
-						<th>Date of publication</th>
-					</tr>
-				</thead>
-				<tbody>
-				<c:forEach items = "${requestScope.articles}" var = "article">
-					<tr>
-						<td><c:out value = "${article.name}"/></td>
-						<td><c:out value = "${article.dateOfPublication}"/></td>
-						<td >
-						    <form action = "/" class = "pull-right">
-						        <input type = "hidden" value = "${article.id}" name = "article_id">
-						        <button type = "submit" class = "btn btn-success" name = "command" value = "show_article_command">Read</button>
-						    </form>
-						</td>
-					</tr>
-				</c:forEach>
-				</tbody>
-			</table>
+			${requestScope.article.text}
         </div>
     </body>
 </html>

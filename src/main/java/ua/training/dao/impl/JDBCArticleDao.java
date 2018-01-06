@@ -47,7 +47,18 @@ public class JDBCArticleDao implements ArticleDao {
 
     @Override
     public List<Article> findAll() {
-        return null;
+        List<Article> articles = new ArrayList<>();
+        ArticleMapper articleMapper = new ArticleMapper();
+
+        try (Statement statement = connection.createStatement()) {
+            ResultSet rs = statement.executeQuery("SELECT * FROM article");
+            while (rs.next()) {
+                articles.add(articleMapper.extractFromResultSet(rs));
+            }
+            return articles;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -58,6 +69,23 @@ public class JDBCArticleDao implements ArticleDao {
     @Override
     public void delete(int id) {
 
+    }
+
+    @Override
+    public List<Article> findArticlesOfUser(int userId) {
+        List<Article> articles = new ArrayList<>();
+        ArticleMapper articleMapper = new ArticleMapper();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM article LEFT JOIN periodical USING (idperiodical) LEFT JOIN order_has_periodical USING (idperiodical) LEFT JOIN project4db.order USING (idorder) LEFT JOIN project4db.user USING (iduser) WHERE iduser = (?)")) {
+            preparedStatement.setInt(1, userId);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                articles.add(articleMapper.extractFromResultSet(rs));
+            }
+            return articles;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

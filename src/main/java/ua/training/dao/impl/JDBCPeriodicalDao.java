@@ -42,6 +42,10 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
             ResultSet rs = preparedStatement.executeQuery();
             rs.next();
             periodical = periodicalMapper.extractFromResultSet(rs);
+            if (rs.getString("date_of_publication") == null) {
+                periodical.setArticles(new ArrayList<>());
+                return periodical;
+            }
             articles.add(articleMapper.extractFromResultSet(rs));
             while (rs.next()) {
                 articles.add(articleMapper.extractFromResultSet(rs));

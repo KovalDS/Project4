@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultCommand implements Command {
-    PeriodicalService periodicalService;
+    private PeriodicalService periodicalService;
 
     public DefaultCommand(PeriodicalService periodicalService) {
         this.periodicalService = periodicalService;

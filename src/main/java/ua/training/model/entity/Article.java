@@ -49,6 +49,28 @@ public class Article {
         this.periodical = periodical;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Article article = (Article) o;
+
+        if (id != article.id) return false;
+        if (!name.equals(article.name)) return false;
+        if (!text.equals(article.text)) return false;
+        return dateOfPublication.equals(article.dateOfPublication);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + text.hashCode();
+        result = 31 * result + dateOfPublication.hashCode();
+        return result;
+    }
+
     public static class ArticleBuilder {
         private int id;
         private String name;

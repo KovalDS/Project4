@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowArticlesListCommand implements Command {
-    PeriodicalService periodicalService;
+    private PeriodicalService periodicalService;
 
     public ShowArticlesListCommand(PeriodicalService periodicalService) {
         this.periodicalService = periodicalService;
@@ -19,6 +19,7 @@ public class ShowArticlesListCommand implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         int periodicalId = Integer.parseInt(req.getParameter("periodicalId"));
+        Periodical periodical;
         User user = (User) req.getSession().getAttribute("user");
         List<Periodical> purchasedPeriodicals;
 
@@ -28,7 +29,7 @@ public class ShowArticlesListCommand implements Command {
             purchasedPeriodicals = periodicalService.getPeriodicalsOfUser(user.getId());
         }
 
-        Periodical periodical = periodicalService.getPeriodicalById(periodicalId);
+        periodical = periodicalService.getPeriodicalById(periodicalId);
 
         if (!purchasedPeriodicals.contains(periodical)) {
             //TODO error page here
@@ -38,6 +39,7 @@ public class ShowArticlesListCommand implements Command {
         req.setAttribute("articles", periodical.getArticles());
         req.setAttribute("periodical", periodical);
 
+        System.out.println(req.getRequestURI());
         return "/WEB-INF/view/articles.jsp";
     }
 }
