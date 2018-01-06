@@ -18,7 +18,7 @@ public class ShowArticlesListCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        int periodicalId = Integer.parseInt(req.getParameter("periodicalId"));
+        int periodicalId = Integer.parseInt(req.getParameter("periodical_id"));
         Periodical periodical;
         User user = (User) req.getSession().getAttribute("user");
         List<Periodical> purchasedPeriodicals;

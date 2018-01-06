@@ -1,9 +1,6 @@
 package ua.training.controller.command.role;
 
-import ua.training.controller.command.Command;
-import ua.training.controller.command.DefaultCommand;
-import ua.training.controller.command.LoginCommand;
-import ua.training.controller.command.RegisterCommand;
+import ua.training.controller.command.*;
 import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.UserService;
 
@@ -22,6 +19,7 @@ public class GuestCommands extends CommandHolder {
         addCommand("default_command", new DefaultCommand(new PeriodicalService()));
         addCommand("login_command", new LoginCommand(new UserService()));
         addCommand("register_command", new RegisterCommand(new UserService()));
+        addCommand("add_to_basket_command", new AddToBasketCommand(new PeriodicalService()));
     }
     private void addCommand(String name, Command command) {
         commands.put(name, command);

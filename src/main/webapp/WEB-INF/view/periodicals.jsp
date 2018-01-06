@@ -22,6 +22,23 @@
 
 				<c:if test = "${sessionScope.user_role.name eq 'guest'}">
 					<ul class="nav navbar-nav navbar-right">
+					    <li class = "dropdown">
+							<a href="#" data-toggle="dropdown" class = "dropdown-toggle">
+								<span class="label label-danger" style = "border-radius:1em;">5</span>
+								<span class="glyphicon glyphicon-shopping-cart"></span>
+							</a>
+							<ul class = "dropdown-menu">
+								<li> asd
+									<button type="button pull-right" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								</li>
+								<c:forEach items = "${sessionScope.basket}" var = "item">
+									<li>
+										<c:out value = "${item.name}"/>
+										<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									</li>
+								</c:forEach>
+							</ul>
+						</li>
 						<li><a href="#" data-toggle="modal" data-target="#register_modal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 						<li><a href="#" data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 
@@ -105,6 +122,23 @@
 						<li><a href="/" >My subscriptions</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
+						<li class = "dropdown">
+							<a href="#" data-toggle="dropdown" class = "dropdown-toggle">
+								<span class="label label-danger" style = "border-radius:1em;">5</span>
+								<span class="glyphicon glyphicon-shopping-cart"></span>
+							</a>
+							<ul class = "dropdown-menu">
+								<li> asd
+									<button type="button pull-right" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								</li>
+								<c:forEach items = "${sessionScope.basket}" var = "item">
+									<li>
+										<c:out value = "${item.name}"/>
+										<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									</li>
+								</c:forEach>
+							</ul>
+						</li>
 						<p class="navbar-text text-warning">
 							Balance: $
 							<c:set var = "balance" target = "user" property = "balance" value = "${user.balance/100}"/>
@@ -126,11 +160,10 @@
 					    <c:out value = "${periodical.description}"/>
 					</div><br/>
 						<div>
-							<input type = "hidden" value = "${periodical.id}" name = "periodicalId">
 							<c:choose>
 								<c:when test = "${func:contains(requestScope.available_periodicals, periodical)}">
                                     <form action = "/" method = "GET">
-										<input type = "hidden" value = "${periodical.id}" name = "periodicalId">
+										<input type = "hidden" value = "${periodical.id}" name = "periodical_id">
                                         <button type="submit" class="btn btn-success pull-right" name = "command" value = "show_articles_list_command">Read</button>
                                     </form>
 								</c:when>
@@ -140,7 +173,8 @@
 										<c:out value = "${price}"/>
 									</span>
 									<form action = "/" method = "POST">
-										<button type="submit" class="btn btn-info pull-right">Subscribe</button>
+										<input type = "hidden" value = "${periodical.id}" name = "periodical_id">
+										<button type="submit" class="btn btn-info pull-right" name = "command" value = "add_to_basket_command">Subscribe</button>
 									</form>
 								</c:otherwise>
 							</c:choose>

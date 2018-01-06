@@ -20,6 +20,7 @@ public class AdminCommands extends CommandHolder {
         addCommand("logout_command", new LogoutCommand());
         addCommand("show_articles_list_command", new ShowArticlesListCommand(new PeriodicalService()));
         addCommand("show_article_command", new ShowArticleCommand(new ArticleService()));
+        addCommand("add_to_basket_command", new AddToBasketCommand(new PeriodicalService()));
     }
 
     private void addCommand(String name, Command command) {
