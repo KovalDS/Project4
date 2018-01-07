@@ -18,7 +18,6 @@ public class OrderService {
         Set<Periodical> periodicals = (Set<Periodical>) req.getSession().getAttribute("basket");
         int totalPrice = (int) req.getSession().getAttribute("total_basket_price");
         User user = (User) req.getSession().getAttribute("user");
-        System.out.println(user.getBalance() + "   " + totalPrice);
         Order order = new Order.OrderBuilder()
                             .buildTotalPrice(totalPrice)
                             .buildDate(LocalDate.now())

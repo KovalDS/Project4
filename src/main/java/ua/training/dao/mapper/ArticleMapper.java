@@ -13,7 +13,7 @@ public class ArticleMapper implements ObjectMapper<Article> {
                 .buildId(rs.getInt("idarticle"))
                 .buildName(rs.getString("article_name"))
                 .buildText(rs.getString("text"))
-                .buildDateOfPublication(rs.getDate("date_of_publication").toLocalDate()) //TODO null pointer exception arises here when periodical has no articles. So every periodical must have at least one article.
+                .buildDateOfPublication(rs.getDate("date_of_publication").toLocalDate())
                 .buildArticle();
     }
 

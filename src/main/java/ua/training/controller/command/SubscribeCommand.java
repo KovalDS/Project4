@@ -45,7 +45,6 @@ public class SubscribeCommand implements Command {
             order = orderService.createOrder(req);
         } catch (TransactionFailedException e) {
             //TODO exception handling here
-            System.out.println("failed");
             return new DefaultCommand(new PeriodicalService()).execute(req, resp);
         } catch (Exception e) {
             throw new RuntimeException(e);

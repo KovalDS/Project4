@@ -214,6 +214,10 @@
 						<li><a href="/?command=logout_command"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 					</ul>
 				</c:if>
+				
+				<c:if test = "${sessionScope.user_role.name eq 'admin'}">
+				
+				</c:if>
 			</div>
         </nav>
 
@@ -249,9 +253,9 @@
 				</div>
             </c:forEach>
 
-			<c:forEach items = "${sessionScope.periodical_list}" var = "periodical">
-				<c:out value = "${func:contains(sessionScope.periodical_list, periodical)}"/>
-			</c:forEach>
+			<form action = "http://google.com">
+				<button type = "submit" class = "btn"></button>
+			</form>
             <c:out value = "${requestScope.message}"/>
 
         </div>

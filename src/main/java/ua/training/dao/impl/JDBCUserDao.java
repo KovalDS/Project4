@@ -3,6 +3,7 @@ package ua.training.dao.impl;
 import ua.training.dao.UserDao;
 import ua.training.dao.mapper.RoleMapper;
 import ua.training.dao.mapper.UserMapper;
+import ua.training.dao.util.ConnectionUtil;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.exception.NotUniqueEmailException;
@@ -92,10 +93,6 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        ConnectionUtil.close(connection);
     }
 }

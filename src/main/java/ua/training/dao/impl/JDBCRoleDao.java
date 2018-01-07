@@ -1,6 +1,7 @@
 package ua.training.dao.impl;
 
 import ua.training.dao.RoleDao;
+import ua.training.dao.util.ConnectionUtil;
 import ua.training.model.entity.Role;
 
 import java.sql.Connection;
@@ -41,10 +42,6 @@ public class JDBCRoleDao implements RoleDao {
 
     @Override
     public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        ConnectionUtil.close(connection);
     }
 }

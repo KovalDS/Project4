@@ -20,14 +20,14 @@ public class RegisterCommand implements Command {
         String page = "/WEB-INF/view/periodicals.jsp";
 
         String email = req.getParameter("email");
-        String passsword = req.getParameter("password");
+        String password = req.getParameter("password");
         String firstName = req.getParameter("first_name");
         String secondName = req.getParameter("second_name"); //TODO choose role while register (add publisher role first)
 
         try {
             userService.registerUser(new User.UserBuilder()
                     .buildEmail(email)
-                    .buildPassword(passsword)
+                    .buildPassword(password)
                     .buildFirstName(firstName)
                     .buildSecondName(secondName)
                     .buildBalance(0)

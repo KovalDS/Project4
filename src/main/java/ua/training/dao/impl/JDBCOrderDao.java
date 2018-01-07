@@ -1,6 +1,7 @@
 package ua.training.dao.impl;
 
 import ua.training.dao.OrderDao;
+import ua.training.dao.util.ConnectionUtil;
 import ua.training.model.entity.Order;
 import ua.training.model.entity.Periodical;
 import ua.training.model.exception.TransactionFailedException;
@@ -52,16 +53,10 @@ public class JDBCOrderDao implements OrderDao {
             updateOrderStatus.executeUpdate();
             connection.commit();
 
-        } catch (SQLException e) {  //TODO Util class to hide all try/catch
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException e1) {
-                    throw new RuntimeException(e);
-                }
-            }
-
+        } catch (SQLException e) {
+            ConnectionUtil.rollback(connection);
             throw new TransactionFailedException(e.getMessage());
+
         } finally {
             try {
                 connection.setAutoCommit(true);
@@ -93,10 +88,6 @@ public class JDBCOrderDao implements OrderDao {
 
     @Override
     public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        ConnectionUtil.close(connection);
     }
 }

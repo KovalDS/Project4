@@ -2,6 +2,7 @@ package ua.training.dao.impl;
 
 import ua.training.dao.ArticleDao;
 import ua.training.dao.mapper.ArticleMapper;
+import ua.training.dao.util.ConnectionUtil;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 
@@ -90,10 +91,6 @@ public class JDBCArticleDao implements ArticleDao {
 
     @Override
     public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        ConnectionUtil.close(connection);
     }
 }

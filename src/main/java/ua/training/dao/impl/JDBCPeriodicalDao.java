@@ -3,6 +3,7 @@ package ua.training.dao.impl;
 import ua.training.dao.PeriodicalDao;
 import ua.training.dao.mapper.ArticleMapper;
 import ua.training.dao.mapper.PeriodicalMapper;
+import ua.training.dao.util.ConnectionUtil;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 
@@ -105,10 +106,6 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
 
     @Override
     public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        ConnectionUtil.close(connection);
     }
 }

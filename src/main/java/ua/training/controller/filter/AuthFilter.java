@@ -32,10 +32,10 @@ public class AuthFilter implements Filter {
 
         Role userRole = ((Role)req.getSession().getAttribute("user_role"));
         if (userRole == null) {
-            req.getSession().setAttribute("user_role", new Role.RoleBuilder()
-                                                                    .buildName("guest")
-                                                                    .buildRole());
-            userRole = ((Role)req.getSession().getAttribute("user_role"));
+            userRole = new Role.RoleBuilder()
+                                    .buildName("guest")
+                                    .buildRole();
+            req.getSession().setAttribute("user_role", userRole);
         }
 
         CommandHolder commands = commandsByRole.get(userRole.getName());

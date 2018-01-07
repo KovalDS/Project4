@@ -31,6 +31,21 @@ public class Role {
         this.users = users;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Role role = (Role) o;
+
+        return name.equals(role.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
     public static class RoleBuilder {
         private int id;
         private String name;

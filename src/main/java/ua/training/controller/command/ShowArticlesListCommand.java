@@ -1,6 +1,7 @@
 package ua.training.controller.command;
 
 import ua.training.model.entity.Periodical;
+import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.service.PeriodicalService;
 
@@ -23,7 +24,10 @@ public class ShowArticlesListCommand implements Command {
         User user = (User) req.getSession().getAttribute("user");
         List<Periodical> purchasedPeriodicals;
 
-        if (user.getRoles().get(0).getName().equals("admin")) {  //TODO looks a little ugly.
+        if (user.getRoles().contains(new Role.RoleBuilder()
+                                                .buildName("admin")
+                                                .buildRole())) {
+
             purchasedPeriodicals = periodicalService.getAllPeriodicals();
         } else {
             purchasedPeriodicals = periodicalService.getPeriodicalsOfUser(user.getId());
