@@ -19,6 +19,8 @@ public class AddToBasketCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        int basketSize;
+        int totalPrice = 0;
         int periodicalId = Integer.parseInt(req.getParameter("periodical_id"));
         Periodical periodical = periodicalService.getPeriodicalById(periodicalId);
         Set<Periodical> basket = (Set<Periodical>) req.getSession().getAttribute("basket");
@@ -27,7 +29,15 @@ public class AddToBasketCommand implements Command {
             basket = new HashSet<>();
         }
 
+
         basket.add(periodical);
+        basketSize = basket.size();
+        for (Periodical item : basket) {
+            totalPrice += item.getPrice();
+        }
+
+        req.getSession().setAttribute("basket_badge", "<span class=\"badge progress-bar-danger\" style = \"${requestScope.display_basket_size}\">" + basketSize + "</span>");
+        req.getSession().setAttribute("total_basket_price", totalPrice);
         req.getSession().setAttribute("basket", basket);
         return new DefaultCommand(periodicalService).execute(req, resp);
     }

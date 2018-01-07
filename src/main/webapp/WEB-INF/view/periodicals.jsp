@@ -11,6 +11,13 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script>
+			$("document").ready(function() {
+			  $('.dropdown-menu').on('click', function(e) {
+				e.stopPropagation();
+			  });
+			});
+		</script>
     </head>
 
     <body>
@@ -22,23 +29,51 @@
 
 				<c:if test = "${sessionScope.user_role.name eq 'guest'}">
 					<ul class="nav navbar-nav navbar-right">
-					    <li class = "dropdown">
+					    <li class = "dropdown ${requestScope.dropdown_open}">
 							<a href="#" data-toggle="dropdown" class = "dropdown-toggle">
-								<span class="label label-danger" style = "border-radius:1em;">5</span>
+								${sessionScope.basket_badge}
 								<span class="glyphicon glyphicon-shopping-cart"></span>
 							</a>
-							<ul class = "dropdown-menu">
-								<li> asd
-									<button type="button pull-right" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<ul class = "dropdown-menu" id = "dropdown" style = "min-width:250; padding-right:5px; padding-left:5px;">
+								<li class="bg-primary text-info text-center">Basket </li>
+								<li class="divider"></li>
+								<c:if test = "${sessionScope.basket eq null}">
+								<li>
+									Your basket is empty
 								</li>
+								</c:if>
 								<c:forEach items = "${sessionScope.basket}" var = "item">
 									<li>
-										<c:out value = "${item.name}"/>
-										<form action = "/" method = "POST">
+										<form action = "/" method = "POST" class="form-horizontal">
+											<span><c:out value = "${item.name}"/></span>
 											<input type = "hidden" value = "${item.id}" name = "periodical_id">
-											<button type="submit" class="close" aria-label="Close" name = "command" value = "delete_from_basket"><span aria-hidden="true">&times;</span></button>
-										</form>									</li>
+											
+											<button type="submit" class="btn btn-xs btn-danger pull-right" aria-label="Close" name = "command" value = "delete_from_basket"><span aria-hidden="true">&times;</span></button>
+											<span class = "pull-right">$
+												<c:set var = "price" target = "item" property = "price" value = "${item.price/100}"/>
+												<c:out value = "${price}"/>
+												&nbsp;
+											</span>
+										</form>
+									</li>
 								</c:forEach>
+								<li class="divider"></li>
+								<li>
+									<div class = "row" style = "margin-right:0px; margin-lef:0px">
+										<span class = "pull-right bg-i">
+										Total price: $ 
+										<c:set var = "total_price" target = "sessionScope.total_basket_price" value = "${sessionScope.total_basket_price/100}"/>
+										<c:out value = "${total_price}"/>
+										</span>
+									</div>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<form action = "/" method = "POST" class="form-horizontal" style = "margin-bottom:0;">
+										<button type = "submit" class = "btn btn-success center-block">Checkout</button>
+									</form>
+								</li>
+								
 							</ul>
 						</li>
 						<li><a href="#" data-toggle="modal" data-target="#register_modal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -124,24 +159,51 @@
 						<li><a href="/" >My subscriptions</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li class = "dropdown">
+					    <li class = "dropdown ${requestScope.dropdown_open}">
 							<a href="#" data-toggle="dropdown" class = "dropdown-toggle">
-								<span class="label label-danger" style = "border-radius:1em;">5</span>
+								${sessionScope.basket_badge}
 								<span class="glyphicon glyphicon-shopping-cart"></span>
 							</a>
-							<ul class = "dropdown-menu">
-								<li> asd
-									<button type="button pull-right" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<ul class = "dropdown-menu" id = "dropdown" style = "min-width:250; padding-right:5px; padding-left:5px;">
+								<li class="bg-primary text-info text-center">Basket </li>
+								<li class="divider"></li>
+								<c:if test = "${sessionScope.basket eq null}">
+								<li>
+									Your basket is empty
 								</li>
+								</c:if>
 								<c:forEach items = "${sessionScope.basket}" var = "item">
 									<li>
-										<c:out value = "${item.name}"/>
-										<form action = "/" method = "POST">
-											<input type = "hidden" value = "${periodical.id}">
-											<button type="submit" class="close" aria-label="Close" name = "command" value = "delete_from_basket"><span aria-hidden="true">&times;</span></button>
+										<form action = "/" method = "POST" class="form-horizontal">
+											<span><c:out value = "${item.name}"/></span>
+											<input type = "hidden" value = "${item.id}" name = "periodical_id">
+											
+											<button type="submit" class="btn btn-xs btn-danger pull-right" aria-label="Close" name = "command" value = "delete_from_basket"><span aria-hidden="true">&times;</span></button>
+											<span class = "pull-right">$
+												<c:set var = "price" target = "item" property = "price" value = "${item.price/100}"/>
+												<c:out value = "${price}"/>
+												&nbsp;
+											</span>
 										</form>
 									</li>
 								</c:forEach>
+								<li class="divider"></li>
+								<li>
+									<div class = "row" style = "margin-right:0px; margin-lef:0px">
+										<span class = "pull-right bg-info">
+										Total price: $ 
+										<c:set var = "total_price" target = "sessionScope.total_basket_price" value = "${sessionScope.total_basket_price/100}"/>
+										<c:out value = "${total_price}"/>
+										</span>
+									</div>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<form action = "/" method = "POST" class="form-horizontal" style = "margin-bottom:0;">
+										<button type = "submit" class = "btn btn-success center-block">Checkout</button>
+									</form>
+								</li>
+								
 							</ul>
 						</li>
 						<p class="navbar-text text-warning">
@@ -173,11 +235,11 @@
                                     </form>
 								</c:when>
 								<c:otherwise>
-									<span class = "text-warning lead">Subscribe now for $
-										<c:set var = "price" target = "periodical" property = "price" value = "${periodical.price/100}"/>
-										<c:out value = "${price}"/>
-									</span>
 									<form action = "/" method = "POST">
+										<span class = "text-warning lead">Subscribe now for $
+											<c:set var = "price" target = "periodical" property = "price" value = "${periodical.price/100}"/>
+											<c:out value = "${price}"/>
+										</span>
 										<input type = "hidden" value = "${periodical.id}" name = "periodical_id">
 										<button type="submit" class="btn btn-info pull-right" name = "command" value = "add_to_basket_command">Subscribe</button>
 									</form>

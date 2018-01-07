@@ -16,11 +16,32 @@ public class DeleteFromBasket implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        int basketSize;
+        int totalPrice = 0;
         Set<Periodical> basket = (Set<Periodical>) req.getSession().getAttribute("basket");
         int periodicalId = Integer.parseInt(req.getParameter("periodical_id"));
         Periodical periodical = periodicalService.getPeriodicalById(periodicalId);
 
         basket.remove(periodical);
+        basketSize = basket.size();
+
+        if (basketSize == 0) {
+            req.getSession().removeAttribute("basket_badge");
+            req.getSession().removeAttribute("total_basket_price");
+            req.getSession().removeAttribute("basket");
+            req.getSession().removeAttribute("basket_size");
+            return new DefaultCommand(new PeriodicalService()).execute(req, resp);
+        }
+
+        for (Periodical item : basket) {
+            totalPrice += item.getPrice();
+        }
+
+        req.getSession().setAttribute("total_basket_price", totalPrice);
+        req.getSession().setAttribute("basket_badge", "<span class=\"badge progress-bar-danger\" style = \"${requestScope.display_basket_size}\">" + basketSize + "</span>");
+
+        req.setAttribute("dropdown_open", "open");
+        req.getSession().setAttribute("basket_size", basketSize);
 
         return new DefaultCommand(new PeriodicalService()).execute(req, resp);
     }
