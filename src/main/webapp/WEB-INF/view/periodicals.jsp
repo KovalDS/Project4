@@ -60,7 +60,7 @@
 								<li class="divider"></li>
 								<li>
 									<div class = "row" style = "margin-right:0px; margin-lef:0px">
-										<span class = "pull-right bg-i">
+										<span class = "pull-right bg-info">
 										Total price: $ 
 										<c:set var = "total_price" target = "sessionScope.total_basket_price" value = "${sessionScope.total_basket_price/100}"/>
 										<c:out value = "${total_price}"/>
@@ -70,7 +70,7 @@
 								<li class="divider"></li>
 								<li>
 									<form action = "/" method = "POST" class="form-horizontal" style = "margin-bottom:0;">
-										<button type = "submit" class = "btn btn-success center-block">Checkout</button>
+										<button type = "submit" class = "btn btn-success center-block" name = "command" value = "subscribe_command">Checkout</button>
 									</form>
 								</li>
 								
@@ -200,7 +200,7 @@
 								<li class="divider"></li>
 								<li>
 									<form action = "/" method = "POST" class="form-horizontal" style = "margin-bottom:0;">
-										<button type = "submit" class = "btn btn-success center-block">Checkout</button>
+										<button type = "submit" class = "btn btn-success center-block" name = "command" value = "subscribe_command">Checkout</button>
 									</form>
 								</li>
 								

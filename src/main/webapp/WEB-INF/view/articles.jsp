@@ -65,7 +65,7 @@
 							<li class="divider"></li>
 							<li>
 								<form action = "/" method = "POST" class="form-horizontal" style = "margin-bottom:0;">
-									<button type = "submit" class = "btn btn-success center-block">Checkout</button>
+									<button type = "submit" class = "btn btn-success center-block" name = "command" value = "subscribe_command">Checkout</button>
 								</form>
 							</li>
 							

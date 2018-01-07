@@ -2,6 +2,7 @@ package ua.training.controller.command.role;
 
 import ua.training.controller.command.*;
 import ua.training.model.service.ArticleService;
+import ua.training.model.service.OrderService;
 import ua.training.model.service.PeriodicalService;
 
 import java.util.HashMap;
@@ -22,6 +23,7 @@ public class AdminCommands extends CommandHolder {
         addCommand("show_article_command", new ShowArticleCommand(new ArticleService()));
         addCommand("add_to_basket_command", new AddToBasketCommand(new PeriodicalService()));
         addCommand("delete_from_basket", new DeleteFromBasket(new PeriodicalService()));
+        addCommand("subscribe_command", new SubscribeCommand(new OrderService()));
     }
 
     private void addCommand(String name, Command command) {

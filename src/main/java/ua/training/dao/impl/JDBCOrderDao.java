@@ -2,10 +2,12 @@ package ua.training.dao.impl;
 
 import ua.training.dao.OrderDao;
 import ua.training.model.entity.Order;
+import ua.training.model.entity.Periodical;
+import ua.training.model.exception.TransactionFailedException;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
+import java.util.Set;
 
 public class JDBCOrderDao implements OrderDao {
     private Connection connection;
@@ -16,7 +18,57 @@ public class JDBCOrderDao implements OrderDao {
 
     @Override
     public void create(Order entity) {
+        try (PreparedStatement insertOrderStatement = connection.prepareStatement("INSERT INTO project4db.order (status, total_price, date, iduser) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                        PreparedStatement insertPeriodicalStatement = connection.prepareStatement("INSERT INTO order_has_periodical (idorder, idperiodical) VALUES (?, ?)");
+                        PreparedStatement updateUserBalance = connection.prepareStatement("UPDATE project4db.user SET balance = balance - (?) WHERE iduser = (?)");
+                        PreparedStatement updateOrderStatus = connection.prepareStatement("UPDATE project4db.order SET status = (?) WHERE idorder = (?)")) {
+            int orderId;
+            Set<Periodical> periodicals = entity.getPeriodicals();
 
+            insertOrderStatement.setString(1, entity.getStatus());
+            insertOrderStatement.setInt(2, entity.getTotalPrice());
+            insertOrderStatement.setDate(3, Date.valueOf(entity.getDate()));
+            insertOrderStatement.setInt(4, entity.getUser().getId());
+            insertOrderStatement.executeUpdate();
+
+            ResultSet rs = insertOrderStatement.getGeneratedKeys();
+            rs.next();
+            orderId = rs.getInt(1);
+
+            connection.setAutoCommit(false);
+
+            for (Periodical periodical : periodicals) {
+                insertPeriodicalStatement.setInt(1, orderId);
+                insertPeriodicalStatement.setInt(2, periodical.getId());
+                insertPeriodicalStatement.executeUpdate();
+
+                updateUserBalance.setInt(1, periodical.getPrice());
+                updateUserBalance.setInt(2, entity.getUser().getId());
+                updateUserBalance.executeUpdate();
+            }
+
+            updateOrderStatus.setString(1, "completed");
+            updateOrderStatus.setInt(2, orderId);
+            updateOrderStatus.executeUpdate();
+            connection.commit();
+
+        } catch (SQLException e) {  //TODO Util class to hide all try/catch
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException e1) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            throw new TransactionFailedException(e.getMessage());
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override

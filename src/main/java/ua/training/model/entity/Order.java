@@ -1,7 +1,7 @@
 package ua.training.model.entity;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 public class Order {
     private int id;
@@ -9,7 +9,7 @@ public class Order {
     private int totalPrice;
     private LocalDate date;
     private User user;
-    private List<Periodical> periodicals;
+    private Set<Periodical> periodicals;
 
     public int getId() {
         return id;
@@ -51,21 +51,21 @@ public class Order {
         this.user = user;
     }
 
-    public List<Periodical> getPeriodicals() {
+    public Set<Periodical> getPeriodicals() {
         return periodicals;
     }
 
-    public void setPeriodicals(List<Periodical> periodicals) {
+    public void setPeriodicals(Set<Periodical> periodicals) {
         this.periodicals = periodicals;
     }
 
     public static class OrderBuilder {
         private int id;
-        private String status;
+        private String status = "cancelled";
         private int totalPrice;
         private LocalDate date;
         private User user;
-        private List<Periodical> periodicals;
+        private Set<Periodical> periodicals;
 
         public OrderBuilder buildId(int id) {
             this.id = id;
@@ -92,7 +92,7 @@ public class Order {
             return this;
         }
 
-        public OrderBuilder buildPeriodicals(List<Periodical> periodicals) {
+        public OrderBuilder buildPeriodicals(Set<Periodical> periodicals) {
             this.periodicals = periodicals;
             return this;
         }
