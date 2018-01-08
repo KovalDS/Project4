@@ -13,5 +13,18 @@ public class Util {
                 .collect(Collectors.toList());
     }
 
+    public static String parseStringToHtml(String text) {
+        StringBuffer buffer = new StringBuffer("");
 
+        String[] paragraphs = text.split("\r\n");
+
+
+
+        for (String paragraph : paragraphs) {
+            buffer = buffer.append("<p>")
+                            .append(paragraph)
+                            .append("</p>");
+        }
+        return buffer.toString();
+    }
 }

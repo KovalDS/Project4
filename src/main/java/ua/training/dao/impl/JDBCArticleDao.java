@@ -19,10 +19,11 @@ public class JDBCArticleDao implements ArticleDao {
 
     @Override
     public void create(Article entity) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO article (text, date_of_publication, idperiodical) VALUES (?, ?, ?)")) {
-            preparedStatement.setString(1, entity.getText());
-            preparedStatement.setDate(2, Date.valueOf(entity.getDateOfPublication()));
-            preparedStatement.setInt(3, entity.getPeriodical().getId());
+        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO article (article_name, text, date_of_publication, idperiodical) VALUES (?, ?, ?, ?)")) {
+            preparedStatement.setString(1, entity.getName());
+            preparedStatement.setString(2, entity.getText());
+            preparedStatement.setDate(3, Date.valueOf(entity.getDateOfPublication()));
+            preparedStatement.setInt(4, entity.getPeriodical().getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

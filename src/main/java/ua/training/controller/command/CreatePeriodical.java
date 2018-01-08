@@ -1,17 +1,18 @@
 package ua.training.controller.command;
 
 import ua.training.model.entity.Periodical;
+import ua.training.model.service.AdminService;
 import ua.training.model.service.PeriodicalService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.regex.Pattern;
 
-//TODO negative price!!!!!
 public class CreatePeriodical implements Command{
-    PeriodicalService periodicalService;
+    AdminService adminService;
 
-    public CreatePeriodical(PeriodicalService periodicalService) {
-        this.periodicalService = periodicalService;
+    public CreatePeriodical(AdminService adminService) {
+        this.adminService = adminService;
     }
 
     @Override
@@ -22,6 +23,11 @@ public class CreatePeriodical implements Command{
         String description = req.getParameter("periodical_description");
         String priceStr = req.getParameter("periodical_price");
 
+        if (!Pattern.matches("^[0-9]*[,.][0-9]{2}$", priceStr)) {  //TODO create input validation method
+            System.out.println("pattern don't match");
+            return "/WEB-INF/view/add_periodical.jsp";
+        }
+
         priceStr = priceStr.replaceAll("[,.]", "");
         price = Integer.parseInt(priceStr);
 
@@ -29,7 +35,7 @@ public class CreatePeriodical implements Command{
             return "/WEB-INF/view/add_periodical.jsp";
         }
 
-        periodicalService.createPeriodical(new Periodical.PeriodicalBuilder()
+        adminService.createPeriodical(new Periodical.PeriodicalBuilder()
                                                 .buildName(name)
                                                 .buildDescription(description)
                                                 .buildPrice(price)

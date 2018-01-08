@@ -24,6 +24,12 @@
 			</div>
 			${requestScope.message}
 			<form class = "form-horizontal" action = "/add_article/create_article" method = "POST">
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="periodical_name">Periodical:</label>
+					<div class="col-sm-10">
+						<p class="form-control-static">${requestScope.periodical.name}</p>
+					</div>
+				</div>
 				<div class="form-group row">
 					<label class="control-label col-sm-2" for="name">Articlel name:</label>
 					<div class="col-sm-4">
@@ -38,6 +44,7 @@
 				</div>
 				<div class="form-group"> 
 					<div class="col-sm-offset-2 col-sm-10">
+						<input type = "hidden" value = "${requestScope.periodical.id}" name = "periodical_id">
 						<button type="submit" class="btn btn-default btn-danger">Create</button>
 					</div>
 				</div>

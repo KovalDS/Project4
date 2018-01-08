@@ -1,6 +1,7 @@
 package ua.training.controller.command.role;
 
 import ua.training.controller.command.*;
+import ua.training.model.service.AdminService;
 import ua.training.model.service.ArticleService;
 import ua.training.model.service.OrderService;
 import ua.training.model.service.PeriodicalService;
@@ -26,8 +27,9 @@ public class AdminCommands extends CommandHolder {
         addCommand("/delete_from_basket", new DeleteFromBasket(new PeriodicalService()));
         addCommand("/subscribe", new SubscribeCommand(new OrderService()));
         addCommand("/add_periodical", new CreatePeriodicalPageCommand());
-        addCommand("/add_periodical/create_periodical", new CreatePeriodical(new PeriodicalService()));
-        addCommand("/add_article", new CreateArticlePage());
+        addCommand("/add_periodical/create_periodical", new CreatePeriodical(new AdminService()));
+        addCommand("/add_article", new CreateArticlePage(new PeriodicalService()));
+        addCommand("/add_article/create_article", new CreateArticle(new AdminService()));
     }
 
     private void addCommand(String name, Command command) {

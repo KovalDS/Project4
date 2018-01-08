@@ -1,23 +1,23 @@
 package ua.training.model.service;
 
+import ua.training.dao.ArticleDao;
 import ua.training.dao.PeriodicalDao;
 import ua.training.dao.factory.DaoFactory;
+import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 
-import java.util.List;
-
-public class PeriodicalService {
-    public List<Periodical> getAllPeriodicals() {
-        try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
-            return periodicalDao.findAll();
+public class AdminService {
+    public void createArticle(Article article) {
+        try (ArticleDao articleDao = DaoFactory.getInstance().createArticleDao()) {
+            articleDao.create(article);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<Periodical> getPeriodicalsOfUser(int userId) {
+    public void createPeriodical(Periodical periodical) {
         try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
-            return periodicalDao.findByUser(userId);
+            periodicalDao.create(periodical);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
