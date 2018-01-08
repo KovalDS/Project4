@@ -10,10 +10,8 @@ public abstract class CommandHolder {
     Map<String, Command> commands;
 
     public String executeCommand(HttpServletRequest req, HttpServletResponse resp) {
-        String commandName = req.getParameter("command");
-        if (commandName == null) {
-            return commands.get("default_command").execute(req, resp);
-        }
+        String commandName = req.getRequestURI();
+
         Command command = commands.getOrDefault(commandName,
                 (r, rsp) -> {throw new UnsupportedOperationException(commandName);});
         return command.execute(req, resp);

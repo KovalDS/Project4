@@ -17,13 +17,14 @@ public class UserCommands extends CommandHolder {
     public void initCommands() {
         commands = new HashMap<>();
 
-        addCommand("default_command", new DefaultCommand(new PeriodicalService()));
-        addCommand("logout_command", new LogoutCommand());
-        addCommand("show_articles_list_command", new ShowArticlesListCommand(new PeriodicalService()));
-        addCommand("show_article_command", new ShowArticleCommand(new ArticleService()));
-        addCommand("add_to_basket_command", new AddToBasketCommand(new PeriodicalService()));
-        addCommand("delete_from_basket", new DeleteFromBasket(new PeriodicalService()));
-        addCommand("subscribe_command", new SubscribeCommand(new OrderService()));
+        addCommand("/", new DefaultCommand(new PeriodicalService()));
+        addCommand("/home", new DefaultCommand(new PeriodicalService()));
+        addCommand("/logout", new LogoutCommand());
+        addCommand("/periodical", new ShowArticlesListCommand(new PeriodicalService()));
+        addCommand("/periodical/article", new ShowArticleCommand(new ArticleService()));
+        addCommand("/add_to_basket", new AddToBasketCommand(new PeriodicalService()));
+        addCommand("/delete_from_basket", new DeleteFromBasket(new PeriodicalService()));
+        addCommand("/subscribe", new SubscribeCommand(new OrderService()));
     }
 
     private void addCommand(String name, Command command) {

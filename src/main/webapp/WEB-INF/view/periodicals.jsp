@@ -24,7 +24,7 @@
         <nav class="navbar">
             <div class="container-fluid bg-info">
                 <div class="navbar-header">
-                  <a class="navbar-brand" href="/">WebSiteName</a>
+                  <a class="navbar-brand" href="/home">WebSiteName</a>
                 </div>
 
 				<c:if test = "${sessionScope.user_role.name eq 'guest'}">
@@ -44,7 +44,7 @@
 								</c:if>
 								<c:forEach items = "${sessionScope.basket}" var = "item">
 									<li>
-										<form action = "/" method = "POST" class="form-horizontal">
+										<form action = "/delete_from_basket" method = "POST" class="form-horizontal">
 											<span><c:out value = "${item.name}"/></span>
 											<input type = "hidden" value = "${item.id}" name = "periodical_id">
 											
@@ -69,7 +69,7 @@
 								</li>
 								<li class="divider"></li>
 								<li>
-									<form action = "/" method = "POST" class="form-horizontal" style = "margin-bottom:0;">
+									<form action = "/subscribe" method = "POST" class="form-horizontal" style = "margin-bottom:0;">
 										<button type = "submit" class = "btn btn-success center-block" name = "command" value = "subscribe_command">Checkout</button>
 									</form>
 								</li>
@@ -88,7 +88,7 @@
 										<h4 class="modal-title text-center">Login</h4>
 									</div>
 									<div class="modal-body">
-										<form action="/" method = "POST">
+										<form action="/home/login" method = "POST">
 											<div class="form-group">
 												<label for="email">Email address:</label>
 												<input type="email" class="form-control" id="email" name = "email">
@@ -118,7 +118,7 @@
 										<h4 class="modal-title text-center">Register</h4>
 									</div>
 									<div class="modal-body">
-										<form action="/" method = "POST">
+										<form action="/home/register" method = "POST">
 											<div class="form-group">
 												<label for="email">Email address:</label>
 												<input type="email" class="form-control" id="email" name = "email">
@@ -174,7 +174,7 @@
 								</c:if>
 								<c:forEach items = "${sessionScope.basket}" var = "item">
 									<li>
-										<form action = "/" method = "POST" class="form-horizontal">
+										<form action = "/delete_from_basket" method = "POST" class="form-horizontal">
 											<span><c:out value = "${item.name}"/></span>
 											<input type = "hidden" value = "${item.id}" name = "periodical_id">
 											
@@ -199,7 +199,7 @@
 								</li>
 								<li class="divider"></li>
 								<li>
-									<form action = "/" method = "POST" class="form-horizontal" style = "margin-bottom:0;">
+									<form action = "/subscribe" method = "POST" class="form-horizontal" style = "margin-bottom:0;">
 										<button type = "submit" class = "btn btn-success center-block" name = "command" value = "subscribe_command">Checkout</button>
 									</form>
 								</li>
@@ -211,7 +211,7 @@
 							<c:set var = "balance" target = "user" property = "balance" value = "${user.balance/100}"/>
 							<c:out value = "${balance}"/>
 						</p>
-						<li><a href="/?command=logout_command"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+						<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 					</ul>
 				</c:if>
 				
@@ -233,13 +233,13 @@
 						<div>
 							<c:choose>
 								<c:when test = "${func:contains(requestScope.available_periodicals, periodical)}">
-                                    <form action = "/" method = "GET">
+                                    <form action = "/periodical" method = "GET">
 										<input type = "hidden" value = "${periodical.id}" name = "periodical_id">
                                         <button type="submit" class="btn btn-success pull-right" name = "command" value = "show_articles_list_command">Read</button>
                                     </form>
 								</c:when>
 								<c:otherwise>
-									<form action = "/" method = "POST">
+									<form action = "/add_to_basket" method = "POST">
 										<span class = "text-warning lead">Subscribe now for $
 											<c:set var = "price" target = "periodical" property = "price" value = "${periodical.price/100}"/>
 											<c:out value = "${price}"/>
@@ -253,7 +253,7 @@
 				</div>
             </c:forEach>
 
-			<form action = "http://google.com">
+			<form action = "/periodicals">
 				<button type = "submit" class = "btn"></button>
 			</form>
             <c:out value = "${requestScope.message}"/>

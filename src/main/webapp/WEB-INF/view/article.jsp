@@ -17,7 +17,7 @@
         <nav class="navbar">
             <div class="container-fluid bg-info">
                 <div class="navbar-header">
-                  <a class="navbar-brand" href="/">WebSiteName</a>
+                  <a class="navbar-brand" href="/home">WebSiteName</a>
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="/">My account</a></li>
@@ -39,7 +39,7 @@
 							</c:if>
 							<c:forEach items = "${sessionScope.basket}" var = "item">
 								<li>
-									<form action = "/" method = "POST" class="form-horizontal">
+									<form action = "/delete_from_basket" method = "POST" class="form-horizontal">
 										<span><c:out value = "${item.name}"/></span>
 										<input type = "hidden" value = "${item.id}" name = "periodical_id">
 										
@@ -64,7 +64,7 @@
 							</li>
 							<li class="divider"></li>
 							<li>
-								<form action = "/" method = "POST" class="form-horizontal" style = "margin-bottom:0;">
+								<form action = "/subscribe" method = "POST" class="form-horizontal" style = "margin-bottom:0;">
 									<button type = "submit" class = "btn btn-success center-block" name = "command" value = "subscribe_command">Checkout</button>
 								</form>
 							</li>
@@ -77,7 +77,7 @@
                         <c:set var = "balance" target = "user" property = "balance" value = "${user.balance/100}"/>
                         <c:out value = "${balance}"/>
                     </p>
-                    <li><a href="/?command=logout_command"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
 			</div>
         </nav>

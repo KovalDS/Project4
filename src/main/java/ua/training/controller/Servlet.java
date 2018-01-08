@@ -14,7 +14,7 @@ public class Servlet extends HttpServlet {
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String page;
 
-        CommandHolder commands = (CommandHolder)httpServletRequest.getSession().getAttribute("available_commands");
+        CommandHolder commands = (CommandHolder) httpServletRequest.getSession().getAttribute("available_commands");
         page = commands.executeCommand(httpServletRequest, httpServletResponse);
 
         httpServletRequest.getRequestDispatcher(page).forward(httpServletRequest, httpServletResponse);
@@ -24,9 +24,11 @@ public class Servlet extends HttpServlet {
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String page;
 
-        CommandHolder commands = (CommandHolder)httpServletRequest.getSession().getAttribute("available_commands");
-        page = commands.executeCommand(httpServletRequest, httpServletResponse);
+        System.out.println(httpServletRequest.getRequestURI());
 
+        CommandHolder commands = (CommandHolder) httpServletRequest.getSession().getAttribute("available_commands");
+        page = commands.executeCommand(httpServletRequest, httpServletResponse);
+        
         httpServletRequest.getRequestDispatcher(page).forward(httpServletRequest, httpServletResponse);
     }
 }
