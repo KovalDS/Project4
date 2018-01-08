@@ -30,4 +30,12 @@ public class PeriodicalService {
             throw new RuntimeException(e);
         }
     }
+
+    public void createPeriodical(Periodical periodical) {
+        try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
+            periodicalDao.create(periodical);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
