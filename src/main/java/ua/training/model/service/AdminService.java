@@ -10,24 +10,18 @@ public class AdminService {
     public void createArticle(Article article) {
         try (ArticleDao articleDao = DaoFactory.getInstance().createArticleDao()) {
             articleDao.create(article);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 
     public void createPeriodical(Periodical periodical) {
         try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
             periodicalDao.create(periodical);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 
     public Periodical getPeriodicalById(int periodicalId) {
         try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
             return periodicalDao.findById(periodicalId);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 }

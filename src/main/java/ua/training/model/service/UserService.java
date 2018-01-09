@@ -11,8 +11,6 @@ public class UserService {
     public User findByEmail(String email) {
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
             return userDao.findByEmail(email);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -21,8 +19,6 @@ public class UserService {
             userDao.create(user);
         } catch (NotUniqueEmailException e){
             throw new NotUniqueEmailException("Not unique email");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 }

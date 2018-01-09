@@ -10,24 +10,18 @@ public class PeriodicalService {
     public List<Periodical> getAllPeriodicals() {
         try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
             return periodicalDao.findAll();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 
     public List<Periodical> getPeriodicalsOfUser(int userId) {
         try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
             return periodicalDao.findByUser(userId);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 
     public Periodical getPeriodicalById(int periodicalId) {
         try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
             return periodicalDao.findById(periodicalId);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 }
