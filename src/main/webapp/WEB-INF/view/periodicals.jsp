@@ -17,6 +17,14 @@
 				e.stopPropagation();
 			  });
 			});
+			
+			$(document).ready(function(){
+				${requestScope.show_login_modal}
+			});
+			
+			$(document).ready(function(){
+				${requestScope.show_register_modal}
+			});
 		</script>
     </head>
 
@@ -24,8 +32,8 @@
 		<%@ include file="nav.jsp" %>
 
         <div class="container">
-
-            <c:forEach items = "${sessionScope.periodical_list}" var = "periodical">
+			${requestScope.message}
+            <c:forEach items = "${requestScope.periodical_list}" var = "periodical">
 				<div>
 					<h2><c:out value = "${periodical.name}"/></h2>
 					<hr/>
@@ -37,7 +45,7 @@
 								<c:when test = "${func:contains(requestScope.available_periodicals, periodical)}">
                                     <form action = "/periodical" method = "GET">
 										<input type = "hidden" value = "${periodical.id}" name = "periodical_id">
-                                        <button type="submit" class="btn btn-success pull-right" name = "command" value = "show_articles_list_command">Read</button>
+                                        <button type="submit" class="btn btn-success pull-right">Read</button>
                                     </form>
 								</c:when>
 								<c:otherwise>
@@ -47,18 +55,13 @@
 											<c:out value = "${price}"/>
 										</span>
 										<input type = "hidden" value = "${periodical.id}" name = "periodical_id">
-										<button type="submit" class="btn btn-info pull-right" name = "command" value = "add_to_basket_command">Subscribe</button>
+										<button type="submit" class="btn btn-info pull-right">Subscribe</button>
 									</form>
 								</c:otherwise>
 							</c:choose>
 						</div>
 				</div>
             </c:forEach>
-
-			<form action = "/periodicals">
-				<button type = "submit" class = "btn"></button>
-			</form>
-            <c:out value = "${requestScope.message}"/>
 
         </div>
     </body>

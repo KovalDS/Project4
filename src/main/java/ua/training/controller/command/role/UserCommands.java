@@ -25,6 +25,8 @@ public class UserCommands extends CommandHolder {
         addCommand("/add_to_basket", new AddToBasketCommand(new PeriodicalService()));
         addCommand("/delete_from_basket", new DeleteFromBasket(new PeriodicalService()));
         addCommand("/subscribe", new SubscribeCommand(new OrderService()));
+        addCommand("/my_account", new MyAccountCommand());
+        addCommand("/my_subscriptions", new MySubscriptionsCommand(new PeriodicalService()));
     }
 
     private void addCommand(String name, Command command) {

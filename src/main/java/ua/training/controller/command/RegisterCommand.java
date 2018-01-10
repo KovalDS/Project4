@@ -33,9 +33,11 @@ public class RegisterCommand implements Command {
                     .buildBalance(0)
                     .buildUser());
         } catch (NotUniqueEmailException e) {
-            req.setAttribute("message", "Email already registered");
+            req.setAttribute("show_register_modal", "$(\"#register_modal\").modal(\"show\");");
+            req.setAttribute("register_message", "Email already registered");
         }
 
+        req.setAttribute("message", "<div class=\"alert alert-success\">You are registered! Now you can <a href=\"#\" class=\"alert-link\" data-toggle=\"modal\" data-target=\"#login_modal\">login</a></div>");
         return new DefaultCommand(new PeriodicalService()).execute(req, resp);
 
     }

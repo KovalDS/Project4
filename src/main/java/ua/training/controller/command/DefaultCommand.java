@@ -23,7 +23,7 @@ public class DefaultCommand implements Command {
         String page = "/WEB-INF/view/periodicals.jsp";
 
         List<Periodical> periodicalList = periodicalService.getAllPeriodicals();
-        req.getSession().setAttribute("periodical_list", periodicalList);
+        req.setAttribute("periodical_list", periodicalList);
 
         User user =  (User) req.getSession().getAttribute("user");
         Role role = (Role) req.getSession().getAttribute("user_role");

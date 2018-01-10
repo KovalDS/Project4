@@ -30,6 +30,8 @@ public class AdminCommands extends CommandHolder {
         addCommand("/add_periodical/create_periodical", new CreatePeriodical(new AdminService()));
         addCommand("/add_article", new CreateArticlePage(new PeriodicalService()));
         addCommand("/add_article/create_article", new CreateArticle(new AdminService()));
+        addCommand("/my_account", new MyAccountCommand());
+        addCommand("/my_subscriptions", new MySubscriptionsCommand(new PeriodicalService()));
     }
 
     private void addCommand(String name, Command command) {

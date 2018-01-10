@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 public class AddToBasketCommand implements Command {
-    private PeriodicalService periodicalService;
+    private PeriodicalService periodicalService; //TODO order service??
 
     public AddToBasketCommand(PeriodicalService periodicalService) {
         this.periodicalService = periodicalService;

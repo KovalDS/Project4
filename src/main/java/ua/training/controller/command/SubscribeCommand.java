@@ -29,22 +29,23 @@ public class SubscribeCommand implements Command {
 
         Set<Periodical> basket = (Set) req.getSession().getAttribute("basket");
         User user = (User) req.getSession().getAttribute("user");
+        Role role = (Role) req.getSession().getAttribute("user_role");
 
-        if (user.getRoles().get(0).getName().equals("guest")) {
-            //TODO open register window here
+        if (role.getName().equals("guest")) {
+            req.setAttribute("message", "<div class=\"alert alert-danger\">You must be <a href=\"#\" class=\"alert-link\" data-toggle=\"modal\" data-target=\"#login_modal\">logged in</a> to subscribe</div>");
             return new DefaultCommand(new PeriodicalService()).execute(req, resp);
         }
 
         purchasedPeriodical = orderService.periodicalsPurchased(user.getId());
         if (!Util.listIntersection(purchasedPeriodical, new ArrayList<Periodical>(basket)).isEmpty()) {
-            //TODO return error message: you've already subscribed
+            req.setAttribute("message", "<div class=\"alert alert-danger\">You are already subscribed to this periodical!</div>");
             return new DefaultCommand(new PeriodicalService()).execute(req, resp);
         }
 
         try  {
             order = orderService.createOrder(req);
         } catch (TransactionFailedException e) {
-            //TODO exception handling here
+            req.setAttribute("message", "<div class=\"alert alert-danger\">Not enough money on your balance</div>");
             return new DefaultCommand(new PeriodicalService()).execute(req, resp);
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -46,7 +46,7 @@
 					<li class="divider"></li>
 					<li>
 						<form action = "/subscribe" method = "POST" class="form-horizontal" style = "margin-bottom:0;">
-							<button type = "submit" class = "btn btn-success center-block" name = "command" value = "subscribe_command">Checkout</button>
+							<button type = "submit" class = "btn btn-success center-block">Checkout</button>
 						</form>
 					</li>
 				</ul>
@@ -76,6 +76,7 @@
 									</div>
 									<button type="submit" class="btn btn-primary" name = "command" value = "login_command">Login</button>
 								</form>
+								<p class = "text-danger text-center bg-danger" style = "border-radius: 2px;">${requestScope.login_message}</p>
 							</div>
 							<div class="modal-footer">
 								<label for="register_link">Don't have account? <a href="#" id = "register_link" data-toggle="modal" data-target="#register_modal" data-dismiss="modal">Sign Up</a></label>
@@ -114,6 +115,7 @@
 									</div>
 									<button type="submit" class="btn btn-primary " name = "command" value = "register_command">Sign up</button>
 								</form>
+								<p class = "text-danger text-center bg-danger" style = "border-radius: 2px;">${requestScope.register_message}</p>
 							</div>
 							<div class="modal-footer">
 								<label for="login_link">Already registered? <a href="#" id = "login_link" data-toggle="modal" data-target="#login_modal" data-dismiss="modal">Login</a></label>
@@ -136,8 +138,8 @@
 
 		<c:if test = "${sessionScope.user_role.name ne 'guest'}">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="/">My account</a></li>
-				<li><a href="/" >My subscriptions</a></li>
+				<li class="active"><a href="/my_account">My account</a></li>
+				<li><a href="/my_subscriptions" >My subscriptions</a></li>
 				<c:if test = "${sessionScope.user_role.name eq 'admin'}">
 					<li class="active"><a href="/add_periodical" class = "text-danger">Add periodical</a></li>
 				</c:if>

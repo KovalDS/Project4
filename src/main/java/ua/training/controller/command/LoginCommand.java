@@ -27,9 +27,8 @@ public class LoginCommand implements Command {
             return new DefaultCommand(new PeriodicalService()).execute(req, resp);
         }
 
-        req.setAttribute("message", "No such user");  //TODO
+        req.setAttribute("show_login_modal", "$(\"#login_modal\").modal(\"show\");");
+        req.setAttribute("login_message", "No such user");  //TODO
         return new DefaultCommand(new PeriodicalService()).execute(req, resp);
-
-
     }
 }
