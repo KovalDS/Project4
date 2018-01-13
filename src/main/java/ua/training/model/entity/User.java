@@ -1,5 +1,7 @@
 package ua.training.model.entity;
 
+import jdk.nashorn.internal.runtime.UserAccessorProperty;
+
 import java.util.List;
 
 public class User {
@@ -9,9 +11,10 @@ public class User {
     private String firstName;
     private String secondName;
     private int balance;
-    private List<Article> unreadArticles;
+    private List<UserArticle> userArticles;
     private List<Order> orders;
-    private List<Role> roles;
+    private Role role;
+    private List<Periodical> periodicals;
 
     public int getId() {
         return id;
@@ -61,12 +64,12 @@ public class User {
         this.balance = balance;
     }
 
-    public List<Article> getUnreadArticles() {
-        return unreadArticles;
+    public List<UserArticle> getUserArticles() {
+        return userArticles;
     }
 
-    public void setUnreadArticles(List<Article> unreadArticles) {
-        this.unreadArticles = unreadArticles;
+    public void setUserArticles(List<UserArticle> unreadArticles) {
+        this.userArticles = unreadArticles;
     }
 
     public List<Order> getOrders() {
@@ -77,12 +80,20 @@ public class User {
         this.orders = orders;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRoles(Role role) {
+        this.role = role;
+    }
+
+    public List<Periodical> getPeriodicals() {
+        return periodicals;
+    }
+
+    public void setPeriodicals(List<Periodical> periodicals) {
+        this.periodicals = periodicals;
     }
 
     public static class UserBuilder {
@@ -92,9 +103,10 @@ public class User {
         private String firstName;
         private String secondName;
         private int balance;
-        private List<Article> unreadArticles;
+        private List<UserArticle> userArticles;
         private List<Order> orders;
-        private List<Role> roles;
+        private Role role;
+        private List<Periodical> periodicals;
 
         public UserBuilder buildId(int id) {
             this.id = id;
@@ -126,8 +138,8 @@ public class User {
             return this;
         }
 
-        public UserBuilder buildUnreadArticles(List<Article> unreadArticles) {
-            this.unreadArticles = unreadArticles;
+        public UserBuilder buildUserArticles(List<UserArticle> userArticle) {
+            this.userArticles = userArticles;
             return this;
         }
 
@@ -136,11 +148,15 @@ public class User {
             return this;
         }
 
-        public UserBuilder buildRoles(List<Role> roles) {
-            this.roles = roles;
+        public UserBuilder buildRole(Role role) {
+            this.role = role;
             return this;
         }
 
+        public UserBuilder buildPeriodicals(List<Periodical> periodicals) {
+            this.periodicals = periodicals;
+            return this;
+        }
 
         public User buildUser() {
             User user = new User();
@@ -150,9 +166,10 @@ public class User {
             user.setFirstName(firstName);
             user.setSecondName(secondName);
             user.setBalance(balance);
-            user.setUnreadArticles(unreadArticles);
+            user.setUserArticles(userArticles);
             user.setOrders(orders);
-            user.setRoles(roles);
+            user.setRoles(role);
+            user.setPeriodicals(periodicals);
             return user;
         }
     }

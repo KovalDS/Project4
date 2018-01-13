@@ -24,8 +24,6 @@ public class Servlet extends HttpServlet {
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String page;
 
-        System.out.println(httpServletRequest.getRequestURI());
-
         CommandHolder commands = (CommandHolder) httpServletRequest.getSession().getAttribute("available_commands");
         page = commands.executeCommand(httpServletRequest, httpServletResponse);
         

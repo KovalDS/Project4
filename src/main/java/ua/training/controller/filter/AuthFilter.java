@@ -14,15 +14,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AuthFilter implements Filter {
-    private Map<String, CommandHolder> commandsByRole;
+    private Map<Role, CommandHolder> commandsByRole;
 
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         commandsByRole = new HashMap<>();
-        commandsByRole.put("admin", new AdminCommands());
-        commandsByRole.put("user", new UserCommands());
-        commandsByRole.put("guest", new GuestCommands());
+        commandsByRole.put(Role.ADMIN, new AdminCommands());
+        commandsByRole.put(Role.USER, new UserCommands());
+        commandsByRole.put(Role.GUEST, new GuestCommands());
     }
 
     @Override
@@ -32,13 +32,11 @@ public class AuthFilter implements Filter {
 
         Role userRole = ((Role)req.getSession().getAttribute("user_role"));
         if (userRole == null) {
-            userRole = new Role.RoleBuilder()
-                                    .buildName("guest")
-                                    .buildRole();
+            userRole = Role.GUEST;
             req.getSession().setAttribute("user_role", userRole);
         }
 
-        CommandHolder commands = commandsByRole.get(userRole.getName());
+        CommandHolder commands = commandsByRole.get(userRole);
         req.getSession().setAttribute("available_commands", commands);
         filterChain.doFilter(req, resp);
     }

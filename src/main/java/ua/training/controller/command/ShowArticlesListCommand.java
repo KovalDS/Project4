@@ -24,9 +24,7 @@ public class ShowArticlesListCommand implements Command {
         User user = (User) req.getSession().getAttribute("user");
         List<Periodical> purchasedPeriodicals;
 
-        if (user.getRoles().contains(new Role.RoleBuilder()
-                                                .buildName("admin")
-                                                .buildRole())) {
+        if (user.getRole().equals(Role.ADMIN)) {
 
             purchasedPeriodicals = periodicalService.getAllPeriodicals();
         } else {

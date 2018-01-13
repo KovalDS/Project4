@@ -23,9 +23,7 @@ public class ShowArticleCommand implements Command {
         User user = (User) req.getSession().getAttribute("user");
         List<Article> availableArticles;
 
-        if (user.getRoles().contains(new Role.RoleBuilder()
-                                            .buildName("admin")
-                                            .buildRole())) { //TODO rewrite with map
+        if (user.getRole().equals(Role.ADMIN)) { //TODO rewrite with map
 
             availableArticles = articleService.getAllArticles();
         } else {

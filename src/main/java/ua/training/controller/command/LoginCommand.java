@@ -23,7 +23,7 @@ public class LoginCommand implements Command {
         User user = userService.findByEmail(email);
         if (user != null && user.getPassword().equals(password)) {
             req.getSession().setAttribute("user", user);
-            req.getSession().setAttribute("user_role", user.getRoles().get(0)); //TODO very wrong here
+            req.getSession().setAttribute("user_role", user.getRole());
             return new DefaultCommand(new PeriodicalService()).execute(req, resp);
         }
 

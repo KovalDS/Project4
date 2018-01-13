@@ -22,7 +22,7 @@ public class MySubscriptionsCommand implements Command {
         User user = (User) req.getSession().getAttribute("user");
         Role role = (Role) req.getSession().getAttribute("user_role");
 
-        if (role.getName().equals("admin")) {
+        if (role.equals(Role.ADMIN)) {
             periodicals = periodicalService.getAllPeriodicals();
         } else {
             periodicals = periodicalService.getPeriodicalsOfUser(user.getId());

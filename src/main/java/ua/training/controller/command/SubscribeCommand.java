@@ -31,7 +31,7 @@ public class SubscribeCommand implements Command {
         User user = (User) req.getSession().getAttribute("user");
         Role role = (Role) req.getSession().getAttribute("user_role");
 
-        if (role.getName().equals("guest")) {
+        if (role.equals(Role.GUEST)) {
             req.setAttribute("message", "<div class=\"alert alert-danger\">You must be <a href=\"#\" class=\"alert-link\" data-toggle=\"modal\" data-target=\"#login_modal\">logged in</a> to subscribe</div>");
             return new DefaultCommand(new PeriodicalService()).execute(req, resp);
         }
@@ -43,7 +43,7 @@ public class SubscribeCommand implements Command {
         }
 
         try  {
-            order = orderService.createOrder(req);
+            orderService.createOrder(req);
         } catch (TransactionFailedException e) {
             req.setAttribute("message", "<div class=\"alert alert-danger\">Not enough money on your balance</div>");
             return new DefaultCommand(new PeriodicalService()).execute(req, resp);
@@ -51,7 +51,7 @@ public class SubscribeCommand implements Command {
             throw new RuntimeException(e);
         }
 
-        req.getSession().setAttribute("user", order.getUser());
+//        req.getSession().setAttribute("user", order.getUser());
         req.getSession().removeAttribute("basket_badge");
         req.getSession().removeAttribute("total_basket_price");
         req.getSession().removeAttribute("basket");

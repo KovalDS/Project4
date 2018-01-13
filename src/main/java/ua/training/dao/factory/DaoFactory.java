@@ -10,6 +10,7 @@ public abstract class DaoFactory {
     public abstract PeriodicalDao createPeriodicalDao();
     public abstract RoleDao createRoleDao();
     public abstract UserDao createUserDao();
+    public abstract UserArticleDao createUserArticleDao();
 
     public static DaoFactory getInstance() {
         if (daoFactory == null) {

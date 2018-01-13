@@ -37,6 +37,11 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCUserDao(getConnection());
     }
 
+    @Override
+    public UserArticleDao createUserArticleDao() {
+        return new JDBCUserArticleDao(getConnection());
+    }
+
     private Connection getConnection() {
         try {
             return dataSource.getConnection();

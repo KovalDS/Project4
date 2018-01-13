@@ -1,5 +1,6 @@
 package ua.training.dao.mapper;
 
+import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 
 import java.sql.ResultSet;
@@ -17,7 +18,7 @@ public class UserMapper implements ObjectMapper<User> {
                     .buildFirstName(rs.getString("first_name"))
                     .buildSecondName(rs.getString("second_name"))
                     .buildBalance(rs.getInt("balance"))
-                    .buildRoles(new ArrayList<>())
+                    .buildRole(Role.valueOf(rs.getString("role")))
                     .buildUser();
     }
 
