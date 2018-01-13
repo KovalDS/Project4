@@ -8,7 +8,6 @@ public abstract class DaoFactory {
     public abstract ArticleDao createArticleDao();
     public abstract OrderDao createOrderDao();
     public abstract PeriodicalDao createPeriodicalDao();
-    public abstract RoleDao createRoleDao();
     public abstract UserDao createUserDao();
     public abstract UserArticleDao createUserArticleDao();
 

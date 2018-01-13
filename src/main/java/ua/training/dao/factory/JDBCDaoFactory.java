@@ -28,11 +28,6 @@ public class JDBCDaoFactory extends DaoFactory {
     }
 
     @Override
-    public RoleDao createRoleDao() {
-        return new JDBCRoleDao(getConnection());
-    }
-
-    @Override
     public UserDao createUserDao() {
         return new JDBCUserDao(getConnection());
     }

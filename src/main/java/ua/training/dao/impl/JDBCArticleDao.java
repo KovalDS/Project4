@@ -78,7 +78,7 @@ public class JDBCArticleDao implements ArticleDao {
         List<Article> articles = new ArrayList<>();
         ArticleMapper articleMapper = new ArticleMapper();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM article LEFT JOIN periodical USING (idperiodical) LEFT JOIN order_has_periodical USING (idperiodical) LEFT JOIN project4db.order USING (idorder) LEFT JOIN project4db.user USING (iduser) WHERE iduser = (?)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM article LEFT JOIN user_has_article USING (idarticle) LEFT JOIN user USING (iduser) WHERE iduser = (?)")) {
             preparedStatement.setInt(1, userId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
