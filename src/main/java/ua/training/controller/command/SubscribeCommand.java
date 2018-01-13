@@ -37,7 +37,7 @@ public class SubscribeCommand implements Command {
         }
 
         purchasedPeriodical = orderService.periodicalsPurchased(user.getId());
-        if (!Util.listIntersection(purchasedPeriodical, new ArrayList<Periodical>(basket)).isEmpty()) {
+        if (!Util.listIntersection(purchasedPeriodical, new ArrayList<Periodical>(basket)).isEmpty()) { //TODO instead of this better to catch duplication exception from user_has_periodical
             req.setAttribute("message", "<div class=\"alert alert-danger\">You are already subscribed to this periodical!</div>");
             return new DefaultCommand(new PeriodicalService()).execute(req, resp);
         }

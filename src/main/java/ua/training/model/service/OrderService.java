@@ -2,10 +2,9 @@ package ua.training.model.service;
 
 import ua.training.dao.OrderDao;
 import ua.training.dao.PeriodicalDao;
+import ua.training.dao.UserArticleDao;
 import ua.training.dao.factory.DaoFactory;
-import ua.training.model.entity.Order;
-import ua.training.model.entity.Periodical;
-import ua.training.model.entity.User;
+import ua.training.model.entity.*;
 import ua.training.model.exception.TransactionFailedException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +24,19 @@ public class OrderService {
                             .buildPeriodicals(periodicals)
                             .buildOrder();
 
-        try (OrderDao orderDao = DaoFactory.getInstance().createOrderDao()) {
+        try (OrderDao orderDao = DaoFactory.getInstance().createOrderDao();
+             UserArticleDao userArticleDao = DaoFactory.getInstance().createUserArticleDao()) {
             orderDao.create(order);
             user.setBalance(user.getBalance() - order.getTotalPrice());
+            for (Periodical periodical : periodicals) {
+                for (Article article : periodical.getArticles()) {
+                    userArticleDao.create(new UserArticle.UserArticleBuilder()
+                                                        .buildUser(user)
+                                                        .buildArticle(article)
+                                                        .buildRead(true)
+                                                        .buildUserArticle());
+                }
+            }
         }
     }
 

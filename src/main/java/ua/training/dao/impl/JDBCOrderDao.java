@@ -20,7 +20,8 @@ public class JDBCOrderDao implements OrderDao {
     @Override
     public void create(Order entity) {
         try (PreparedStatement insertOrderStatement = connection.prepareStatement("INSERT INTO project4db.order (status, total_price, date, iduser) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-                        PreparedStatement insertPeriodicalStatement = connection.prepareStatement("INSERT INTO order_has_periodical (idorder, idperiodical) VALUES (?, ?)");
+                        PreparedStatement insertOrderHasPeriodicalStatement = connection.prepareStatement("INSERT INTO order_has_periodical (idorder, idperiodical) VALUES (?, ?)");
+                        PreparedStatement insertUserHasPeriodicalStatement = connection.prepareStatement("INSERT INTO user_has_periodical (iduser, idperiodical) VALUE (?, ?)");
                         PreparedStatement updateUserBalance = connection.prepareStatement("UPDATE project4db.user SET balance = balance - (?) WHERE iduser = (?)");
                         PreparedStatement updateOrderStatus = connection.prepareStatement("UPDATE project4db.order SET status = (?) WHERE idorder = (?)")) {
             int orderId;
@@ -39,13 +40,17 @@ public class JDBCOrderDao implements OrderDao {
             connection.setAutoCommit(false);
 
             for (Periodical periodical : periodicals) {
-                insertPeriodicalStatement.setInt(1, orderId);
-                insertPeriodicalStatement.setInt(2, periodical.getId());
-                insertPeriodicalStatement.executeUpdate();
+                insertOrderHasPeriodicalStatement.setInt(1, orderId);
+                insertOrderHasPeriodicalStatement.setInt(2, periodical.getId());
+                insertOrderHasPeriodicalStatement.executeUpdate();
 
                 updateUserBalance.setInt(1, periodical.getPrice());
                 updateUserBalance.setInt(2, entity.getUser().getId());
                 updateUserBalance.executeUpdate();
+
+                insertUserHasPeriodicalStatement.setInt(1, entity.getUser().getId());
+                insertUserHasPeriodicalStatement.setInt(2, periodical.getId());
+                insertUserHasPeriodicalStatement.executeUpdate();
             }
 
             updateOrderStatus.setString(1, "completed");

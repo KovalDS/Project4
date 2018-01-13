@@ -4,6 +4,8 @@ import ua.training.dao.UserArticleDao;
 import ua.training.model.entity.UserArticle;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 public class JDBCUserArticleDao implements UserArticleDao {
@@ -15,7 +17,14 @@ public class JDBCUserArticleDao implements UserArticleDao {
 
     @Override
     public void create(UserArticle entity) {
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user_has_article (iduser, idarticle, is_read) VALUES (?, ?, ?)")) {
+            preparedStatement.setInt(1, entity.getUser().getId());
+            preparedStatement.setInt(2, entity.getArticle().getId());
+            preparedStatement.setBoolean(3, entity.isRead());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
