@@ -1,8 +1,10 @@
 package ua.training.model.service;
 
 import ua.training.dao.ArticleDao;
+import ua.training.dao.UserArticleDao;
 import ua.training.dao.factory.DaoFactory;
 import ua.training.model.entity.Article;
+import ua.training.model.entity.UserArticle;
 
 import java.util.List;
 
@@ -22,6 +24,18 @@ public class ArticleService {
     public Article getArticleById(int articleId) {
         try (ArticleDao articleDao = DaoFactory.getInstance().createArticleDao()) {
             return articleDao.findById(articleId);
+        }
+    }
+
+    public List<Article> getUnreadArticles(int userId) {
+        try (ArticleDao articleDao = DaoFactory.getInstance().createArticleDao()) {
+            return articleDao.findUnreadArticlesOfUser(userId);
+        }
+    }
+
+    public void makeArticleRead(UserArticle userArticle) {
+        try (UserArticleDao userArticleDao = DaoFactory.getInstance().createUserArticleDao()) {
+            userArticleDao.update(userArticle);
         }
     }
 }

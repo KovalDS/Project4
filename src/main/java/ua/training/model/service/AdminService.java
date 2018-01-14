@@ -2,14 +2,32 @@ package ua.training.model.service;
 
 import ua.training.dao.ArticleDao;
 import ua.training.dao.PeriodicalDao;
+import ua.training.dao.UserArticleDao;
+import ua.training.dao.UserDao;
 import ua.training.dao.factory.DaoFactory;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
+import ua.training.model.entity.User;
+import ua.training.model.entity.UserArticle;
+import ua.training.model.observer.ObservablePeriodical;
+import ua.training.model.observer.UserObserver;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class AdminService {
     public void createArticle(Article article) {
-        try (ArticleDao articleDao = DaoFactory.getInstance().createArticleDao()) {
-            articleDao.create(article);
+        try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
+
+            List<User> subscribers = userDao.findUsersSubscribedOnPeriodical(article.getPeriodical().getId());
+            ObservablePeriodical observablePeriodical = new ObservablePeriodical();
+
+            for (User user : subscribers) {
+                new UserObserver(user, observablePeriodical);
+            }
+
+            observablePeriodical.addArticle(article);
         }
     }
 

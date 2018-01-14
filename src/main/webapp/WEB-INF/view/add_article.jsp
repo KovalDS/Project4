@@ -39,7 +39,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="description">Text:</label>
 					<div class="col-sm-10">
-						<textarea class="form-control" id="description" rows="20" placeholder= "Enter description" required name = "article_text"></textarea>
+						<textarea class="form-control" id="description" rows="20" placeholder= "Enter text" required name = "article_text"></textarea>
 					</div>
 				</div>
 				<div class="form-group"> 

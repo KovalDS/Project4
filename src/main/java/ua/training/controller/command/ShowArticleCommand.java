@@ -3,6 +3,7 @@ package ua.training.controller.command;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
+import ua.training.model.entity.UserArticle;
 import ua.training.model.service.ArticleService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,17 @@ public class ShowArticleCommand implements Command {
             return null;
         }
 
+        List<Article> unreadArticles = (List<Article>) req.getSession().getAttribute("unread_articles");
+        if (unreadArticles.contains(article)) {
+            articleService.makeArticleRead(new UserArticle.UserArticleBuilder()
+                                                        .buildUser(user)
+                                                        .buildArticle(article)
+                                                        .buildRead(true)
+                                                        .buildUserArticle());
+        }
+
         req.setAttribute("article", article);
+
         return "/WEB-INF/view/article.jsp";
     }
 }

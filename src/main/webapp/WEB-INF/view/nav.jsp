@@ -139,7 +139,7 @@
 		<c:if test = "${sessionScope.user_role.name ne 'guest'}">
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="/my_account">My account</a></li>
-				<li><a href="/my_subscriptions" >My subscriptions</a></li>
+				<li><a href="/my_subscriptions" >My subscriptions ${sessionScope.unread_articles_badge}</a></li>
 				<c:if test = "${sessionScope.user_role.name eq 'admin'}">
 					<li class="active"><a href="/add_periodical" class = "text-danger">Add periodical</a></li>
 				</c:if>

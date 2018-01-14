@@ -39,7 +39,14 @@ public class JDBCUserArticleDao implements UserArticleDao {
 
     @Override
     public void update(UserArticle entity) {
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user_has_article SET is_read = (?) WHERE iduser = (?) AND idarticle = (?)")){
+            preparedStatement.setBoolean(1, entity.isRead());
+            preparedStatement.setInt(2, entity.getUser().getId());
+            preparedStatement.setInt(3, entity.getArticle().getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

@@ -29,7 +29,6 @@ public class DeleteFromBasket implements Command {
             req.getSession().removeAttribute("basket_badge");
             req.getSession().removeAttribute("total_basket_price");
             req.getSession().removeAttribute("basket");
-            req.getSession().removeAttribute("basket_size");
             return new DefaultCommand(new PeriodicalService()).execute(req, resp);
         }
 

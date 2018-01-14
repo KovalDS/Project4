@@ -1,5 +1,7 @@
 package ua.training.dao.impl;
 
+import com.mysql.cj.xdevapi.ExprUnparser;
+import com.sun.org.apache.regexp.internal.RE;
 import ua.training.dao.UserDao;
 import ua.training.dao.mapper.UserMapper;
 import ua.training.dao.util.ConnectionUtil;
@@ -8,6 +10,7 @@ import ua.training.model.entity.User;
 import ua.training.model.exception.NotUniqueEmailException;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +73,23 @@ public class JDBCUserDao implements UserDao {
             }
             return user;
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<User> findUsersSubscribedOnPeriodical(int periodicalId) {
+        List<User> users = new ArrayList<>();
+        UserMapper userMapper = new UserMapper();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM project4db.user LEFT JOIN user_has_periodical USING (iduser) WHERE idperiodical = (?)")) {
+            preparedStatement.setInt(1, periodicalId);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                users.add(userMapper.extractFromResultSet(rs));
+            }
+            return users;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

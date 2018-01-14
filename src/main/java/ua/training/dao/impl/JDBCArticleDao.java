@@ -6,6 +6,7 @@ import ua.training.dao.util.ConnectionUtil;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 
+import java.security.interfaces.RSAKey;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +20,16 @@ public class JDBCArticleDao implements ArticleDao {
 
     @Override
     public void create(Article entity) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO article (article_name, text, date_of_publication, idperiodical) VALUES (?, ?, ?, ?)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO article (article_name, text, date_of_publication, idperiodical) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getText());
             preparedStatement.setDate(3, Date.valueOf(entity.getDateOfPublication()));
             preparedStatement.setInt(4, entity.getPeriodical().getId());
             preparedStatement.executeUpdate();
+
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            rs.next();
+            entity.setId(rs.getInt(1));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -79,6 +84,23 @@ public class JDBCArticleDao implements ArticleDao {
         ArticleMapper articleMapper = new ArticleMapper();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM article LEFT JOIN user_has_article USING (idarticle) LEFT JOIN user USING (iduser) WHERE iduser = (?)")) {
+            preparedStatement.setInt(1, userId);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                articles.add(articleMapper.extractFromResultSet(rs));
+            }
+            return articles;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Article> findUnreadArticlesOfUser(int userId) {
+        List<Article> articles = new ArrayList<>();
+        ArticleMapper articleMapper = new ArticleMapper();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM article LEFT JOIN user_has_article USING (idarticle) LEFT JOIN user USING (iduser) WHERE iduser = (?) AND is_read = 0")) {
             preparedStatement.setInt(1, userId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {

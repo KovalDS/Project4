@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ArticleDao extends GenericDao<Article> {
     List<Article> findArticlesOfUser(int userId);
+    List<Article> findUnreadArticlesOfUser(int userId);
 }
