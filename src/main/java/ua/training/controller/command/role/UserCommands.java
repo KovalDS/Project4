@@ -4,6 +4,7 @@ import ua.training.controller.command.*;
 import ua.training.model.service.ArticleService;
 import ua.training.model.service.OrderService;
 import ua.training.model.service.PeriodicalService;
+import ua.training.model.service.UserService;
 
 import java.util.HashMap;
 
@@ -27,6 +28,7 @@ public class UserCommands extends CommandHolder {
         addCommand("/subscribe", new SubscribeCommand(new OrderService()));
         addCommand("/my_account", new MyAccountCommand());
         addCommand("/my_subscriptions", new MySubscriptionsCommand(new PeriodicalService()));
+        addCommand("/my_account/update", new ReplenishAccountCommand(new UserService()));
     }
 
     private void addCommand(String name, Command command) {

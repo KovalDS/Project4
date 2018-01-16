@@ -4,6 +4,7 @@ import ua.training.model.entity.Periodical;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class PeriodicalMapper implements ObjectMapper<Periodical> {
@@ -14,6 +15,7 @@ public class PeriodicalMapper implements ObjectMapper<Periodical> {
                 .buildName(rs.getString("name"))
                 .buildDescription(rs.getString("description"))
                 .buildPrice(rs.getInt("price"))
+                .buildArticles(new ArrayList<>())
                 .buildPeriodical();
     }
 

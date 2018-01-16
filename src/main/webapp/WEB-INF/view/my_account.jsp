@@ -22,37 +22,57 @@
 			</div>
 			${requestScope.article.text}
 
-			<div>
+			<div class = "row">
 				<label class="control-label col-sm-2">Email:</label>
 				<div class="col-sm-10">
 					<p>${sessionScope.user.email}</p>
 				</div>
 
 			</div>
-			<div>			
+			<div class = "row">			
 				<label class="control-label col-sm-2">Password:</label>
 				<div class="col-sm-10">
 					<p>${sessionScope.user.password}</p>
 				</div>
 			</div>
-			<div>
+			<div class = "row">
 				<label class="control-label col-sm-2">First name:</label>
 				<div class="col-sm-10">
 					<p>${sessionScope.user.firstName}</p>
 				</div>
 			</div>
-			<div>
+			<div class = "row">
 				<label class="control-label col-sm-2">Second name:</label>
 				<div class="col-sm-10">
 					<p>${sessionScope.user.secondName}</p>
 				</div>
 			</div>
-			<div>
+			<div class = "row">
 				<label class="control-label col-sm-2">Status:</label>
 				<div class="col-sm-10">
 					<p>${sessionScope.user_role.name}</p>
 				</div>
 			</div>
+			<div class = "row">			
+				<label class="control-label col-sm-2">Balance:</label>
+				<div class="col-sm-10">
+					<p>
+						$
+						<c:set var = "balance" target = "user" property = "balance" value = "${user.balance/100}"/>
+						<c:out value = "${balance}"/>
+					</p>
+				</div>
+			</div>
+			<hr>
+			<form class =  action = "/my_account/update" method = "POST">
+				<div class = "row">
+					<label class="control-label col-sm-2 for="amount" style = "display: inline-block; vertical-align: middle; float: none;">Update balance:</label>
+					<input type = "number" name = "amount" id = "amount" placeholder = "Amount" step = "any">	
+					<button type="submit" class="btn btn-default btn-success col-sm-offset-1">Update</button>
+				</div>
+			</form>
+			<hr>
 		</div>
+		
     </body>
 </html>

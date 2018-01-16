@@ -1,5 +1,6 @@
 package ua.training.controller.command;
 
+import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;

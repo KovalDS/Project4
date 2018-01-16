@@ -52,7 +52,16 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public void update(User entity) {
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET password = (?), first_name = (?), second_name = (?), balance = (?) WHERE iduser = (?)")) {
+            preparedStatement.setString(1, entity.getPassword());
+            preparedStatement.setString(2, entity.getFirstName());
+            preparedStatement.setString(3, entity.getSecondName());
+            preparedStatement.setInt(4, entity.getBalance());
+            preparedStatement.setInt(5, entity.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

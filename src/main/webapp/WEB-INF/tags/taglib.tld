@@ -8,10 +8,27 @@
     <uri>/WEB-INF/tags/taglib</uri>
 
     <function>
-        <name>contains</name>
-        <function-class>ua.training.controller.jstl.ContainsFunction</function-class>
+        <name>containsPeriodical</name>
+        <function-class>ua.training.controller.jstl.JstlFunctions</function-class>
         <function-signature>
-            boolean contains(java.util.List, ua.training.model.entity.Periodical)
+            boolean containsPeriodical(java.util.List, ua.training.model.entity.Periodical)
         </function-signature>
     </function>
+
+    <function>
+        <name>containsArticle</name>
+        <function-class>ua.training.controller.jstl.JstlFunctions</function-class>
+        <function-signature>
+            boolean containsArticle(java.util.List, ua.training.model.entity.Article)
+        </function-signature>
+    </function>
+
+    <function>
+        <name>hasUnreadArticles</name>
+        <function-class>ua.training.controller.jstl.JstlFunctions</function-class>
+        <function-signature>
+            boolean hasUnreadArticles(java.util.List, java.util.List)
+        </function-signature>
+    </function>
+
 </taglib>

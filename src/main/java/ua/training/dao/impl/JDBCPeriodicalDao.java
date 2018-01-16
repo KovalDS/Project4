@@ -9,7 +9,9 @@ import ua.training.model.entity.Periodical;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JDBCPeriodicalDao implements PeriodicalDao {
     private Connection connection;
@@ -61,15 +63,26 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
 
     @Override
     public List<Periodical> findAll() {
-        List<Periodical> result = new ArrayList<>();
+        Map<Integer, Periodical> periodicalMap = new HashMap<>();
+        Map<Integer, Article> articleMap = new HashMap();
         PeriodicalMapper periodicalMapper = new PeriodicalMapper();
+        ArticleMapper articleMapper = new ArticleMapper();
 
         try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery("SELECT * FROM periodical");
+            ResultSet rs = statement.executeQuery("SELECT * FROM periodical LEFT JOIN article USING (idperiodical)");
             while (rs.next()) {
-                result.add(periodicalMapper.extractFromResultSet(rs));
+                Article article = null;
+                Periodical periodical = periodicalMapper.extractFromResultSet(rs);
+                periodical = periodicalMapper.makeUnique(periodicalMap, periodical);
+                if (rs.getString("date_of_publication") != null) {
+                    article = articleMapper.extractFromResultSet(rs);
+                    article = articleMapper.makeUnique(articleMap, article);
+                }
+
+
+                periodical.getArticles().add(article);
             }
-            return result;
+            return new ArrayList<>(periodicalMap.values());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -87,18 +100,27 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
 
     @Override
     public List<Periodical> findByUser(int userId) {
-        List<Periodical> periodicals = new ArrayList<>();
+        Map<Integer, Periodical> periodicalMap = new HashMap<>();
+        Map<Integer, Article> articleMap = new HashMap();
         PeriodicalMapper periodicalMapper = new PeriodicalMapper();
+        ArticleMapper articleMapper = new ArticleMapper();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM project4db.periodical LEFT JOIN user_has_periodical USING (idperiodical) LEFT JOIN project4db.user USING (iduser) WHERE iduser = (?)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM project4db.periodical LEFT JOIN user_has_periodical USING (idperiodical) LEFT JOIN project4db.user USING (iduser) LEFT JOIN article USING (idperiodical) WHERE iduser = (?)")) {
             preparedStatement.setInt(1, userId);
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                periodicals.add(periodicalMapper.extractFromResultSet(rs));
+                Article article = null;
+                Periodical periodical = periodicalMapper.extractFromResultSet(rs);
+                periodical = periodicalMapper.makeUnique(periodicalMap, periodical);
+                if (rs.getString("date_of_publication") != null) {
+                    article = articleMapper.extractFromResultSet(rs);
+                    article = articleMapper.makeUnique(articleMap, article);
+                }
+                periodical.getArticles().add(article);
             }
 
-            return periodicals;
+            return new ArrayList<>(periodicalMap.values());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -35,14 +35,19 @@
 			${requestScope.message}
             <c:forEach items = "${requestScope.periodical_list}" var = "periodical">
 				<div>
-					<h2><c:out value = "${periodical.name}"/></h2>
+					<h2>
+						<c:out value = "${periodical.name}"/>
+						<c:if test = "${func:hasUnreadArticles(sessionScope.unread_articles, periodical.articles)}">
+							<small><span class = "label label-danger"> new articles!</span></small>
+						</c:if>
+					</h2>
 					<hr/>
 					<div>
 					    <c:out value = "${periodical.description}"/>
 					</div><br/>
 						<div>
 							<c:choose>
-								<c:when test = "${func:contains(requestScope.available_periodicals, periodical)}">
+								<c:when test = "${func:containsPeriodical(requestScope.available_periodicals, periodical)}">
                                     <form action = "/periodical" method = "GET">
 										<input type = "hidden" value = "${periodical.id}" name = "periodical_id">
                                         <button type="submit" class="btn btn-success pull-right">Read</button>

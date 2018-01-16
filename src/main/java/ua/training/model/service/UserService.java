@@ -21,4 +21,10 @@ public class UserService {
             throw new NotUniqueEmailException("Not unique email");
         }
     }
+
+    public void updateUser(User user) {
+        try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
+            userDao.update(user);
+        }
+    }
 }

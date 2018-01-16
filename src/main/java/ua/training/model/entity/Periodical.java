@@ -1,5 +1,6 @@
 package ua.training.model.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Periodical {

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="func" uri="taglib" %>
 
 <html>
     <head>
@@ -31,7 +32,12 @@
 				<tbody>
 				<c:forEach items = "${requestScope.articles}" var = "article">
 					<tr>
-						<td><c:out value = "${article.name}"/></td>
+						<td>
+							<c:out value = "${article.name}"/>
+							<c:if test = "${func:containsArticle(sessionScope.unread_articles, article)}">
+								<span class = "label label-danger">new</span>
+							</c:if>
+						</td>
 						<td><c:out value = "${article.dateOfPublication}"/></td>
 						<td >
 						    <form action = "/periodical/article" class = "pull-right">
