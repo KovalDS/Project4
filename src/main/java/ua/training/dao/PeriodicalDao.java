@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface PeriodicalDao extends GenericDao<Periodical> {
     List<Periodical> findByUser(int userId);
+    List<Periodical> findFixedNumberOfPeriodicals(int limit, int offset);
 }

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ShowPeriodicalsList implements Command {
     private PeriodicalService periodicalService;
@@ -23,7 +24,14 @@ public class ShowPeriodicalsList implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String page = "/WEB-INF/view/periodicals.jsp";
 
-        List<Periodical> periodicalList = periodicalService.getAllPeriodicals();
+        Map<Integer, List<Periodical>> periodicalsDividedOnPages = periodicalService.getPeriodicalsDividedOnPages(4);
+        String periodicalPageStr = req.getParameter("periodicals_page");
+        if (periodicalPageStr == null) {
+            periodicalPageStr = "1";
+        }
+        List<Periodical> periodicalList = periodicalsDividedOnPages.getOrDefault(Integer.parseInt(periodicalPageStr), periodicalsDividedOnPages.get(1));
+        req.setAttribute("pages", periodicalsDividedOnPages.keySet());
+        req.setAttribute("current_page", Integer.parseInt(periodicalPageStr));
         req.setAttribute("periodical_list", periodicalList);
 
         User user =  (User) req.getSession().getAttribute("user");
@@ -32,6 +40,7 @@ public class ShowPeriodicalsList implements Command {
         if (user != null && !role.equals(Role.ADMIN)) {  //TODO refactor using map
             List<Periodical> purchasedPeriodicals = periodicalService.getPeriodicalsOfUser(user.getId()); //TODO if available periodicals will be stored in session, you can avoid calling default command in other commands
             req.setAttribute("available_periodicals", purchasedPeriodicals);
+
         } else if (role != null && role.equals(Role.ADMIN)) {
             req.setAttribute("available_periodicals", periodicalList);
         } else {

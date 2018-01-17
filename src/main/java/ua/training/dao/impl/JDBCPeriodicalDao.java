@@ -127,6 +127,35 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
     }
 
     @Override
+    public List<Periodical> findFixedNumberOfPeriodicals(int limit, int offset) {
+        Map<Integer, Periodical> periodicalMap = new HashMap<>();
+        Map<Integer, Article> articleMap = new HashMap();
+        PeriodicalMapper periodicalMapper = new PeriodicalMapper();
+        ArticleMapper articleMapper = new ArticleMapper();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM (SELECT * FROM periodical LIMIT ? OFFSET ?) AS periodical_limited LEFT JOIN article USING (idperiodical)")) {
+            preparedStatement.setInt(1, limit);
+            preparedStatement.setInt(2, offset);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Article article = null;
+                Periodical periodical = periodicalMapper.extractFromResultSet(rs);
+                periodical = periodicalMapper.makeUnique(periodicalMap, periodical);
+                if (rs.getString("date_of_publication") != null) {
+                    article = articleMapper.extractFromResultSet(rs);
+                    article = articleMapper.makeUnique(articleMap, article);
+                }
+                periodical.getArticles().add(article);
+            }
+
+            return new ArrayList<>(periodicalMap.values());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void close() {
         ConnectionUtil.close(connection);
     }

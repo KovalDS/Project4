@@ -69,6 +69,20 @@
 				</div>
             </c:forEach>
 
+			<div class = "text-center">
+				<ul class = "pagination">
+					<c:forEach items = "${requestScope.pages}" var = "page">
+						<c:choose>
+							<c:when test = "${page == requestScope.current_page}">
+								<li class="active"><a href="/home?periodicals_page=${page}">${page}</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="/home?periodicals_page=${page}">${page}</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</ul>
+			</div>
         </div>
     </body>
 </html>
