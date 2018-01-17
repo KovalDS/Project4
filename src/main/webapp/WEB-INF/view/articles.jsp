@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="func" uri="taglib" %>
 
 <html>
@@ -21,12 +22,12 @@
 			<div class="page-header">
 			    <h1 class = "text-center"><c:out value = "${requestScope.periodical.name}"/></h1>
 			</div>
-			<h3>Choose article, please</h3>
+			<h3><fmt:message key = "choose.article" bundle = "${bundle}"/></h3>
 			<table class = "table table-hover">
 				<thead>
 					<tr>
-						<th>Article name</th>
-						<th>Date of publication</th>
+						<th><fmt:message key = "article.name" bundle = "${bundle}"/></th>
+						<th><fmt:message key = "article.date" bundle = "${bundle}"/></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -35,14 +36,14 @@
 						<td>
 							<c:out value = "${article.name}"/>
 							<c:if test = "${func:containsArticle(sessionScope.unread_articles, article)}">
-								<span class = "label label-danger">new</span>
+								<span class = "label label-danger"><fmt:message key = "new" bundle = "${bundle}"/></span>
 							</c:if>
 						</td>
 						<td><c:out value = "${article.dateOfPublication}"/></td>
 						<td >
 						    <form action = "/periodical/article" class = "pull-right">
 						        <input type = "hidden" value = "${article.id}" name = "article_id">
-						        <button type = "submit" class = "btn btn-success" name = "command" value = "show_article_command">Read</button>
+						        <button type = "submit" class = "btn btn-success" name = "command" value = "show_article_command"><fmt:message key = "read" bundle = "${bundle}"/></button>
 						    </form>
 						</td>
 					</tr>
@@ -52,7 +53,7 @@
 			<c:if test = "${sessionScope.user_role.name eq 'admin'}">
 				<form action = "/add_article" class = "pull-right">
 					<input type = "hidden" value = "${requestScope.periodical.id}" name = "periodical_id">
-					<button type = "submit" class = "btn btn-success btn-danger">Add article</button>
+					<button type = "submit" class = "btn btn-success btn-danger"><fmt:message key = "add.article" bundle = "${bundle}"/></button>
 				</form>
 			</c:if>
         </div>

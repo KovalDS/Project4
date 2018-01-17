@@ -12,10 +12,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefaultCommand implements Command {
+public class ShowPeriodicalsList implements Command {
     private PeriodicalService periodicalService;
 
-    public DefaultCommand(PeriodicalService periodicalService) {
+    public ShowPeriodicalsList(PeriodicalService periodicalService) {
         this.periodicalService = periodicalService;
     }
 

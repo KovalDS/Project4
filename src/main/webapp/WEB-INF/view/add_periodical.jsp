@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt"%>
 
 <html>
     <head>
@@ -19,32 +20,32 @@
         <div class="container">
 			<div class="page-header">
 			    <h1 class = "text-center">
-					Create new periodical
+					<fmt:message key = "create.periodical" bundle = "${bundle}"/>
 				</h1>
 			</div>
 			${requestScope.message}
 			<form class = "form-horizontal" action = "/add_periodical/create_periodical" method = "POST">
 				<div class="form-group row">
-					<label class="control-label col-sm-2" for="name">Periodical name:</label>
+					<label class="control-label col-sm-2" for="name"><fmt:message key = "periodical.name" bundle = "${bundle}"/>:</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" id="name" placeholder="Enter name" required name = "periodical_name">
+						<input type="text" class="form-control" id="name" placeholder="<fmt:message key = 'enter.name' bundle = '${bundle}'/>" required name = "periodical_name">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="description">Short description:</label>
+					<label class="control-label col-sm-2" for="description"><fmt:message key = "description" bundle = "${bundle}"/>:</label>
 					<div class="col-sm-10">
-						<textarea class="form-control" id="description" rows="5" placeholder= "Enter description" required name = "periodical_description"></textarea>
+						<textarea class="form-control" id="description" rows="5" placeholder= "<fmt:message key = 'enter.description' bundle = '${bundle}'/>" required name = "periodical_description"></textarea>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="price">Subscription price ($):</label>
+					<label class="control-label col-sm-2" for="price"><fmt:message key = "price" bundle = "${bundle}"/> ($):</label>
 					<div class="col-sm-2">
 						<input type="number" class="form-control" id="price" required name = "periodical_price"  step = "any">
 					</div>
 				</div>
 				<div class="form-group"> 
 					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-default btn-danger">Create</button>
+						<button type="submit" class="btn btn-default btn-danger"><fmt:message key = "create" bundle = "${bundle}"/></button>
 					</div>
 				</div>
 			</form>

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.regex.Pattern;
 
 public class CreatePeriodical implements Command{
-    AdminService adminService;
+    private AdminService adminService;
 
     public CreatePeriodical(AdminService adminService) {
         this.adminService = adminService;
@@ -24,7 +24,6 @@ public class CreatePeriodical implements Command{
         String priceStr = req.getParameter("periodical_price");
 
         if (!Pattern.matches("^[0-9]*[,.][0-9]{2}$", priceStr)) {  //TODO create input validation method
-            System.out.println("pattern don't match");
             return "/WEB-INF/view/add_periodical.jsp";
         }
 

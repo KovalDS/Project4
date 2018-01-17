@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="func" uri="taglib" %>
 
 <html>
@@ -38,33 +39,33 @@
 					<h2>
 						<c:out value = "${periodical.name}"/>
 						<c:if test = "${func:hasUnreadArticles(sessionScope.unread_articles, periodical.articles)}">
-							<small><span class = "label label-danger"> new articles!</span></small>
+							<small><span class = "label label-danger"> <fmt:message key = "new.articles" bundle = "${bundle}"/></span></small>
 						</c:if>
 					</h2>
 					<hr/>
 					<div>
 					    <c:out value = "${periodical.description}"/>
 					</div><br/>
-						<div>
-							<c:choose>
-								<c:when test = "${func:containsPeriodical(requestScope.available_periodicals, periodical)}">
-                                    <form action = "/periodical" method = "GET">
-										<input type = "hidden" value = "${periodical.id}" name = "periodical_id">
-                                        <button type="submit" class="btn btn-success pull-right">Read</button>
-                                    </form>
-								</c:when>
-								<c:otherwise>
-									<form action = "/add_to_basket" method = "POST">
-										<span class = "text-warning lead">Subscribe now for $
-											<c:set var = "price" target = "periodical" property = "price" value = "${periodical.price/100}"/>
-											<c:out value = "${price}"/>
-										</span>
-										<input type = "hidden" value = "${periodical.id}" name = "periodical_id">
-										<button type="submit" class="btn btn-info pull-right">Subscribe</button>
-									</form>
-								</c:otherwise>
-							</c:choose>
-						</div>
+					<div>
+						<c:choose>
+							<c:when test = "${func:containsPeriodical(requestScope.available_periodicals, periodical)}">
+								<form action = "/periodical" method = "GET">
+									<input type = "hidden" value = "${periodical.id}" name = "periodical_id">
+									<button type="submit" class="btn btn-success pull-right"><fmt:message key = "read" bundle = "${bundle}"/></button>
+								</form>
+							</c:when>
+							<c:otherwise>
+								<form action = "/add_to_basket" method = "POST">
+									<span class = "text-warning lead"><fmt:message key = "subscribe.now" bundle = "${bundle}"/>
+										<c:set var = "price" target = "periodical" property = "price" value = "${periodical.price/100}"/>
+										<c:out value = "${price}"/>
+									</span>
+									<input type = "hidden" value = "${periodical.id}" name = "periodical_id">
+									<button type="submit" class="btn btn-info pull-right"><fmt:message key = "subscribe" bundle = "${bundle}"/></button>
+								</form>
+							</c:otherwise>
+						</c:choose>
+					</div>
 				</div>
             </c:forEach>
 

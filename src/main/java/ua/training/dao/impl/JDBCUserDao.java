@@ -1,19 +1,14 @@
 package ua.training.dao.impl;
 
-import com.mysql.cj.xdevapi.ExprUnparser;
-import com.sun.org.apache.regexp.internal.RE;
 import ua.training.dao.UserDao;
 import ua.training.dao.mapper.UserMapper;
 import ua.training.dao.util.ConnectionUtil;
-import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.exception.NotUniqueEmailException;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class JDBCUserDao implements UserDao {
     private Connection connection;

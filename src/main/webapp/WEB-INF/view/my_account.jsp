@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt"%>
 
 <html>
     <head>
@@ -18,43 +19,43 @@
 
         <div class="container">
 			<div class="page-header">
-			    <h1 class = "text-center">My account</h1>
+			    <h1 class = "text-center"><fmt:message key = "my.account" bundle = "${bundle}"/></h1>
 			</div>
 			${requestScope.article.text}
 
 			<div class = "row">
-				<label class="control-label col-sm-2">Email:</label>
+				<label class="control-label col-sm-2"><fmt:message key = "email" bundle = "${bundle}"/>:</label>
 				<div class="col-sm-10">
 					<p>${sessionScope.user.email}</p>
 				</div>
 
 			</div>
 			<div class = "row">			
-				<label class="control-label col-sm-2">Password:</label>
+				<label class="control-label col-sm-2"><fmt:message key = "password" bundle = "${bundle}"/></label>
 				<div class="col-sm-10">
 					<p>${sessionScope.user.password}</p>
 				</div>
 			</div>
 			<div class = "row">
-				<label class="control-label col-sm-2">First name:</label>
+				<label class="control-label col-sm-2"><fmt:message key = "first.name" bundle = "${bundle}"/></label>
 				<div class="col-sm-10">
 					<p>${sessionScope.user.firstName}</p>
 				</div>
 			</div>
 			<div class = "row">
-				<label class="control-label col-sm-2">Second name:</label>
+				<label class="control-label col-sm-2"><fmt:message key = "last.name" bundle = "${bundle}"/></label>
 				<div class="col-sm-10">
 					<p>${sessionScope.user.secondName}</p>
 				</div>
 			</div>
 			<div class = "row">
-				<label class="control-label col-sm-2">Status:</label>
+				<label class="control-label col-sm-2"><fmt:message key = "status" bundle = "${bundle}"/>:</label>
 				<div class="col-sm-10">
 					<p>${sessionScope.user_role.name}</p>
 				</div>
 			</div>
 			<div class = "row">			
-				<label class="control-label col-sm-2">Balance:</label>
+				<label class="control-label col-sm-2"><fmt:message key = "balance" bundle = "${bundle}"/></label>
 				<div class="col-sm-10">
 					<p>
 						$
@@ -66,9 +67,9 @@
 			<hr>
 			<form class =  action = "/my_account/update" method = "POST">
 				<div class = "row">
-					<label class="control-label col-sm-2 for="amount" style = "display: inline-block; vertical-align: middle; float: none;">Update balance:</label>
-					<input type = "number" name = "amount" id = "amount" placeholder = "Amount" step = "any">	
-					<button type="submit" class="btn btn-default btn-success col-sm-offset-1">Update</button>
+					<label class="control-label col-sm-2 for="amount" style = "display: inline-block; vertical-align: middle; float: none;"><fmt:message key = "update.balance" bundle = "${bundle}"/>:</label>
+					<input type = "text" name = "amount" id = "amount" placeholder = "<fmt:message key = 'amount' bundle = '${bundle}'/>" step = "any">	
+					<button type="submit" class="btn btn-default btn-success col-sm-offset-1"><fmt:message key = "update" bundle = "${bundle}"/></button>
 				</div>
 			</form>
 			<hr>

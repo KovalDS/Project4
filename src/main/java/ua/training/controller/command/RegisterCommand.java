@@ -38,7 +38,7 @@ public class RegisterCommand implements Command {
         }
 
         req.setAttribute("message", "<div class=\"alert alert-success\">You are registered! Now you can <a href=\"#\" class=\"alert-link\" data-toggle=\"modal\" data-target=\"#login_modal\">login</a></div>");
-        return new DefaultCommand(new PeriodicalService()).execute(req, resp);
+        return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
 
     }
 }

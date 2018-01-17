@@ -25,7 +25,6 @@ public class ShowArticleCommand implements Command {
         List<Article> availableArticles;
 
         if (user.getRole().equals(Role.ADMIN)) { //TODO rewrite with map
-
             availableArticles = articleService.getAllArticles();
         } else {
             availableArticles = articleService.getArticlesOfUser(user.getId());

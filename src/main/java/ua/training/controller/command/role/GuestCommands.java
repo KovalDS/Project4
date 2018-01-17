@@ -17,13 +17,14 @@ public class GuestCommands extends CommandHolder {
     public void initCommands() {
         commands = new HashMap<>();
 
-        addCommand("/", new DefaultCommand(new PeriodicalService()));
-        addCommand("/home", new DefaultCommand(new PeriodicalService()));
+        addCommand("/", new ShowPeriodicalsList(new PeriodicalService()));
+        addCommand("/home", new ShowPeriodicalsList(new PeriodicalService()));
         addCommand("/home/login", new LoginCommand(new UserService()));
         addCommand("/home/register", new RegisterCommand(new UserService()));
         addCommand("/add_to_basket", new AddToBasketCommand(new PeriodicalService()));
         addCommand("/delete_from_basket", new DeleteFromBasket(new PeriodicalService()));
         addCommand("/subscribe", new SubscribeCommand(new OrderService()));
+        addCommand("/select_lang", new SelectLanguageCommand());
     }
     private void addCommand(String name, Command command) {
         commands.put(name, command);

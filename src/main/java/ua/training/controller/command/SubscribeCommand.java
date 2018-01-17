@@ -33,20 +33,20 @@ public class SubscribeCommand implements Command {
 
         if (role.equals(Role.GUEST)) {
             req.setAttribute("message", "<div class=\"alert alert-danger\">You must be <a href=\"#\" class=\"alert-link\" data-toggle=\"modal\" data-target=\"#login_modal\">logged in</a> to subscribe</div>");
-            return new DefaultCommand(new PeriodicalService()).execute(req, resp);
+            return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
         }
 
         purchasedPeriodical = orderService.periodicalsPurchased(user.getId());
         if (!Util.listIntersection(purchasedPeriodical, new ArrayList<Periodical>(basket)).isEmpty()) { //TODO instead of this better to catch duplication exception from user_has_periodical
             req.setAttribute("message", "<div class=\"alert alert-danger\">You are already subscribed to this periodical!</div>");
-            return new DefaultCommand(new PeriodicalService()).execute(req, resp);
+            return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
         }
 
         try  {
             orderService.createOrder(req);
         } catch (TransactionFailedException e) {
             req.setAttribute("message", "<div class=\"alert alert-danger\">Not enough money on your balance</div>");
-            return new DefaultCommand(new PeriodicalService()).execute(req, resp);
+            return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -57,6 +57,6 @@ public class SubscribeCommand implements Command {
         req.getSession().removeAttribute("basket");
         req.getSession().removeAttribute("basket_size");
 
-        return new DefaultCommand(new PeriodicalService()).execute(req, resp);
+        return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
     }
 }

@@ -5,9 +5,7 @@ import ua.training.model.service.PeriodicalService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class AddToBasketCommand implements Command {
@@ -29,7 +27,6 @@ public class AddToBasketCommand implements Command {
             basket = new HashSet<>();
         }
 
-
         basket.add(periodical);
         basketSize = basket.size();
         for (Periodical item : basket) {
@@ -39,6 +36,6 @@ public class AddToBasketCommand implements Command {
         req.getSession().setAttribute("basket_badge", "<span class=\"badge progress-bar-danger\" >" + basketSize + "</span>");
         req.getSession().setAttribute("total_basket_price", totalPrice);
         req.getSession().setAttribute("basket", basket);
-        return new DefaultCommand(periodicalService).execute(req, resp);
+        return new ShowPeriodicalsList(periodicalService).execute(req, resp);
     }
 }

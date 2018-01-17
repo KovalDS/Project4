@@ -6,7 +6,6 @@ import ua.training.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class LoginCommand implements Command {
     private UserService userService;
@@ -24,11 +23,11 @@ public class LoginCommand implements Command {
         if (user != null && user.getPassword().equals(password)) {
             req.getSession().setAttribute("user", user);
             req.getSession().setAttribute("user_role", user.getRole());
-            return new DefaultCommand(new PeriodicalService()).execute(req, resp);
+            return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
         }
 
         req.setAttribute("show_login_modal", "$(\"#login_modal\").modal(\"show\");");
         req.setAttribute("login_message", "No such user");  //TODO
-        return new DefaultCommand(new PeriodicalService()).execute(req, resp);
+        return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
     }
 }

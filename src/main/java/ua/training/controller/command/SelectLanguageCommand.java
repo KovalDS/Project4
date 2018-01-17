@@ -5,10 +5,12 @@ import ua.training.model.service.PeriodicalService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LogoutCommand implements Command {
+public class SelectLanguageCommand implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        req.getSession().invalidate();
+        String language = req.getParameter("language");
+
+        req.getSession().setAttribute("language", language);
         return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
     }
 }

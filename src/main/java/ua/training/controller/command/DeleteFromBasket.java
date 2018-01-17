@@ -29,7 +29,7 @@ public class DeleteFromBasket implements Command {
             req.getSession().removeAttribute("basket_badge");
             req.getSession().removeAttribute("total_basket_price");
             req.getSession().removeAttribute("basket");
-            return new DefaultCommand(new PeriodicalService()).execute(req, resp);
+            return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
         }
 
         for (Periodical item : basket) {
@@ -42,6 +42,6 @@ public class DeleteFromBasket implements Command {
         req.setAttribute("dropdown_open", "open");
         req.getSession().setAttribute("basket_size", basketSize);
 
-        return new DefaultCommand(new PeriodicalService()).execute(req, resp);
+        return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
     }
 }

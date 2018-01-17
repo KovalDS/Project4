@@ -18,8 +18,8 @@ public class UserCommands extends CommandHolder {
     public void initCommands() {
         commands = new HashMap<>();
 
-        addCommand("/", new DefaultCommand(new PeriodicalService()));
-        addCommand("/home", new DefaultCommand(new PeriodicalService()));
+        addCommand("/", new ShowPeriodicalsList(new PeriodicalService()));
+        addCommand("/home", new ShowPeriodicalsList(new PeriodicalService()));
         addCommand("/logout", new LogoutCommand());
         addCommand("/periodical", new ShowArticlesListCommand(new PeriodicalService()));
         addCommand("/periodical/article", new ShowArticleCommand(new ArticleService()));
@@ -29,6 +29,7 @@ public class UserCommands extends CommandHolder {
         addCommand("/my_account", new MyAccountCommand());
         addCommand("/my_subscriptions", new MySubscriptionsCommand(new PeriodicalService()));
         addCommand("/my_account/update", new ReplenishAccountCommand(new UserService()));
+        addCommand("/select_lang", new SelectLanguageCommand());
     }
 
     private void addCommand(String name, Command command) {
