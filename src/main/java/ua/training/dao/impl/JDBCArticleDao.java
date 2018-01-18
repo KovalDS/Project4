@@ -1,5 +1,7 @@
 package ua.training.dao.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.dao.ArticleDao;
 import ua.training.dao.mapper.ArticleMapper;
 import ua.training.dao.util.ConnectionUtil;
@@ -13,6 +15,7 @@ import java.util.List;
 
 public class JDBCArticleDao implements ArticleDao {
     private Connection connection;
+    private static final Logger logger = LogManager.getLogger(JDBCArticleDao.class);
 
     public JDBCArticleDao(Connection connection) {
         this.connection = connection;
@@ -31,6 +34,7 @@ public class JDBCArticleDao implements ArticleDao {
             rs.next();
             entity.setId(rs.getInt(1));
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }
@@ -48,6 +52,7 @@ public class JDBCArticleDao implements ArticleDao {
             }
             return result;
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }
@@ -64,6 +69,7 @@ public class JDBCArticleDao implements ArticleDao {
             }
             return articles;
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }
@@ -91,6 +97,7 @@ public class JDBCArticleDao implements ArticleDao {
             }
             return articles;
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }
@@ -108,6 +115,7 @@ public class JDBCArticleDao implements ArticleDao {
             }
             return articles;
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }

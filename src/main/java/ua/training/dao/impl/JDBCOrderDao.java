@@ -1,5 +1,7 @@
 package ua.training.dao.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.dao.OrderDao;
 import ua.training.dao.util.ConnectionUtil;
 import ua.training.model.entity.Order;
@@ -12,6 +14,7 @@ import java.util.Set;
 
 public class JDBCOrderDao implements OrderDao {
     private Connection connection;
+    private static final Logger logger = LogManager.getLogger(JDBCOrderDao.class);
 
     public JDBCOrderDao(Connection connection) {
         this.connection = connection;
@@ -59,6 +62,7 @@ public class JDBCOrderDao implements OrderDao {
             connection.commit();
 
         } catch (SQLException e) {
+            logger.info(e);
             ConnectionUtil.rollback(connection);
             throw new TransactionFailedException(e.getMessage());
 
@@ -66,6 +70,7 @@ public class JDBCOrderDao implements OrderDao {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException e) {
+                logger.info(e);
                 throw new RuntimeException(e);
             }
         }

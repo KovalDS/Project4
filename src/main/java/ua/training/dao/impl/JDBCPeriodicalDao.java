@@ -1,5 +1,7 @@
 package ua.training.dao.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.dao.PeriodicalDao;
 import ua.training.dao.mapper.ArticleMapper;
 import ua.training.dao.mapper.PeriodicalMapper;
@@ -15,6 +17,7 @@ import java.util.Map;
 
 public class JDBCPeriodicalDao implements PeriodicalDao {
     private Connection connection;
+    private static final Logger logger = LogManager.getLogger(JDBCPeriodicalDao.class);
 
     public JDBCPeriodicalDao(Connection connection) {
         this.connection = connection;
@@ -29,6 +32,7 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
             preparedStatement.setInt(3, entity.getPrice());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }
@@ -57,6 +61,7 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
             return periodical;
 
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }
@@ -84,6 +89,7 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
             }
             return new ArrayList<>(periodicalMap.values());
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }
@@ -122,6 +128,7 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
 
             return new ArrayList<>(periodicalMap.values());
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }
@@ -151,6 +158,7 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
 
             return new ArrayList<>(periodicalMap.values());
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }

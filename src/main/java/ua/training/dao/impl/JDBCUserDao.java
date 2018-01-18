@@ -1,5 +1,7 @@
 package ua.training.dao.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.dao.UserDao;
 import ua.training.dao.mapper.UserMapper;
 import ua.training.dao.util.ConnectionUtil;
@@ -12,6 +14,7 @@ import java.util.List;
 
 public class JDBCUserDao implements UserDao {
     private Connection connection;
+    private static final Logger logger = LogManager.getLogger(JDBCUserDao.class);
 
     public JDBCUserDao(Connection connection) {
         this.connection = connection;
@@ -29,8 +32,10 @@ public class JDBCUserDao implements UserDao {
             insertUserStatement.executeUpdate();
 
         } catch (SQLIntegrityConstraintViolationException e) {
+            logger.info(e);
             throw new NotUniqueEmailException("Not unique email");
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }
@@ -55,6 +60,7 @@ public class JDBCUserDao implements UserDao {
             preparedStatement.setInt(5, entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }
@@ -78,6 +84,7 @@ public class JDBCUserDao implements UserDao {
             return user;
 
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }
@@ -95,6 +102,7 @@ public class JDBCUserDao implements UserDao {
             }
             return users;
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }

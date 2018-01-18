@@ -1,5 +1,7 @@
 package ua.training.dao.factory;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.dao.*;
 import ua.training.dao.impl.*;
 
@@ -10,7 +12,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
-    private DataSource dataSource = ConnectionPoolHolder.getDataSource();;
+    private DataSource dataSource = ConnectionPoolHolder.getDataSource();
+    private static final Logger logger = LogManager.getLogger(JDBCDaoFactory.class);
 
     @Override
     public ArticleDao createArticleDao() {
@@ -41,6 +44,7 @@ public class JDBCDaoFactory extends DaoFactory {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }

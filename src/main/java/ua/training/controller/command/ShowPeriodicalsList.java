@@ -1,5 +1,7 @@
 package ua.training.controller.command;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 import ua.training.model.entity.Role;
@@ -15,6 +17,7 @@ import java.util.Map;
 
 public class ShowPeriodicalsList implements Command {
     private PeriodicalService periodicalService;
+    private static final Logger logger = LogManager.getLogger(ShowPeriodicalsList.class);
 
     public ShowPeriodicalsList(PeriodicalService periodicalService) {
         this.periodicalService = periodicalService;
@@ -23,6 +26,8 @@ public class ShowPeriodicalsList implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String page = "/WEB-INF/view/periodicals.jsp";
+        logger.info("method execute() of " + this + " called");
+
 
         Map<Integer, List<Periodical>> periodicalsDividedOnPages = periodicalService.getPeriodicalsDividedOnPages(4);
         String periodicalPageStr = req.getParameter("periodicals_page");

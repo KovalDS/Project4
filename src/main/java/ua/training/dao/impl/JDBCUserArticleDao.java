@@ -1,5 +1,7 @@
 package ua.training.dao.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.dao.UserArticleDao;
 import ua.training.model.entity.UserArticle;
 
@@ -10,6 +12,7 @@ import java.util.List;
 
 public class JDBCUserArticleDao implements UserArticleDao {
     private Connection connection;
+    private static final Logger logger = LogManager.getLogger(JDBCUserArticleDao.class);
 
     public JDBCUserArticleDao(Connection connection) {
         this.connection = connection;
@@ -23,6 +26,7 @@ public class JDBCUserArticleDao implements UserArticleDao {
             preparedStatement.setBoolean(3, entity.isRead());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }
@@ -45,6 +49,7 @@ public class JDBCUserArticleDao implements UserArticleDao {
             preparedStatement.setInt(3, entity.getArticle().getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            logger.info(e);
             throw new RuntimeException(e);
         }
     }
