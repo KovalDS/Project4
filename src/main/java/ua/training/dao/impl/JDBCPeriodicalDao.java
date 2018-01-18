@@ -40,7 +40,7 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
         PeriodicalMapper periodicalMapper = new PeriodicalMapper();
         ArticleMapper articleMapper = new ArticleMapper();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM project4db.periodical LEFT JOIN article USING (idperiodical) WHERE idperiodical = (?)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM project4db.periodical LEFT JOIN article USING (idperiodical) WHERE idperiodical = (?) ORDER BY date_of_publication DESC")) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             rs.next();

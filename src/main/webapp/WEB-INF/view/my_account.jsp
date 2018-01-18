@@ -68,7 +68,7 @@
 			<form class =  action = "/my_account/update" method = "POST">
 				<div class = "row">
 					<label class="control-label col-sm-2 for="amount" style = "display: inline-block; vertical-align: middle; float: none;"><fmt:message key = "update.balance" bundle = "${bundle}"/>:</label>
-					<input type = "text" name = "amount" id = "amount" placeholder = "<fmt:message key = 'amount' bundle = '${bundle}'/>" step = "any">	
+					<input type = "number" name = "amount" id = "amount" placeholder = "<fmt:message key = 'amount' bundle = '${bundle}'/>" step = "any">	
 					<button type="submit" class="btn btn-default btn-success col-sm-offset-1"><fmt:message key = "update" bundle = "${bundle}"/></button>
 				</div>
 			</form>
