@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 public class OrderService {
-    public void createOrder(HttpServletRequest req) throws Exception {
+    public void createOrder(HttpServletRequest req) {
         Set<Periodical> periodicals = (Set<Periodical>) req.getSession().getAttribute("basket");
         int totalPrice = (int) req.getSession().getAttribute("total_basket_price");
         User user = (User) req.getSession().getAttribute("user");

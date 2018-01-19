@@ -7,6 +7,7 @@ import ua.training.model.entity.Periodical;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.service.PeriodicalService;
+import ua.training.model.service.strategy.StrategyFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,14 +27,15 @@ public class ShowPeriodicalsList implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String page = "/WEB-INF/view/periodicals.jsp";
-        logger.info("method execute() of " + this + " called");
-
+        List<Periodical> availablePeriodicals;
 
         Map<Integer, List<Periodical>> periodicalsDividedOnPages = periodicalService.getPeriodicalsDividedOnPages(4);
         String periodicalPageStr = req.getParameter("periodicals_page");
+
         if (periodicalPageStr == null) {
             periodicalPageStr = "1";
         }
+
         List<Periodical> periodicalList = periodicalsDividedOnPages.getOrDefault(Integer.parseInt(periodicalPageStr), periodicalsDividedOnPages.get(1));
         req.setAttribute("pages", periodicalsDividedOnPages.keySet());
         req.setAttribute("current_page", Integer.parseInt(periodicalPageStr));
@@ -42,15 +44,13 @@ public class ShowPeriodicalsList implements Command {
         User user =  (User) req.getSession().getAttribute("user");
         Role role = (Role) req.getSession().getAttribute("user_role");
 
-        if (user != null && !role.equals(Role.ADMIN)) {  //TODO refactor using map
-            List<Periodical> purchasedPeriodicals = periodicalService.getPeriodicalsOfUser(user.getId()); //TODO if available periodicals will be stored in session, you can avoid calling default command in other commands
-            req.setAttribute("available_periodicals", purchasedPeriodicals);
-
-        } else if (role != null && role.equals(Role.ADMIN)) {
-            req.setAttribute("available_periodicals", periodicalList);
+        if (user != null) {
+            periodicalService.setStrategy(StrategyFactory.getStrategy(role));
+            availablePeriodicals = periodicalService.getPeriodicalsOfUser(user.getId());
         } else {
-            req.setAttribute("available_periodicals", new ArrayList());
+            availablePeriodicals = new ArrayList<>();
         }
+        req.setAttribute("available_periodicals", availablePeriodicals);
 
         return page;
     }

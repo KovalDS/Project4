@@ -1,5 +1,6 @@
 package ua.training.controller.command;
 
+import ua.training.controller.util.Util;
 import ua.training.model.entity.Periodical;
 import ua.training.model.service.AdminService;
 import ua.training.model.service.PeriodicalService;
@@ -23,16 +24,12 @@ public class CreatePeriodical implements Command{
         String description = req.getParameter("periodical_description");
         String priceStr = req.getParameter("periodical_price");
 
-        if (!Pattern.matches("^[0-9]*[,.][0-9]{2}$", priceStr)) {  //TODO create input validation method
+        if (!Util.priceIsValid(priceStr)) {  //TODO error message
             return "/WEB-INF/view/add_periodical.jsp";
         }
 
         priceStr = priceStr.replaceAll("[,.]", "");
         price = Integer.parseInt(priceStr);
-
-        if (price <= 0) {  //TODO create input validation method
-            return "/WEB-INF/view/add_periodical.jsp";
-        }
 
         adminService.createPeriodical(new Periodical.PeriodicalBuilder()
                                                 .buildName(name)

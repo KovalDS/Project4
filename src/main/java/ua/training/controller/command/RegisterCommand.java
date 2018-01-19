@@ -32,7 +32,7 @@ public class RegisterCommand implements Command {
                     .buildSecondName(secondName)
                     .buildBalance(0)
                     .buildUser());
-        } catch (NotUniqueEmailException e) {
+        } catch (NotUniqueEmailException e) { //TODO Is this exception necessary?
             req.setAttribute("show_register_modal", "$(\"#register_modal\").modal(\"show\");");
             req.setAttribute("register_message", "Email already registered");
         }

@@ -1,6 +1,6 @@
 package ua.training.controller.jstl;
 
-import ua.training.controller.Util;
+import ua.training.controller.util.Util;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 

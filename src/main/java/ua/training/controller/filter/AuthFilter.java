@@ -30,7 +30,7 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
-        Role userRole = ((Role)req.getSession().getAttribute("user_role"));
+        Role userRole = ((Role)req.getSession().getAttribute("user_role"));  // TODO maybe it will be enough to store only user in session
         if (userRole == null) {
             userRole = Role.GUEST;
             req.getSession().setAttribute("user_role", userRole);

@@ -1,6 +1,6 @@
 package ua.training.controller.command;
 
-import ua.training.controller.Util;
+import ua.training.controller.util.Util;
 import ua.training.model.entity.Order;
 import ua.training.model.entity.Periodical;
 import ua.training.model.entity.Role;
@@ -47,8 +47,6 @@ public class SubscribeCommand implements Command {
         } catch (TransactionFailedException e) {
             req.setAttribute("message", "<div class=\"alert alert-danger\">Not enough money on your balance</div>");
             return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
 
 //        req.getSession().setAttribute("user", order.getUser());

@@ -4,6 +4,7 @@ import ua.training.model.entity.Periodical;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.service.PeriodicalService;
+import ua.training.model.service.strategy.StrategyFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,11 +23,8 @@ public class MySubscriptionsCommand implements Command {
         User user = (User) req.getSession().getAttribute("user");
         Role role = (Role) req.getSession().getAttribute("user_role");
 
-        if (role.equals(Role.ADMIN)) {
-            periodicals = periodicalService.getAllPeriodicals();
-        } else {
-            periodicals = periodicalService.getPeriodicalsOfUser(user.getId());
-        }
+        periodicalService.setStrategy(StrategyFactory.getStrategy(role));
+        periodicals = periodicalService.getPeriodicalsOfUser(user.getId());
 
         req.setAttribute("periodical_list", periodicals);
         req.setAttribute("available_periodicals", periodicals);

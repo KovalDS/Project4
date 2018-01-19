@@ -1,5 +1,6 @@
 package ua.training.controller.command;
 
+import ua.training.controller.util.Util;
 import ua.training.model.entity.User;
 import ua.training.model.service.UserService;
 
@@ -21,17 +22,13 @@ public class ReplenishAccountCommand implements Command {  //TODO make this comm
         User user = (User) req.getSession().getAttribute("user");
         String amountStr = req.getParameter("amount");
 
-        if (!Pattern.matches("^[0-9]*[,.][0-9]{2}$", amountStr)) {  //TODO create input validation method
+        if (!Util.priceIsValid(amountStr)) {  //TODO create input validation method
             System.out.println("pattern don't match");
             return "/WEB-INF/view/my_account.jsp";
         }
 
         amountStr = amountStr.replaceAll("[,.]", "");
         amount = Integer.parseInt(amountStr);
-
-        if (amount <= 0) {  //TODO create input validation method
-            return "/WEB-INF/view/my_account.jsp";
-        }
 
         user.setBalance(user.getBalance() + amount);
         userService.updateUser(user);

@@ -1,11 +1,9 @@
 package ua.training.controller.command;
 
-import ua.training.controller.Util;
+import ua.training.controller.util.Util;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 import ua.training.model.service.AdminService;
-import ua.training.model.service.ArticleService;
-import ua.training.model.service.PeriodicalService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

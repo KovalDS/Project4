@@ -83,7 +83,6 @@
 					</c:forEach>
 				</ul>
 			</div>
-			${catalina.base}
         </div>
     </body>
 </html>
