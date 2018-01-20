@@ -16,7 +16,6 @@
 
 
     <body>
-		<%@ include file="nav.jsp" %>
 		<div class="container">
             <div class="alert alert-info">
                  You are logged out. <a href="/home" class="alert-link">Home page</a>

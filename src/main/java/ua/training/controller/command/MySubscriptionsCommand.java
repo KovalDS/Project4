@@ -29,6 +29,8 @@ public class MySubscriptionsCommand implements Command {
         req.setAttribute("periodical_list", periodicals);
         req.setAttribute("available_periodicals", periodicals);
 
+        req.getSession().setAttribute("previous_page", "/my_subscriptions");
+
         return "/WEB-INF/view/periodicals.jsp";
     }
 }

@@ -37,6 +37,6 @@ public class AddToBasketCommand implements Command {
         req.getSession().setAttribute("basket_badge", "<span class=\"badge progress-bar-danger\" >" + basketSize + "</span>");
         req.getSession().setAttribute("total_basket_price", totalPrice);
         req.getSession().setAttribute("basket", basket);
-        return "/home";
+        return (String) req.getSession().getAttribute("previous_page");
     }
 }

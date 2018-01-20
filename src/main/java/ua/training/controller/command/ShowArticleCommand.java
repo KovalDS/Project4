@@ -46,6 +46,8 @@ public class ShowArticleCommand implements Command {
 
         req.setAttribute("article", article);
 
+        req.getSession().setAttribute("previous_page", "/periodical/article?article_id=" + articleId);
+
         return "/WEB-INF/view/article.jsp";
     }
 }

@@ -9,8 +9,8 @@ public class SelectLanguageCommand implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String language = req.getParameter("language");
-
         req.getSession().setAttribute("language", language);
-        return "/home";
+
+        return (String) req.getSession().getAttribute("previous_page");
     }
 }

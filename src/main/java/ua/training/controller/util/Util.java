@@ -22,7 +22,6 @@ public class Util {
         StringBuffer buffer = new StringBuffer("");
 
         String[] paragraphs = text.split("\r\n");
-
         for (String paragraph : paragraphs) {
             buffer = buffer.append("<p>")
                             .append(paragraph)

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CreatePeriodicalPageCommand implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        req.getSession().setAttribute("previous_page", "/add_periodical");
         return "/WEB-INF/view/add_periodical.jsp";
     }
 }

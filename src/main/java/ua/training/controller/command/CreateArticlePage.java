@@ -18,6 +18,7 @@ public class CreateArticlePage implements Command {
         int periodicalId = Integer.parseInt(req.getParameter("periodical_id"));
         Periodical periodical = periodicalService.getPeriodicalById(periodicalId);
         req.setAttribute("periodical", periodical);
+        req.getSession().setAttribute("previous_page", "/add_article?periodical_id=" + periodicalId);
         return "/WEB-INF/view/add_article.jsp";
     }
 }

@@ -38,7 +38,7 @@ public class RegisterCommand implements Command {
         }
 
         req.setAttribute("message", "<div class=\"alert alert-success\">You are registered! Now you can <a href=\"#\" class=\"alert-link\" data-toggle=\"modal\" data-target=\"#login_modal\">login</a></div>");
-        return "/home";
+        return (String) req.getSession().getAttribute("previous_page");
 
     }
 }

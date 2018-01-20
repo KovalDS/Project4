@@ -23,11 +23,11 @@ public class LoginCommand implements Command {
         if (user != null && user.getPassword().equals(password)) {
             req.getSession().setAttribute("user", user);
             req.getSession().setAttribute("user_role", user.getRole());
-            return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
+            return (String) req.getSession().getAttribute("previous_page");
         }
 
         req.setAttribute("show_login_modal", "$(\"#login_modal\").modal(\"show\");");
         req.setAttribute("login_message", "No such user");  //TODO i18n
-        return "/home";
+        return (String) req.getSession().getAttribute("previous_page");
     }
 }

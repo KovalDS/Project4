@@ -34,7 +34,7 @@ public class ShowArticlesListCommand implements Command {
         articlesOfPeriodical = articleService.getArticlesOfPeriodicalDividedOnPages(periodicalId, 6);
 
         String page = req.getParameter("articles_page");
-        if (page == null) {
+        if (page == null || page.isEmpty()) {
             page = "1";
         }
 
@@ -49,6 +49,8 @@ public class ShowArticlesListCommand implements Command {
 
         req.setAttribute("articles", pageOfArticles);
         req.setAttribute("periodical", articleService.getPeriodicalById(periodicalId));
+
+        req.getSession().setAttribute("previous_page", "/periodical?periodical_id=" + periodicalId + "&articles_page=" + page);
 
         return "/WEB-INF/view/articles.jsp";
     }

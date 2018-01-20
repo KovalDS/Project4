@@ -32,7 +32,7 @@ public class ShowPeriodicalsList implements Command {
         Map<Integer, List<Periodical>> periodicalsDividedOnPages = periodicalService.getPeriodicalsDividedOnPages(4);
         String periodicalPageStr = req.getParameter("periodicals_page");
 
-        if (periodicalPageStr == null) {
+        if (periodicalPageStr == null || periodicalPageStr.isEmpty()) {
             periodicalPageStr = "1";
         }
 
@@ -51,6 +51,8 @@ public class ShowPeriodicalsList implements Command {
             availablePeriodicals = new ArrayList<>();
         }
         req.setAttribute("available_periodicals", availablePeriodicals);
+
+        req.getSession().setAttribute("previous_page", "/home?periodicals_page=" + periodicalPageStr);
 
         return page;
     }
