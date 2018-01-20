@@ -11,6 +11,6 @@ public class LogoutCommand implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         req.getSession().invalidate();
         req.getSession().setAttribute("user_role", Role.GUEST);
-        return "/home";
+        return "/WEB-INF/view/logout.jsp";
     }
 }
