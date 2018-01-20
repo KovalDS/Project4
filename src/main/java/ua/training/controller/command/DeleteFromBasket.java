@@ -42,6 +42,6 @@ public class DeleteFromBasket implements Command {
         req.setAttribute("dropdown_open", "open");
         req.getSession().setAttribute("basket_size", basketSize);
 
-        return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
+        return "/home";
     }
 }

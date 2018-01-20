@@ -28,6 +28,6 @@ public class LoginCommand implements Command {
 
         req.setAttribute("show_login_modal", "$(\"#login_modal\").modal(\"show\");");
         req.setAttribute("login_message", "No such user");  //TODO i18n
-        return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
+        return "/home";
     }
 }

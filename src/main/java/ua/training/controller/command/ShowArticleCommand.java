@@ -5,6 +5,7 @@ import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.entity.UserArticle;
 import ua.training.model.service.ArticleService;
+import ua.training.model.service.strategy.StrategyFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,11 +25,8 @@ public class ShowArticleCommand implements Command {
         User user = (User) req.getSession().getAttribute("user");
         List<Article> availableArticles;
 
-        if (user.getRole().equals(Role.ADMIN)) { //TODO rewrite with map
-            availableArticles = articleService.getAllArticles();
-        } else {
-            availableArticles = articleService.getArticlesOfUser(user.getId());
-        }
+        articleService.setStrategy(StrategyFactory.getStrategy(user.getRole()));
+        availableArticles = articleService.getArticlesOfUser(user.getId());
 
         article = articleService.getArticleById(articleId);
 

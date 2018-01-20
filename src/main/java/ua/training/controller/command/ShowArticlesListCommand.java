@@ -1,56 +1,54 @@
 package ua.training.controller.command;
 
-import ua.training.controller.util.Util;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
-import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
-import ua.training.model.service.PeriodicalService;
+import ua.training.model.service.ArticleService;
 import ua.training.model.service.strategy.StrategyFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ShowArticlesListCommand implements Command {
-    private PeriodicalService periodicalService;
+    private ArticleService articleService;
 
-    public ShowArticlesListCommand(PeriodicalService periodicalService) {
-        this.periodicalService = periodicalService;
+    public ShowArticlesListCommand(ArticleService articleService) {
+        this.articleService = articleService;
     }
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        List<Article> purchasedArticles;
+        Map<Integer, List<Article>> articlesOfPeriodical;
+        List<Article> pageOfArticles;
+
         int periodicalId = Integer.parseInt(req.getParameter("periodical_id"));
-        Periodical periodical;
         User user = (User) req.getSession().getAttribute("user");
-        List<Periodical> purchasedPeriodicals;
 
-        periodicalService.setStrategy(StrategyFactory.getStrategy(user.getRole()));
-        purchasedPeriodicals = periodicalService.getPeriodicalsOfUser(user.getId());
+        articleService.setStrategy(StrategyFactory.getStrategy(user.getRole()));
+        purchasedArticles = articleService.getArticlesOfUser(user.getId());
 
-        periodical = periodicalService.getPeriodicalById(periodicalId);
-
-        if (!purchasedPeriodicals.contains(periodical)) {
-            //TODO error page here
-            return null;
-        }
-
-        List<Article> articles = periodical.getArticles();
-        Map<Integer, List<Article>> articlePages = Util.divideOnPages(articles);
+        articlesOfPeriodical = articleService.getArticlesOfPeriodicalDividedOnPages(periodicalId, 6);
 
         String page = req.getParameter("articles_page");
         if (page == null) {
             page = "1";
         }
-        req.setAttribute("pages", articlePages.keySet());
+
+        pageOfArticles = articlesOfPeriodical.getOrDefault(Integer.parseInt(page), new ArrayList<>());
+
+        if (!purchasedArticles.containsAll(pageOfArticles)) {
+            //TODO error page
+            return null;
+        }
+        req.setAttribute("pages", articlesOfPeriodical.keySet());
         req.setAttribute("current_page", page);
 
-
-        req.setAttribute("articles", articlePages.getOrDefault(Integer.parseInt(page), articlePages.get(1)));
-        req.setAttribute("periodical", periodical);
+        req.setAttribute("articles", pageOfArticles);
+        req.setAttribute("periodical", articleService.getPeriodicalById(periodicalId));
 
         return "/WEB-INF/view/articles.jsp";
     }

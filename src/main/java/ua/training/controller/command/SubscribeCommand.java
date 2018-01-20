@@ -55,6 +55,6 @@ public class SubscribeCommand implements Command {
         req.getSession().removeAttribute("basket");
         req.getSession().removeAttribute("basket_size");
 
-        return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
+        return "/home";
     }
 }

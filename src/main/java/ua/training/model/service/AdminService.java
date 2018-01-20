@@ -6,8 +6,8 @@ import ua.training.dao.factory.DaoFactory;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 import ua.training.model.entity.User;
-import ua.training.model.observer.ObservablePeriodical;
-import ua.training.model.observer.UserObserver;
+import ua.training.model.service.observer.ObservablePeriodical;
+import ua.training.model.service.observer.UserObserver;
 
 import java.util.List;
 

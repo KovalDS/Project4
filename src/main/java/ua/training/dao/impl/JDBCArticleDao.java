@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.dao.ArticleDao;
 import ua.training.dao.mapper.ArticleMapper;
+import ua.training.dao.mapper.PeriodicalMapper;
 import ua.training.dao.util.ConnectionUtil;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
@@ -116,6 +117,26 @@ public class JDBCArticleDao implements ArticleDao {
             return articles;
         } catch (SQLException e) {
             logger.info(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Article> findFixedNumberOfArticlesOfPeriodical(int periodicalId, int limit, int offset) {
+        List<Article> articles = new ArrayList<>();
+        ArticleMapper articleMapper = new ArticleMapper();;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM article WHERE idperiodical = (?) ORDER BY date_of_publication DESC LIMIT ? OFFSET ?")) {
+            preparedStatement.setInt(1, periodicalId);
+            preparedStatement.setInt(2, limit);
+            preparedStatement.setInt(3, offset);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                articles.add(articleMapper.extractFromResultSet(rs));
+            }
+            return articles;
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

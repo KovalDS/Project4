@@ -11,6 +11,6 @@ public class SelectLanguageCommand implements Command {
         String language = req.getParameter("language");
 
         req.getSession().setAttribute("language", language);
-        return new ShowPeriodicalsList(new PeriodicalService()).execute(req, resp);
+        return "/home";
     }
 }

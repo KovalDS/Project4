@@ -2,8 +2,6 @@ package ua.training.controller.filter;
 
 import ua.training.model.entity.Article;
 import ua.training.model.entity.User;
-import ua.training.model.observer.ObservablePeriodical;
-import ua.training.model.observer.UserObserver;
 import ua.training.model.service.ArticleService;
 
 import javax.servlet.*;

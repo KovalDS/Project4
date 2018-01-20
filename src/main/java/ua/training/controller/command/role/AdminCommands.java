@@ -18,7 +18,7 @@ public class AdminCommands extends CommandHolder {
         addCommand("/", new ShowPeriodicalsList(new PeriodicalService()));
         addCommand("/home", new ShowPeriodicalsList(new PeriodicalService()));
         addCommand("/logout", new LogoutCommand());
-        addCommand("/periodical", new ShowArticlesListCommand(new PeriodicalService()));
+        addCommand("/periodical", new ShowArticlesListCommand(new ArticleService()));
         addCommand("/periodical/article", new ShowArticleCommand(new ArticleService()));
         addCommand("/add_to_basket", new AddToBasketCommand(new PeriodicalService()));
         addCommand("/delete_from_basket", new DeleteFromBasket(new PeriodicalService()));

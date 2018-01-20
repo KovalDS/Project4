@@ -140,7 +140,7 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
         PeriodicalMapper periodicalMapper = new PeriodicalMapper();
         ArticleMapper articleMapper = new ArticleMapper();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM (SELECT * FROM periodical LIMIT ? OFFSET ?) AS periodical_limited LEFT JOIN article USING (idperiodical)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM (SELECT * FROM periodical LIMIT ? OFFSET ?) AS periodicals_page LEFT JOIN article USING (idperiodical)")) {
             preparedStatement.setInt(1, limit);
             preparedStatement.setInt(2, offset);
             ResultSet rs = preparedStatement.executeQuery();

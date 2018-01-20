@@ -1,4 +1,4 @@
-package ua.training.model.observer;
+package ua.training.model.service.observer;
 
 import ua.training.dao.UserArticleDao;
 import ua.training.dao.factory.DaoFactory;
