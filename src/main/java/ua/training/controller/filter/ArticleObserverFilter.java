@@ -13,7 +13,7 @@ import java.util.List;
 
 //TODO think about new name
 public class ArticleObserverFilter implements Filter {
-    ArticleService articleService;
+    private ArticleService articleService;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

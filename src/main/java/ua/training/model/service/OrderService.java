@@ -5,7 +5,6 @@ import ua.training.dao.PeriodicalDao;
 import ua.training.dao.UserArticleDao;
 import ua.training.dao.factory.DaoFactory;
 import ua.training.model.entity.*;
-import ua.training.model.exception.TransactionFailedException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;

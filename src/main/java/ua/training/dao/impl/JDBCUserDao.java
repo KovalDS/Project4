@@ -33,7 +33,7 @@ public class JDBCUserDao implements UserDao {
 
         } catch (SQLIntegrityConstraintViolationException e) {
             logger.info(e);
-            throw new NotUniqueEmailException("Not unique email");
+            throw new NotUniqueEmailException(e.getMessage());
         } catch (SQLException e) {
             logger.info(e);
             throw new RuntimeException(e);

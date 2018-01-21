@@ -1,5 +1,6 @@
 package ua.training.controller.command;
 
+import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.exception.NotUniqueEmailException;
 import ua.training.model.service.PeriodicalService;
@@ -31,10 +32,12 @@ public class RegisterCommand implements Command {
                     .buildFirstName(firstName)
                     .buildSecondName(secondName)
                     .buildBalance(0)
+                    .buildRole(Role.USER)
                     .buildUser());
-        } catch (NotUniqueEmailException e) { //TODO Is this exception necessary?
+        } catch (NotUniqueEmailException e) {
             req.setAttribute("show_register_modal", "$(\"#register_modal\").modal(\"show\");");
             req.setAttribute("register_message", "Email already registered");
+            return (String) req.getSession().getAttribute("previous_page");
         }
 
         req.setAttribute("message", "<div class=\"alert alert-success\">You are registered! Now you can <a href=\"#\" class=\"alert-link\" data-toggle=\"modal\" data-target=\"#login_modal\">login</a></div>");

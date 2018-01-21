@@ -17,8 +17,6 @@ public class UserService {
     public void registerUser(User user) {
         try (UserDao userDao = DaoFactory.getInstance().createUserDao()) {
             userDao.create(user);
-        } catch (NotUniqueEmailException e){
-            throw new NotUniqueEmailException("Not unique email");
         }
     }
 

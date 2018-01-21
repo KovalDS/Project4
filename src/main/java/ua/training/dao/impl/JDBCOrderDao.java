@@ -1,12 +1,14 @@
 package ua.training.dao.impl;
 
+import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.dao.OrderDao;
 import ua.training.dao.util.ConnectionUtil;
 import ua.training.model.entity.Order;
 import ua.training.model.entity.Periodical;
-import ua.training.model.exception.TransactionFailedException;
+import ua.training.model.exception.NotEnoughBalanceException;
+import ua.training.model.exception.SubscriptionDuplicationException;
 
 import java.sql.*;
 import java.util.List;
@@ -61,11 +63,17 @@ public class JDBCOrderDao implements OrderDao {
             updateOrderStatus.executeUpdate();
             connection.commit();
 
+        } catch (MysqlDataTruncation e) {
+            logger.info(e);
+            ConnectionUtil.rollback(connection);
+            throw new NotEnoughBalanceException(e.getMessage());
+        } catch (SQLIntegrityConstraintViolationException e) {
+            logger.info(e);
+            ConnectionUtil.rollback(connection);
+            throw new SubscriptionDuplicationException(e.getMessage());
         } catch (SQLException e) {
             logger.info(e);
             ConnectionUtil.rollback(connection);
-            throw new TransactionFailedException(e.getMessage());
-
         } finally {
             try {
                 connection.setAutoCommit(true);
