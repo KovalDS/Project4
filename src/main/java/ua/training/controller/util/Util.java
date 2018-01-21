@@ -1,7 +1,5 @@
 package ua.training.controller.util;
 
-//TODO remove somewhere
-
 import ua.training.model.entity.Article;
 
 import java.util.HashMap;
@@ -32,18 +30,5 @@ public class Util {
 
     public static boolean priceIsValid(String price) {
         return Pattern.matches("^[0-9]*[,.][0-9]{2}$", price);
-    }
-
-    public static Map<Integer, List<Article>> divideOnPages(List<Article> articles) { //TODO must do something with this
-        Map<Integer, List<Article>> result = new HashMap<>();
-
-        for (int i = 0; i < articles.size()/6; i++) {
-            result.put(i+1, articles.subList(i*6, (i+1)*6));
-        }
-        if (!articles.subList((articles.size()/6)*6, articles.size()).isEmpty()) {
-            result.put(articles.size()/6 + 1, articles.subList((articles.size()/6)*6, articles.size()));
-        }
-
-        return result;
     }
 }

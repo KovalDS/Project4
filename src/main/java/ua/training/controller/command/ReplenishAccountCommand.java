@@ -22,8 +22,8 @@ public class ReplenishAccountCommand implements Command {  //TODO make this comm
         User user = (User) req.getSession().getAttribute("user");
         String amountStr = req.getParameter("amount");
 
-        if (!Util.priceIsValid(amountStr)) {  //TODO message with error
-            System.out.println("pattern don't match");
+        if (!Util.priceIsValid(amountStr)) {
+            req.setAttribute("message", "<div class=\"alert alert-danger\">Please, input price in format X.XX</div>");
             return "/WEB-INF/view/my_account.jsp";
         }
 

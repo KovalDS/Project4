@@ -24,7 +24,8 @@ public class CreatePeriodical implements Command{
         String description = req.getParameter("periodical_description");
         String priceStr = req.getParameter("periodical_price");
 
-        if (!Util.priceIsValid(priceStr)) {  //TODO error message
+        if (!Util.priceIsValid(priceStr)) {
+            req.setAttribute("message", "<div class=\"alert alert-danger\">Please, input price in format X.XX</div>");
             return "/WEB-INF/view/add_periodical.jsp";
         }
 

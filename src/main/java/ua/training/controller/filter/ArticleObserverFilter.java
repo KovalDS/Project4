@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO think about new name
 public class ArticleObserverFilter implements Filter {
     private ArticleService articleService;
 
