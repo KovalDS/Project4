@@ -18,8 +18,6 @@ public class RegisterCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String page = "/WEB-INF/view/periodicals.jsp";
-
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String firstName = req.getParameter("first_name");

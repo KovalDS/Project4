@@ -40,9 +40,8 @@ public class ShowArticlesListCommand implements Command {
 
         pageOfArticles = articlesOfPeriodical.getOrDefault(Integer.parseInt(page), new ArrayList<>());
 
-        if (!purchasedArticles.containsAll(pageOfArticles)) {
-            //TODO error page
-            return null;
+        if (!purchasedArticles.containsAll(pageOfArticles)) { //FIXME user without subscription can access page if periodical has no articles
+            return "/WEB-INF/view/403_error.jsp";
         }
         req.setAttribute("pages", articlesOfPeriodical.keySet());
         req.setAttribute("current_page", page);

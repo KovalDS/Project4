@@ -22,7 +22,7 @@ public class ReplenishAccountCommand implements Command {  //TODO make this comm
         User user = (User) req.getSession().getAttribute("user");
         String amountStr = req.getParameter("amount");
 
-        if (!Util.priceIsValid(amountStr)) {  //TODO create input validation method
+        if (!Util.priceIsValid(amountStr)) {  //TODO message with error
             System.out.println("pattern don't match");
             return "/WEB-INF/view/my_account.jsp";
         }

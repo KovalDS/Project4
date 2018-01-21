@@ -31,8 +31,7 @@ public class ShowArticleCommand implements Command {
         article = articleService.getArticleById(articleId);
 
         if (!availableArticles.contains(article)) {
-            //TODO exception page here
-            return null;
+            return "/WEB-INF/view/403_error.jsp";
         }
 
         List<Article> unreadArticles = (List<Article>) req.getSession().getAttribute("unread_articles");
