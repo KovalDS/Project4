@@ -1,5 +1,6 @@
 package ua.training.controller.command;
 
+import ua.training.controller.util.Util;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.exception.NotUniqueEmailException;
@@ -22,6 +23,16 @@ public class RegisterCommand implements Command {
         String password = req.getParameter("password");
         String firstName = req.getParameter("first_name");
         String secondName = req.getParameter("second_name"); //TODO choose role while register (add publisher role first)
+
+        if (!Util.emailIsValid(email)) {
+            req.setAttribute("show_register_modal", "$(\"#register_modal\").modal(\"show\");");
+            req.setAttribute("register_message", "Invalid email");
+            return (String) req.getSession().getAttribute("previous_page");
+        } else if (!Util.passwordIsValid(password)) {
+            req.setAttribute("show_register_modal", "$(\"#register_modal\").modal(\"show\");");
+            req.setAttribute("register_message", "Password must be longer than 8 characters");
+            return (String) req.getSession().getAttribute("previous_page");
+        }
 
         try {
             userService.registerUser(new User.UserBuilder()

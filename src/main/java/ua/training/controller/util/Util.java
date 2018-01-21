@@ -31,4 +31,12 @@ public class Util {
     public static boolean priceIsValid(String price) {
         return Pattern.matches("^[0-9]*[,.][0-9]{2}$", price);
     }
+
+    public static boolean emailIsValid(String email) {
+        return Pattern.matches("^[a-z0-9_-]+(\\.[a-z0-9_-]+)*@[a-z]+\\.[a-z]{2,6}$", email);
+    }
+
+    public static boolean passwordIsValid(String password) {
+        return Pattern.matches("^[a-zA-Z0-9!@#$%^&*()?><+_=\"\',-{}]{8,}$",password);
+    }
 }
