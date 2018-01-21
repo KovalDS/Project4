@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class AddToBasketCommand implements Command {
-    private PeriodicalService periodicalService; //TODO order service??
+    private PeriodicalService periodicalService;
 
     public AddToBasketCommand(PeriodicalService periodicalService) {
         this.periodicalService = periodicalService;

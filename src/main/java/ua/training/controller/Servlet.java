@@ -17,7 +17,7 @@ public class Servlet extends HttpServlet {
         CommandHolder commands = (CommandHolder) httpServletRequest.getSession().getAttribute("available_commands");
         try {
             page = commands.executeCommand(httpServletRequest, httpServletResponse);
-        } catch (UnsupportedOperationException e) {
+        } catch (RuntimeException e) {
             page = "/WEB-INF/view/404_error.jsp";
         }
 
@@ -31,7 +31,7 @@ public class Servlet extends HttpServlet {
         CommandHolder commands = (CommandHolder) httpServletRequest.getSession().getAttribute("available_commands");
         try {
             page = commands.executeCommand(httpServletRequest, httpServletResponse);
-        } catch (UnsupportedOperationException e) {
+        } catch (RuntimeException e) {
             page = "/WEB-INF/view/404_error.jsp";
         }
         

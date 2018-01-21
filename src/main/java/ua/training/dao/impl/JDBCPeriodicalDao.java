@@ -8,6 +8,7 @@ import ua.training.dao.mapper.PeriodicalMapper;
 import ua.training.dao.util.ConnectionUtil;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
+import ua.training.model.exception.PeriodicalNotFoundException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
 
     @Override
     public Periodical findById(int id) {
-        Periodical periodical;
+        Periodical periodical = new Periodical();
         List<Article> articles = new ArrayList<>();
         PeriodicalMapper periodicalMapper = new PeriodicalMapper();
         ArticleMapper articleMapper = new ArticleMapper();
@@ -47,7 +48,9 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM project4db.periodical LEFT JOIN article USING (idperiodical) WHERE idperiodical = (?) ORDER BY date_of_publication DESC")) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            rs.next();
+            if(!rs.next()) {
+                throw new PeriodicalNotFoundException("No periodical with such id");
+            }
             periodical = periodicalMapper.extractFromResultSet(rs);
             if (rs.getString("date_of_publication") == null) {
                 periodical.setArticles(new ArrayList<>());

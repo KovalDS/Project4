@@ -21,7 +21,7 @@
 			<div class="page-header">
 			    <h1 class = "text-center"><fmt:message key = "my.account" bundle = "${bundle}"/></h1>
 			</div>
-			${requestScope.article.text}
+			${requestScope.message}
 
 			<div class = "row">
 				<label class="control-label col-sm-2"><fmt:message key = "email" bundle = "${bundle}"/>:</label>
@@ -72,6 +72,7 @@
 					<button type="submit" class="btn btn-default btn-success col-sm-offset-1"><fmt:message key = "update" bundle = "${bundle}"/></button>
 				</div>
 			</form>
+
 			<hr>
 		</div>
 		

@@ -19,6 +19,7 @@
 		<%@ include file="nav.jsp" %>
 
         <div class="container">
+            ${requestScope.message}
 			<div class="page-header">
 			    <h1 class = "text-center"><c:out value = "${requestScope.periodical.name}"/></h1>
 			</div>

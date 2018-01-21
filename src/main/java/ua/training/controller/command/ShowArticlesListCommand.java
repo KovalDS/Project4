@@ -3,6 +3,7 @@ package ua.training.controller.command;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 import ua.training.model.entity.User;
+import ua.training.model.exception.PeriodicalNotFoundException;
 import ua.training.model.service.ArticleService;
 import ua.training.model.service.strategy.StrategyFactory;
 
@@ -21,11 +22,13 @@ public class ShowArticlesListCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        Periodical periodical;
         List<Article> purchasedArticles;
         Map<Integer, List<Article>> articlesOfPeriodical;
         List<Article> pageOfArticles;
 
         int periodicalId = Integer.parseInt(req.getParameter("periodical_id"));
+        periodical = articleService.getPeriodicalById(periodicalId);
         User user = (User) req.getSession().getAttribute("user");
 
         articleService.setStrategy(StrategyFactory.getStrategy(user.getRole()));
@@ -47,7 +50,7 @@ public class ShowArticlesListCommand implements Command {
         req.setAttribute("current_page", page);
 
         req.setAttribute("articles", pageOfArticles);
-        req.setAttribute("periodical", articleService.getPeriodicalById(periodicalId));
+        req.setAttribute("periodical", periodical);
 
         req.getSession().setAttribute("previous_page", "/periodical?periodical_id=" + periodicalId + "&articles_page=" + page);
 
