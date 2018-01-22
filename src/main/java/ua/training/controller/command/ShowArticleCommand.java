@@ -6,6 +6,7 @@ import ua.training.model.entity.User;
 import ua.training.model.entity.UserArticle;
 import ua.training.model.service.ArticleService;
 import ua.training.model.service.strategy.StrategyFactory;
+import ua.training.util.constants.Attributes;
 import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class ShowArticleCommand implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         int articleId = Integer.parseInt(req.getParameter(Parameteres.ARTICLE_ID));
         Article article;
-        User user = (User) req.getSession().getAttribute("user");
+        User user = (User) req.getSession().getAttribute(Attributes.USER);
         List<Article> availableArticles;
 
         articleService.setStrategy(StrategyFactory.getStrategy(user.getRole()));
@@ -36,7 +37,7 @@ public class ShowArticleCommand implements Command {
             return "/WEB-INF/view/403_error.jsp";
         }
 
-        List<Article> unreadArticles = (List<Article>) req.getSession().getAttribute("unread_articles");
+        List<Article> unreadArticles = (List<Article>) req.getSession().getAttribute(Attributes.UNREAD_ARTICLES);
         if (unreadArticles.contains(article)) {
             articleService.makeArticleRead(new UserArticle.UserArticleBuilder()
                                                         .buildUser(user)
@@ -45,9 +46,9 @@ public class ShowArticleCommand implements Command {
                                                         .buildUserArticle());
         }
 
-        req.setAttribute("article", article);
+        req.setAttribute(Attributes.ARTICLE, article);
 
-        req.getSession().setAttribute("previous_page", "/periodical/article?article_id=" + articleId);
+        req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, "/periodical/article?article_id=" + articleId);
 
         return "/WEB-INF/view/article.jsp";
     }

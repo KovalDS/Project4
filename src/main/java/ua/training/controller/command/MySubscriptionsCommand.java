@@ -5,6 +5,7 @@ import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.strategy.StrategyFactory;
+import ua.training.util.constants.Attributes;
 import ua.training.util.constants.Commands;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,16 +22,16 @@ public class MySubscriptionsCommand implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         List<Periodical> periodicals;
-        User user = (User) req.getSession().getAttribute("user");
-        Role role = (Role) req.getSession().getAttribute("user_role");
+        User user = (User) req.getSession().getAttribute(Attributes.USER);
+        Role role = (Role) req.getSession().getAttribute(Attributes.USER_ROLE);
 
         periodicalService.setStrategy(StrategyFactory.getStrategy(role));
         periodicals = periodicalService.getPeriodicalsOfUser(user.getId());
 
-        req.setAttribute("periodical_list", periodicals);
-        req.setAttribute("available_periodicals", periodicals);
+        req.setAttribute(Attributes.PERIODICAL_LIST, periodicals);
+        req.setAttribute(Attributes.AVAILABLE_PERIODICALS, periodicals);
 
-        req.getSession().setAttribute("previous_page", Commands.MY_SUBSCRIPTIONS);
+        req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, Commands.MY_SUBSCRIPTIONS);
 
         return "/WEB-INF/view/periodicals.jsp";
     }

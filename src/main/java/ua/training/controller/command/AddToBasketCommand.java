@@ -2,6 +2,7 @@ package ua.training.controller.command;
 
 import ua.training.model.entity.Periodical;
 import ua.training.model.service.PeriodicalService;
+import ua.training.util.constants.Attributes;
 import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class AddToBasketCommand implements Command {
 
         int periodicalId = Integer.parseInt(req.getParameter(Parameteres.PERIODICAL_ID));
         Periodical periodical = periodicalService.getPeriodicalById(periodicalId);
-        Set<Periodical> basket = (Set<Periodical>) req.getSession().getAttribute("basket");
+        Set<Periodical> basket = (Set<Periodical>) req.getSession().getAttribute(Attributes.BASKET);
 
         if (basket == null) {
             basket = new HashSet<>();
@@ -36,9 +37,9 @@ public class AddToBasketCommand implements Command {
             totalPrice += item.getPrice();
         }
 
-        req.getSession().setAttribute("basket_badge", "<span class=\"badge progress-bar-danger\" >" + basketSize + "</span>");
-        req.getSession().setAttribute("total_basket_price", totalPrice);
-        req.getSession().setAttribute("basket", basket);
-        return (String) req.getSession().getAttribute("previous_page");
+        req.getSession().setAttribute(Attributes.BASKET_BADGE, "<span class=\"badge progress-bar-danger\" >" + basketSize + "</span>");
+        req.getSession().setAttribute(Attributes.BASKET_PRICE, totalPrice);
+        req.getSession().setAttribute(Attributes.BASKET, basket);
+        return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
     }
 }

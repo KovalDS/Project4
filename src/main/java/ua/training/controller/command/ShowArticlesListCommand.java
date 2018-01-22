@@ -6,6 +6,7 @@ import ua.training.model.entity.User;
 import ua.training.model.exception.PeriodicalNotFoundException;
 import ua.training.model.service.ArticleService;
 import ua.training.model.service.strategy.StrategyFactory;
+import ua.training.util.constants.Attributes;
 import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ public class ShowArticlesListCommand implements Command {
 
         int periodicalId = Integer.parseInt(req.getParameter(Parameteres.PERIODICAL_ID));
         periodical = articleService.getPeriodicalById(periodicalId);
-        User user = (User) req.getSession().getAttribute("user");
+        User user = (User) req.getSession().getAttribute(Attributes.USER);
 
         articleService.setStrategy(StrategyFactory.getStrategy(user.getRole()));
         purchasedArticles = articleService.getArticlesOfUser(user.getId());
@@ -47,13 +48,13 @@ public class ShowArticlesListCommand implements Command {
         if (!purchasedArticles.containsAll(pageOfArticles)) { //FIXME user without subscription can access page if periodical has no articles
             return "/WEB-INF/view/403_error.jsp";
         }
-        req.setAttribute("pages", articlesOfPeriodical.keySet());
-        req.setAttribute("current_page", page);
+        req.setAttribute(Attributes.PAGES, articlesOfPeriodical.keySet());
+        req.setAttribute(Attributes.CURRENT_PAGE, page);
 
-        req.setAttribute("articles", pageOfArticles);
-        req.setAttribute("periodical", periodical);
+        req.setAttribute(Attributes.ARTICLES, pageOfArticles);
+        req.setAttribute(Attributes.PERIODICAl, periodical);
 
-        req.getSession().setAttribute("previous_page", "/periodical?periodical_id=" + periodicalId + "&articles_page=" + page);
+        req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, "/periodical?periodical_id=" + periodicalId + "&articles_page=" + page);
 
         return "/WEB-INF/view/articles.jsp";
     }

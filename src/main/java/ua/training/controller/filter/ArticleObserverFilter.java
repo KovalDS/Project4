@@ -3,6 +3,7 @@ package ua.training.controller.filter;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.User;
 import ua.training.model.service.ArticleService;
+import ua.training.util.constants.Attributes;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -25,17 +26,17 @@ public class ArticleObserverFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         List<Article> unreadArticles = new ArrayList<>();
 
-        User user = (User) req.getSession().getAttribute("user");
+        User user = (User) req.getSession().getAttribute(Attributes.USER);
 
         if (user != null) {
             unreadArticles = articleService.getUnreadArticles(user.getId());
         }
 
-        req.getSession().setAttribute("unread_articles", unreadArticles);
+        req.getSession().setAttribute(Attributes.UNREAD_ARTICLES, unreadArticles);
         if (unreadArticles.size() == 0) {
-            req.getSession().removeAttribute("unread_articles_badge");
+            req.getSession().removeAttribute(Attributes.UNREAD_ARTICLES_BADGE);
         } else {
-            req.getSession().setAttribute("unread_articles_badge", "<span class=\"badge progress-bar-danger\">" + unreadArticles.size() + "</span>");
+            req.getSession().setAttribute(Attributes.UNREAD_ARTICLES_BADGE, "<span class=\"badge progress-bar-danger\">" + unreadArticles.size() + "</span>");
         }
 
         filterChain.doFilter(req, resp);

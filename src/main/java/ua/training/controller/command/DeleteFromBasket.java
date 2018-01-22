@@ -2,6 +2,7 @@ package ua.training.controller.command;
 
 import ua.training.model.entity.Periodical;
 import ua.training.model.service.PeriodicalService;
+import ua.training.util.constants.Attributes;
 import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ public class DeleteFromBasket implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         int basketSize;
         int totalPrice = 0;
-        Set<Periodical> basket = (Set<Periodical>) req.getSession().getAttribute("basket");
+        Set<Periodical> basket = (Set<Periodical>) req.getSession().getAttribute(Attributes.BASKET);
         int periodicalId = Integer.parseInt(req.getParameter(Parameteres.PERIODICAL_ID));
         Periodical periodical = periodicalService.getPeriodicalById(periodicalId);
 
@@ -28,22 +29,21 @@ public class DeleteFromBasket implements Command {
         basketSize = basket.size();
 
         if (basketSize == 0) {
-            req.getSession().removeAttribute("basket_badge");
-            req.getSession().removeAttribute("total_basket_price");
-            req.getSession().removeAttribute("basket");
-            return (String) req.getSession().getAttribute("previous_page");
+            req.getSession().removeAttribute(Attributes.BASKET_BADGE);
+            req.getSession().removeAttribute(Attributes.BASKET_PRICE);
+            req.getSession().removeAttribute(Attributes.BASKET);
+            return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
         }
 
         for (Periodical item : basket) {
             totalPrice += item.getPrice();
         }
 
-        req.getSession().setAttribute("total_basket_price", totalPrice);
-        req.getSession().setAttribute("basket_badge", "<span class=\"badge progress-bar-danger\" style = \"${requestScope.display_basket_size}\">" + basketSize + "</span>");
+        req.getSession().setAttribute(Attributes.BASKET_PRICE, totalPrice);
+        req.getSession().setAttribute(Attributes.BASKET_BADGE, "<span class=\"badge progress-bar-danger\" style = \"${requestScope.display_basket_size}\">" + basketSize + "</span>");
 
-        req.setAttribute("dropdown_open", "open");
-        req.getSession().setAttribute("basket_size", basketSize);
+        req.setAttribute(Attributes.DROPDOWN_OPEN, "open");
 
-        return (String) req.getSession().getAttribute("previous_page");
+        return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
     }
 }

@@ -4,6 +4,7 @@ import ua.training.controller.util.Util;
 import ua.training.model.entity.Periodical;
 import ua.training.model.service.AdminService;
 import ua.training.model.service.PeriodicalService;
+import ua.training.util.constants.Attributes;
 import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ public class CreatePeriodical implements Command{
         String priceStr = req.getParameter(Parameteres.PERIODICAL_PRICE);
 
         if (!Util.priceIsValid(priceStr)) {
-            req.setAttribute("message", "<div class=\"alert alert-danger\">Please, input price in format X.XX</div>");
+            req.setAttribute(Attributes.MESSAGE, "<div class=\"alert alert-danger\">Please, input price in format X.XX</div>");
             return "/WEB-INF/view/add_periodical.jsp";
         }
 

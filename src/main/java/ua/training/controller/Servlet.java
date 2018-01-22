@@ -1,6 +1,7 @@
 package ua.training.controller;
 
 import ua.training.controller.command.role.CommandHolder;
+import ua.training.util.constants.Attributes;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +16,7 @@ public class Servlet extends HttpServlet {
         String page;
 
         try {
-            CommandHolder commands = (CommandHolder) httpServletRequest.getSession().getAttribute("available_commands");
+            CommandHolder commands = (CommandHolder) httpServletRequest.getSession().getAttribute(Attributes.AVAILABLE_COMMANDS);
             page = commands.executeCommand(httpServletRequest, httpServletResponse);
             httpServletRequest.getRequestDispatcher(page).forward(httpServletRequest, httpServletResponse);
         } catch (RuntimeException e) {
@@ -28,7 +29,7 @@ public class Servlet extends HttpServlet {
         String page;
 
         try {
-            CommandHolder commands = (CommandHolder) httpServletRequest.getSession().getAttribute("available_commands");
+            CommandHolder commands = (CommandHolder) httpServletRequest.getSession().getAttribute(Attributes.AVAILABLE_COMMANDS);
             page = commands.executeCommand(httpServletRequest, httpServletResponse);
             httpServletRequest.getRequestDispatcher(page).forward(httpServletRequest, httpServletResponse);
         } catch (RuntimeException e) {

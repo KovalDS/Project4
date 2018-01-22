@@ -8,6 +8,7 @@ import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.strategy.StrategyFactory;
+import ua.training.util.constants.Attributes;
 import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,12 +39,12 @@ public class ShowPeriodicalsList implements Command {
         }
 
         List<Periodical> periodicalList = periodicalsDividedOnPages.getOrDefault(Integer.parseInt(periodicalPageStr), periodicalsDividedOnPages.get(1));
-        req.setAttribute("pages", periodicalsDividedOnPages.keySet());
-        req.setAttribute("current_page", Integer.parseInt(periodicalPageStr));
-        req.setAttribute("periodical_list", periodicalList);
+        req.setAttribute(Attributes.PAGES, periodicalsDividedOnPages.keySet());
+        req.setAttribute(Attributes.CURRENT_PAGE, Integer.parseInt(periodicalPageStr));
+        req.setAttribute(Attributes.PERIODICAL_LIST, periodicalList);
 
-        User user =  (User) req.getSession().getAttribute("user");
-        Role role = (Role) req.getSession().getAttribute("user_role");
+        User user =  (User) req.getSession().getAttribute(Attributes.USER);
+        Role role = (Role) req.getSession().getAttribute(Attributes.USER_ROLE);
 
         if (user != null) {
             periodicalService.setStrategy(StrategyFactory.getStrategy(role));
@@ -51,9 +52,9 @@ public class ShowPeriodicalsList implements Command {
         } else {
             availablePeriodicals = new ArrayList<>();
         }
-        req.setAttribute("available_periodicals", availablePeriodicals);
+        req.setAttribute(Attributes.AVAILABLE_PERIODICALS, availablePeriodicals);
 
-        req.getSession().setAttribute("previous_page", "/home?periodicals_page=" + periodicalPageStr);
+        req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, "/home?periodicals_page=" + periodicalPageStr);
 
         return page;
     }

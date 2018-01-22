@@ -14,4 +14,6 @@ public interface Parameteres {
     String ARTICLE_ID = "article_id";
     String ARTICLES_PAGE = "articles_page";
     String PERIODICALS_PAGE = "periodicals_page";
+    String FIRST_NAME = "first_name";
+    String SECOND_NAME = "second_name";
 }
