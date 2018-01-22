@@ -3,6 +3,7 @@ package ua.training.controller.command;
 import ua.training.model.entity.User;
 import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.UserService;
+import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,8 +17,8 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
+        String email = req.getParameter(Parameteres.EMAIL);
+        String password = req.getParameter(Parameteres.PASSWORD);
 
         User user = userService.findByEmail(email);
         if (user != null && user.getPassword().equals(password)) {

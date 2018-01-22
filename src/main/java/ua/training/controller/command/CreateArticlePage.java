@@ -2,12 +2,13 @@ package ua.training.controller.command;
 
 import ua.training.model.entity.Periodical;
 import ua.training.model.service.PeriodicalService;
+import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class CreateArticlePage implements Command {
-    PeriodicalService periodicalService;
+    private PeriodicalService periodicalService;
 
     public CreateArticlePage(PeriodicalService periodicalService) {
         this.periodicalService = periodicalService;
@@ -15,7 +16,7 @@ public class CreateArticlePage implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        int periodicalId = Integer.parseInt(req.getParameter("periodical_id"));
+        int periodicalId = Integer.parseInt(req.getParameter(Parameteres.PERIODICAL_ID));
         Periodical periodical = periodicalService.getPeriodicalById(periodicalId);
         req.setAttribute("periodical", periodical);
         req.getSession().setAttribute("previous_page", "/add_article?periodical_id=" + periodicalId);

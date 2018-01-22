@@ -8,6 +8,7 @@ import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.strategy.StrategyFactory;
+import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +31,7 @@ public class ShowPeriodicalsList implements Command {
         List<Periodical> availablePeriodicals;
 
         Map<Integer, List<Periodical>> periodicalsDividedOnPages = periodicalService.getPeriodicalsDividedOnPages(4);
-        String periodicalPageStr = req.getParameter("periodicals_page");
+        String periodicalPageStr = req.getParameter(Parameteres.PERIODICALS_PAGE);
 
         if (periodicalPageStr == null || periodicalPageStr.isEmpty()) {
             periodicalPageStr = "1";

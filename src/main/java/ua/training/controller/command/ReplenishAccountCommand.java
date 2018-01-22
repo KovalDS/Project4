@@ -3,6 +3,7 @@ package ua.training.controller.command;
 import ua.training.controller.util.Util;
 import ua.training.model.entity.User;
 import ua.training.model.service.UserService;
+import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,7 @@ public class ReplenishAccountCommand implements Command {  //TODO make this comm
         int amount;
 
         User user = (User) req.getSession().getAttribute("user");
-        String amountStr = req.getParameter("amount");
+        String amountStr = req.getParameter(Parameteres.AMOUNT);
 
         if (!Util.priceIsValid(amountStr)) {
             req.setAttribute("message", "<div class=\"alert alert-danger\">Please, input price in format X.XX</div>");

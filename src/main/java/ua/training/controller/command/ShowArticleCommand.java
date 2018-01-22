@@ -6,6 +6,7 @@ import ua.training.model.entity.User;
 import ua.training.model.entity.UserArticle;
 import ua.training.model.service.ArticleService;
 import ua.training.model.service.strategy.StrategyFactory;
+import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,9 +19,10 @@ public class ShowArticleCommand implements Command {
         this.articleService = articleService;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        int articleId = Integer.parseInt(req.getParameter("article_id"));
+        int articleId = Integer.parseInt(req.getParameter(Parameteres.ARTICLE_ID));
         Article article;
         User user = (User) req.getSession().getAttribute("user");
         List<Article> availableArticles;

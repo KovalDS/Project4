@@ -6,6 +6,7 @@ import ua.training.model.entity.User;
 import ua.training.model.exception.PeriodicalNotFoundException;
 import ua.training.model.service.ArticleService;
 import ua.training.model.service.strategy.StrategyFactory;
+import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +28,7 @@ public class ShowArticlesListCommand implements Command {
         Map<Integer, List<Article>> articlesOfPeriodical;
         List<Article> pageOfArticles;
 
-        int periodicalId = Integer.parseInt(req.getParameter("periodical_id"));
+        int periodicalId = Integer.parseInt(req.getParameter(Parameteres.PERIODICAL_ID));
         periodical = articleService.getPeriodicalById(periodicalId);
         User user = (User) req.getSession().getAttribute("user");
 
@@ -36,7 +37,7 @@ public class ShowArticlesListCommand implements Command {
 
         articlesOfPeriodical = articleService.getArticlesOfPeriodicalDividedOnPages(periodicalId, 6);
 
-        String page = req.getParameter("articles_page");
+        String page = req.getParameter(Parameteres.ARTICLES_PAGE);
         if (page == null || page.isEmpty()) {
             page = "1";
         }

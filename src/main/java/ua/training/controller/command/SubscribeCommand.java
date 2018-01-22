@@ -1,21 +1,15 @@
 package ua.training.controller.command;
 
-import ua.training.controller.util.Util;
-import ua.training.model.entity.Periodical;
 import ua.training.model.entity.Role;
-import ua.training.model.entity.User;
 import ua.training.model.exception.NotEnoughBalanceException;
 import ua.training.model.exception.SubscriptionDuplicationException;
 import ua.training.model.service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class SubscribeCommand implements Command {
-    OrderService orderService;
+    private OrderService orderService;
 
     public SubscribeCommand(OrderService orderService) {
         this.orderService = orderService;

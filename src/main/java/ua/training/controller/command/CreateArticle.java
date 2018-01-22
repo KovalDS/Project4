@@ -4,13 +4,14 @@ import ua.training.controller.util.Util;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 import ua.training.model.service.AdminService;
+import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 
 public class CreateArticle implements Command {
-    AdminService adminService;
+    private AdminService adminService;
 
     public CreateArticle(AdminService adminService) {
         this.adminService = adminService;
@@ -18,9 +19,9 @@ public class CreateArticle implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String name = req.getParameter("article_name");
-        String text = req.getParameter("article_text");
-        int periodicalId = Integer.parseInt(req.getParameter("periodical_id"));
+        String name = req.getParameter(Parameteres.ARTICLE_NAME);
+        String text = req.getParameter(Parameteres.ARTICLE_TEXT);
+        int periodicalId = Integer.parseInt(req.getParameter(Parameteres.PERIODICAL_ID));
 
         Periodical periodical = adminService.getPeriodicalById(periodicalId);
 
