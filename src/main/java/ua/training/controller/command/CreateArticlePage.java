@@ -3,6 +3,7 @@ package ua.training.controller.command;
 import ua.training.model.entity.Periodical;
 import ua.training.model.service.PeriodicalService;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Commands;
 import ua.training.util.constants.Pages;
 import ua.training.util.constants.Parameteres;
 
@@ -21,7 +22,8 @@ public class CreateArticlePage implements Command {
         int periodicalId = Integer.parseInt(req.getParameter(Parameteres.PERIODICAL_ID));
         Periodical periodical = periodicalService.getPeriodicalById(periodicalId);
         req.setAttribute(Attributes.PERIODICAl, periodical);
-        req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, "/add_article?periodical_id=" + periodicalId);
+        req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, Commands.ADD_ARTICLE_PAGE + "?" +
+                                                                        Parameteres.PERIODICAL_ID + "=" + periodicalId);
         return Pages.ADD_ARTICLE;
     }
 }

@@ -9,6 +9,7 @@ import ua.training.model.entity.User;
 import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.strategy.StrategyFactory;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Commands;
 import ua.training.util.constants.Pages;
 import ua.training.util.constants.Parameteres;
 
@@ -58,7 +59,8 @@ public class ShowPeriodicalsList implements Command {
         }
         req.setAttribute(Attributes.AVAILABLE_PERIODICALS, availablePeriodicals);
 
-        req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, "/home?periodicals_page=" + periodicalPageStr);
+        req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, Commands.HOME + "?" + Parameteres.PERIODICALS_PAGE
+                                                                                            + "=" + periodicalPageStr);
 
         return Pages.PERIODICALS;
     }

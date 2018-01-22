@@ -44,7 +44,7 @@ public class DeleteFromBasket implements Command {
         req.getSession().setAttribute(Attributes.BASKET_BADGE, Messages.BADGE_OPEN_TAG
                                                                             + basketSize + Messages.BADGE_CLOSE_TAG);
 
-        req.setAttribute(Attributes.DROPDOWN_OPEN, "open");
+        req.setAttribute(Attributes.DROPDOWN_OPEN, Messages.DROPDOWN_OPEN);
 
         return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
     }

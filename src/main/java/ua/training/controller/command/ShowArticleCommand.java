@@ -7,6 +7,7 @@ import ua.training.model.entity.UserArticle;
 import ua.training.model.service.ArticleService;
 import ua.training.model.service.strategy.StrategyFactory;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Commands;
 import ua.training.util.constants.Pages;
 import ua.training.util.constants.Parameteres;
 
@@ -49,7 +50,8 @@ public class ShowArticleCommand implements Command {
 
         req.setAttribute(Attributes.ARTICLE, article);
 
-        req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, "/periodical/article?article_id=" + articleId);
+        req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, Commands.ARTICLE + "?" + Parameteres.ARTICLE_ID
+                                                                                                    + "=" + articleId);
 
         return Pages.ARTICLE;
     }

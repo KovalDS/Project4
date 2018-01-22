@@ -7,6 +7,7 @@ import ua.training.model.exception.PeriodicalNotFoundException;
 import ua.training.model.service.ArticleService;
 import ua.training.model.service.strategy.StrategyFactory;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Commands;
 import ua.training.util.constants.Pages;
 import ua.training.util.constants.Parameteres;
 
@@ -55,7 +56,8 @@ public class ShowArticlesListCommand implements Command {
         req.setAttribute(Attributes.ARTICLES, pageOfArticles);
         req.setAttribute(Attributes.PERIODICAl, periodical);
 
-        req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, "/periodical?periodical_id=" + periodicalId + "&articles_page=" + page);
+        req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, Commands.PERIODICAL + "?" + Parameteres.PERIODICAL_ID
+                                                + "=" + periodicalId + "&" + Parameteres.ARTICLES_PAGE + "=" + page);
 
         return Pages.ARTICLES;
     }

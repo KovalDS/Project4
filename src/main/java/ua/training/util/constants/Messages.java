@@ -14,4 +14,5 @@ public interface Messages {
     String NOT_AUTHORIZED = "<div class=\"alert alert-danger\">You must be <a href=\"#\" class=\"alert-link\" data-toggle=\"modal\" data-target=\"#login_modal\">logged in</a> to subscribe</div>";
     String NOT_ENOUGH_MONEY = "<div class=\"alert alert-danger\">Not enough money on your balance</div>";
     String ALREADY_SUBSCRIBED = "<div class=\"alert alert-danger\">You are already subscribed to this periodical!</div>";
+    String DROPDOWN_OPEN = "open";
 }

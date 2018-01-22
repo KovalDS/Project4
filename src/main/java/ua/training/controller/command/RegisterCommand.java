@@ -27,13 +27,11 @@ public class RegisterCommand implements Command {
         String firstName = req.getParameter(Parameteres.FIRST_NAME);
         String secondName = req.getParameter(Parameteres.SECOND_NAME); //TODO choose role while register (add publisher role first)
 
-        if (!Util.emailIsValid(email)) { //FIXME you can register without first and last name. Also, there is duplication in code
-            req.setAttribute(Attributes.SHOW_REGISTER_MODAL, Messages.SHOW_REGISTER_MODAL);
-            req.setAttribute(Attributes.REGISTER_MESSAGE, Messages.INVALID_EMAIL);
+        if (!Util.emailIsValid(email)) { //FIXME you can register without first and last name.
+            setErrorMessage(req, Messages.INVALID_EMAIL);
             return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
         } else if (!Util.passwordIsValid(password)) {
-            req.setAttribute(Attributes.SHOW_REGISTER_MODAL, Messages.SHOW_REGISTER_MODAL);
-            req.setAttribute(Attributes.REGISTER_MESSAGE, Messages.INVALID_PASSWORD);
+            setErrorMessage(req, Messages.INVALID_PASSWORD);
             return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
         }
 
@@ -47,13 +45,17 @@ public class RegisterCommand implements Command {
                     .buildRole(Role.USER)
                     .buildUser());
         } catch (NotUniqueEmailException e) {
-            req.setAttribute(Attributes.SHOW_REGISTER_MODAL, Messages.SHOW_REGISTER_MODAL);
-            req.setAttribute(Attributes.REGISTER_MESSAGE, Messages.NOT_UNIQUE_EMAIL);
+            setErrorMessage(req, Messages.NOT_UNIQUE_EMAIL);
             return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
         }
 
         req.setAttribute(Attributes.MESSAGE, Messages.REGISTER_SUCCESFUL);
         return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
 
+    }
+
+    private void setErrorMessage(HttpServletRequest req, String message) {
+        req.setAttribute(Attributes.SHOW_REGISTER_MODAL, Messages.SHOW_REGISTER_MODAL);
+        req.setAttribute(Attributes.REGISTER_MESSAGE, message);
     }
 }
