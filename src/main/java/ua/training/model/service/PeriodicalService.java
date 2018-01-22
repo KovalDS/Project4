@@ -13,12 +13,6 @@ import java.util.Map;
 public class PeriodicalService {
     private Strategy strategy;
 
-    public List<Periodical> getAllPeriodicals() {
-        try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
-            return periodicalDao.findAll();
-        }
-    }
-
     public List<Periodical> getPeriodicalsOfUser(int userId) {
         return strategy.getPurchasedPeriodicals(userId);
     }
@@ -32,11 +26,13 @@ public class PeriodicalService {
     public Map<Integer, List<Periodical>> getPeriodicalsDividedOnPages(int periodicalsPerPage) {
         try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
             Map<Integer, List<Periodical>> result = new HashMap<>();
-            List<Periodical> pageOfPeriodicals = periodicalDao.findFixedNumberOfPeriodicals(periodicalsPerPage, 0);
+            List<Periodical> pageOfPeriodicals = periodicalDao
+                    .findFixedNumberOfPeriodicals(periodicalsPerPage, 0);
 
             for (int pageNumber = 1; !pageOfPeriodicals.isEmpty(); pageNumber++) {
                 result.put(pageNumber, pageOfPeriodicals);
-                pageOfPeriodicals = periodicalDao.findFixedNumberOfPeriodicals(periodicalsPerPage, periodicalsPerPage*pageNumber);
+                pageOfPeriodicals = periodicalDao
+                        .findFixedNumberOfPeriodicals(periodicalsPerPage, periodicalsPerPage*pageNumber);
             }
             return result;
         }

@@ -41,10 +41,4 @@ public class OrderService {
             }
         }
     }
-
-    public List<Periodical> periodicalsPurchased(int userId) {
-        try (PeriodicalDao periodicalDao = DaoFactory.getInstance().createPeriodicalDao()) {
-            return periodicalDao.findByUser(userId);
-        }
-    }
 }

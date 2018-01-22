@@ -4,6 +4,7 @@ import ua.training.controller.util.Util;
 import ua.training.model.entity.User;
 import ua.training.model.service.UserService;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Messages;
 import ua.training.util.constants.Pages;
 import ua.training.util.constants.Parameteres;
 
@@ -26,7 +27,7 @@ public class ReplenishAccountCommand implements Command {  //TODO make this comm
         String amountStr = req.getParameter(Parameteres.AMOUNT);
 
         if (!Util.priceIsValid(amountStr)) {
-            req.setAttribute(Attributes.MESSAGE, "<div class=\"alert alert-danger\">Please, input price in format X.XX</div>");
+            req.setAttribute(Attributes.MESSAGE, Messages.WRONG_PRICE_FORMAT_MESSAGE);
             return Pages.MY_ACCOUNT;
         }
 

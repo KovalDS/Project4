@@ -5,6 +5,7 @@ import ua.training.model.exception.NotEnoughBalanceException;
 import ua.training.model.exception.SubscriptionDuplicationException;
 import ua.training.model.service.OrderService;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Messages;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +23,7 @@ public class SubscribeCommand implements Command {
         Role role = (Role) req.getSession().getAttribute(Attributes.USER_ROLE);
 
         if (role.equals(Role.GUEST)) {
-            req.setAttribute(Attributes.MESSAGE, "<div class=\"alert alert-danger\">You must be <a href=\"#\" class=\"alert-link\" data-toggle=\"modal\" data-target=\"#login_modal\">logged in</a> to subscribe</div>");
+            req.setAttribute(Attributes.MESSAGE, Messages.NOT_AUTHORIZED);
             return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
         }
 
@@ -32,9 +33,9 @@ public class SubscribeCommand implements Command {
             req.getSession().removeAttribute(Attributes.BASKET_PRICE);
             req.getSession().removeAttribute(Attributes.BASKET);
         } catch (NotEnoughBalanceException e) {
-            req.setAttribute(Attributes.MESSAGE, "<div class=\"alert alert-danger\">Not enough money on your balance</div>");
+            req.setAttribute(Attributes.MESSAGE, Messages.NOT_ENOUGH_MONEY);
         } catch (SubscriptionDuplicationException e) {
-            req.setAttribute(Attributes.MESSAGE, "<div class=\"alert alert-danger\">You are already subscribed to this periodical!</div>");
+            req.setAttribute(Attributes.MESSAGE, Messages.ALREADY_SUBSCRIBED);
         }
 
         return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);

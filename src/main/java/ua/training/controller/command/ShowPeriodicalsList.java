@@ -31,14 +31,18 @@ public class ShowPeriodicalsList implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         List<Periodical> availablePeriodicals;
 
-        Map<Integer, List<Periodical>> periodicalsDividedOnPages = periodicalService.getPeriodicalsDividedOnPages(4);
+        Map<Integer, List<Periodical>> periodicalsDividedOnPages = periodicalService
+                .getPeriodicalsDividedOnPages(4);
+
         String periodicalPageStr = req.getParameter(Parameteres.PERIODICALS_PAGE);
 
         if (periodicalPageStr == null || periodicalPageStr.isEmpty()) {
             periodicalPageStr = "1";
         }
 
-        List<Periodical> periodicalList = periodicalsDividedOnPages.getOrDefault(Integer.parseInt(periodicalPageStr), periodicalsDividedOnPages.get(1));
+        List<Periodical> periodicalList = periodicalsDividedOnPages.getOrDefault(Integer.parseInt(periodicalPageStr),
+                periodicalsDividedOnPages.get(1));
+
         req.setAttribute(Attributes.PAGES, periodicalsDividedOnPages.keySet());
         req.setAttribute(Attributes.CURRENT_PAGE, Integer.parseInt(periodicalPageStr));
         req.setAttribute(Attributes.PERIODICAL_LIST, periodicalList);

@@ -5,6 +5,7 @@ import ua.training.model.entity.Periodical;
 import ua.training.model.service.AdminService;
 import ua.training.model.service.PeriodicalService;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Messages;
 import ua.training.util.constants.Pages;
 import ua.training.util.constants.Parameteres;
 
@@ -28,7 +29,7 @@ public class CreatePeriodical implements Command{
         String priceStr = req.getParameter(Parameteres.PERIODICAL_PRICE);
 
         if (!Util.priceIsValid(priceStr)) {
-            req.setAttribute(Attributes.MESSAGE, "<div class=\"alert alert-danger\">Please, input price in format X.XX</div>");
+            req.setAttribute(Attributes.MESSAGE, Messages.WRONG_PRICE_FORMAT_MESSAGE);
             return Pages.ADD_PERIODICAL;
         }
 

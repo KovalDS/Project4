@@ -3,6 +3,7 @@ package ua.training.controller.command;
 import ua.training.model.entity.Periodical;
 import ua.training.model.service.PeriodicalService;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Messages;
 import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,8 @@ public class AddToBasketCommand implements Command {
             totalPrice += item.getPrice();
         }
 
-        req.getSession().setAttribute(Attributes.BASKET_BADGE, "<span class=\"badge progress-bar-danger\" >" + basketSize + "</span>");
+        req.getSession().setAttribute(Attributes.BASKET_BADGE, Messages.BADGE_OPEN_TAG +
+                                                                    basketSize + Messages.BADGE_CLOSE_TAG);
         req.getSession().setAttribute(Attributes.BASKET_PRICE, totalPrice);
         req.getSession().setAttribute(Attributes.BASKET, basket);
         return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);

@@ -1,9 +1,9 @@
 package ua.training.controller.command;
 
 import ua.training.model.entity.User;
-import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.UserService;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Messages;
 import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,8 +28,8 @@ public class LoginCommand implements Command {
             return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
         }
 
-        req.setAttribute(Attributes.SHOW_LOGIN_MODAL, "$(\"#login_modal\").modal(\"show\");");
-        req.setAttribute(Attributes.LOGIN_MESSAGE, "No such user");  //TODO i18n
+        req.setAttribute(Attributes.SHOW_LOGIN_MODAL, Messages.SHOW_LOGIN_MODAL);
+        req.setAttribute(Attributes.LOGIN_MESSAGE, Messages.NO_SUCH_USER);  //TODO i18n
         return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
     }
 }

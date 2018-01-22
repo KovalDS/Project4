@@ -16,12 +16,6 @@ import java.util.Map;
 public class ArticleService {
     private Strategy strategy; //TODO think about better name
 
-    public List<Article> getAllArticles() {
-        try (ArticleDao articleDao = DaoFactory.getInstance().createArticleDao()) {
-            return articleDao.findAll();
-        }
-    }
-
     public List<Article> getArticlesOfUser(int userId) {
         return strategy.getAvailableArticles(userId);
     }

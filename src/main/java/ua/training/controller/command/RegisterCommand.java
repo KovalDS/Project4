@@ -7,6 +7,7 @@ import ua.training.model.exception.NotUniqueEmailException;
 import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.UserService;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Messages;
 import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,12 +28,12 @@ public class RegisterCommand implements Command {
         String secondName = req.getParameter(Parameteres.SECOND_NAME); //TODO choose role while register (add publisher role first)
 
         if (!Util.emailIsValid(email)) { //FIXME you can register without first and last name. Also, there is duplication in code
-            req.setAttribute(Attributes.SHOW_REGISTER_MODAL, "$(\"#register_modal\").modal(\"show\");");
-            req.setAttribute(Attributes.REGISTER_MESSAGE, "Invalid email");
+            req.setAttribute(Attributes.SHOW_REGISTER_MODAL, Messages.SHOW_REGISTER_MODAL);
+            req.setAttribute(Attributes.REGISTER_MESSAGE, Messages.INVALID_EMAIL);
             return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
         } else if (!Util.passwordIsValid(password)) {
-            req.setAttribute(Attributes.SHOW_REGISTER_MODAL, "$(\"#register_modal\").modal(\"show\");");
-            req.setAttribute(Attributes.REGISTER_MESSAGE, "Password must be longer than 8 characters");
+            req.setAttribute(Attributes.SHOW_REGISTER_MODAL, Messages.SHOW_REGISTER_MODAL);
+            req.setAttribute(Attributes.REGISTER_MESSAGE, Messages.INVALID_PASSWORD);
             return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
         }
 
@@ -46,12 +47,12 @@ public class RegisterCommand implements Command {
                     .buildRole(Role.USER)
                     .buildUser());
         } catch (NotUniqueEmailException e) {
-            req.setAttribute(Attributes.SHOW_REGISTER_MODAL, "$(\"#register_modal\").modal(\"show\");");
-            req.setAttribute(Attributes.REGISTER_MESSAGE, "Email already registered");
+            req.setAttribute(Attributes.SHOW_REGISTER_MODAL, Messages.SHOW_REGISTER_MODAL);
+            req.setAttribute(Attributes.REGISTER_MESSAGE, Messages.NOT_UNIQUE_EMAIL);
             return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
         }
 
-        req.setAttribute(Attributes.MESSAGE, "<div class=\"alert alert-success\">You are registered! Now you can <a href=\"#\" class=\"alert-link\" data-toggle=\"modal\" data-target=\"#login_modal\">login</a></div>");
+        req.setAttribute(Attributes.MESSAGE, Messages.REGISTER_SUCCESFUL);
         return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
 
     }

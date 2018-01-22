@@ -4,6 +4,7 @@ import ua.training.model.entity.Article;
 import ua.training.model.entity.User;
 import ua.training.model.service.ArticleService;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Messages;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,8 @@ public class ArticleObserverFilter implements Filter {
         if (unreadArticles.size() == 0) {
             req.getSession().removeAttribute(Attributes.UNREAD_ARTICLES_BADGE);
         } else {
-            req.getSession().setAttribute(Attributes.UNREAD_ARTICLES_BADGE, "<span class=\"badge progress-bar-danger\">" + unreadArticles.size() + "</span>");
+            req.getSession().setAttribute(Attributes.UNREAD_ARTICLES_BADGE, Messages.BADGE_OPEN_TAG +
+                                                                    unreadArticles.size() + Messages.BADGE_CLOSE_TAG);
         }
 
         filterChain.doFilter(req, resp);
