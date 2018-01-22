@@ -5,6 +5,7 @@ import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.strategy.StrategyFactory;
+import ua.training.util.constants.Commands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +30,7 @@ public class MySubscriptionsCommand implements Command {
         req.setAttribute("periodical_list", periodicals);
         req.setAttribute("available_periodicals", periodicals);
 
-        req.getSession().setAttribute("previous_page", "/my_subscriptions");
+        req.getSession().setAttribute("previous_page", Commands.MY_SUBSCRIPTIONS);
 
         return "/WEB-INF/view/periodicals.jsp";
     }

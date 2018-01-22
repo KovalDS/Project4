@@ -2,6 +2,7 @@ package ua.training.controller.command.role;
 
 import ua.training.controller.command.*;
 import ua.training.model.service.*;
+import ua.training.util.constants.Commands;
 
 import java.util.HashMap;
 
@@ -15,22 +16,22 @@ public class AdminCommands extends CommandHolder {
     public void initCommands() {
         commands = new HashMap<>();
 
-        addCommand("/", new ShowPeriodicalsList(new PeriodicalService()));
-        addCommand("/home", new ShowPeriodicalsList(new PeriodicalService()));
-        addCommand("/logout", new LogoutCommand());
-        addCommand("/periodical", new ShowArticlesListCommand(new ArticleService()));
-        addCommand("/periodical/article", new ShowArticleCommand(new ArticleService()));
-        addCommand("/add_to_basket", new AddToBasketCommand(new PeriodicalService()));
-        addCommand("/delete_from_basket", new DeleteFromBasket(new PeriodicalService()));
-        addCommand("/subscribe", new SubscribeCommand(new OrderService()));
-        addCommand("/add_periodical", new CreatePeriodicalPageCommand());
-        addCommand("/add_periodical/create_periodical", new CreatePeriodical(new AdminService()));
-        addCommand("/add_article", new CreateArticlePage(new PeriodicalService()));
-        addCommand("/add_article/create_article", new CreateArticle(new AdminService()));
-        addCommand("/my_account", new MyAccountCommand());
-        addCommand("/my_subscriptions", new MySubscriptionsCommand(new PeriodicalService()));
-        addCommand("/my_account/update", new ReplenishAccountCommand(new UserService()));
-        addCommand("/select_lang", new SelectLanguageCommand());
+        addCommand(Commands.DEFAULT_COMMAND, new ShowPeriodicalsList(new PeriodicalService()));
+        addCommand(Commands.HOME, new ShowPeriodicalsList(new PeriodicalService()));
+        addCommand(Commands.LOGOUT, new LogoutCommand());
+        addCommand(Commands.PERIODICAL, new ShowArticlesListCommand(new ArticleService()));
+        addCommand(Commands.ARTICLE, new ShowArticleCommand(new ArticleService()));
+        addCommand(Commands.ADD_TO_BASKET, new AddToBasketCommand(new PeriodicalService()));
+        addCommand(Commands.DELETE_FROM_BASKET, new DeleteFromBasket(new PeriodicalService()));
+        addCommand(Commands.SUBSCRIBE, new SubscribeCommand(new OrderService()));
+        addCommand(Commands.ADD_PERIODICAL_PAGE, new CreatePeriodicalPageCommand());
+        addCommand(Commands.CREATE_PERIODICAL, new CreatePeriodical(new AdminService()));
+        addCommand(Commands.ADD_ARTICLE_PAGE, new CreateArticlePage(new PeriodicalService()));
+        addCommand(Commands.CREATE_ARTICLE, new CreateArticle(new AdminService()));
+        addCommand(Commands.MY_ACCOUNT, new MyAccountCommand());
+        addCommand(Commands.MY_SUBSCRIPTIONS, new MySubscriptionsCommand(new PeriodicalService()));
+        addCommand(Commands.UPDATE_ACCOUNT, new ReplenishAccountCommand(new UserService()));
+        addCommand(Commands.SELECT_LANGUAGE, new SelectLanguageCommand());
     }
 
     private void addCommand(String name, Command command) {

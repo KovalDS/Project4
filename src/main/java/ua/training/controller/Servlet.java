@@ -19,8 +19,7 @@ public class Servlet extends HttpServlet {
             page = commands.executeCommand(httpServletRequest, httpServletResponse);
             httpServletRequest.getRequestDispatcher(page).forward(httpServletRequest, httpServletResponse);
         } catch (RuntimeException e) {
-            page = "/WEB-INF/view/404_error.jsp";
-            httpServletRequest.getRequestDispatcher(page).forward(httpServletRequest, httpServletResponse);
+            httpServletRequest.getRequestDispatcher("/WEB-INF/view/404_error.jsp").forward(httpServletRequest, httpServletResponse);
         }
     }
 
@@ -33,8 +32,7 @@ public class Servlet extends HttpServlet {
             page = commands.executeCommand(httpServletRequest, httpServletResponse);
             httpServletRequest.getRequestDispatcher(page).forward(httpServletRequest, httpServletResponse);
         } catch (RuntimeException e) {
-            page = "/WEB-INF/view/404_error.jsp";
-            httpServletRequest.getRequestDispatcher(page).forward(httpServletRequest, httpServletResponse);
+            httpServletRequest.getRequestDispatcher("/WEB-INF/view/404_error.jsp").forward(httpServletRequest, httpServletResponse);
         }
     }
 }
