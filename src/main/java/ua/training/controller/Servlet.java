@@ -2,6 +2,7 @@ package ua.training.controller;
 
 import ua.training.controller.command.role.CommandHolder;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Pages;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,19 +14,15 @@ import java.io.IOException;
 public class Servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        String page;
-
-        try {
-            CommandHolder commands = (CommandHolder) httpServletRequest.getSession().getAttribute(Attributes.AVAILABLE_COMMANDS);
-            page = commands.executeCommand(httpServletRequest, httpServletResponse);
-            httpServletRequest.getRequestDispatcher(page).forward(httpServletRequest, httpServletResponse);
-        } catch (RuntimeException e) {
-            httpServletRequest.getRequestDispatcher("/WEB-INF/view/404_error.jsp").forward(httpServletRequest, httpServletResponse);
-        }
+        processRequest(httpServletRequest, httpServletResponse);
     }
 
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        processRequest(httpServletRequest, httpServletResponse);
+    }
+
+    private void processRequest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String page;
 
         try {
@@ -33,7 +30,7 @@ public class Servlet extends HttpServlet {
             page = commands.executeCommand(httpServletRequest, httpServletResponse);
             httpServletRequest.getRequestDispatcher(page).forward(httpServletRequest, httpServletResponse);
         } catch (RuntimeException e) {
-            httpServletRequest.getRequestDispatcher("/WEB-INF/view/404_error.jsp").forward(httpServletRequest, httpServletResponse);
+            httpServletRequest.getRequestDispatcher(Pages.ERROR_404).forward(httpServletRequest, httpServletResponse);
         }
     }
 }

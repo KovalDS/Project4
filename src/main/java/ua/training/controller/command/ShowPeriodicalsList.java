@@ -9,6 +9,7 @@ import ua.training.model.entity.User;
 import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.strategy.StrategyFactory;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Pages;
 import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +29,6 @@ public class ShowPeriodicalsList implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String page = "/WEB-INF/view/periodicals.jsp";
         List<Periodical> availablePeriodicals;
 
         Map<Integer, List<Periodical>> periodicalsDividedOnPages = periodicalService.getPeriodicalsDividedOnPages(4);
@@ -56,6 +56,6 @@ public class ShowPeriodicalsList implements Command {
 
         req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, "/home?periodicals_page=" + periodicalPageStr);
 
-        return page;
+        return Pages.PERIODICALS;
     }
 }

@@ -4,6 +4,7 @@ import ua.training.controller.util.Util;
 import ua.training.model.entity.User;
 import ua.training.model.service.UserService;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Pages;
 import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ public class ReplenishAccountCommand implements Command {  //TODO make this comm
 
         if (!Util.priceIsValid(amountStr)) {
             req.setAttribute(Attributes.MESSAGE, "<div class=\"alert alert-danger\">Please, input price in format X.XX</div>");
-            return "/WEB-INF/view/my_account.jsp";
+            return Pages.MY_ACCOUNT;
         }
 
         amountStr = amountStr.replaceAll("[,.]", "");
@@ -34,6 +35,6 @@ public class ReplenishAccountCommand implements Command {  //TODO make this comm
 
         user.setBalance(user.getBalance() + amount);
         userService.updateUser(user);
-        return "/WEB-INF/view/my_account.jsp";
+        return Pages.MY_ACCOUNT;
     }
 }

@@ -5,6 +5,7 @@ import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 import ua.training.model.service.AdminService;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Pages;
 import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,6 @@ public class CreateArticle implements Command {
 
         req.setAttribute(Attributes.PERIODICAl, periodical);
 
-        return "/WEB-INF/view/add_article.jsp";
+        return Pages.ADD_ARTICLE;
     }
 }

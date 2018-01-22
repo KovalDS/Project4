@@ -7,6 +7,7 @@ import ua.training.model.exception.PeriodicalNotFoundException;
 import ua.training.model.service.ArticleService;
 import ua.training.model.service.strategy.StrategyFactory;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Pages;
 import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +47,7 @@ public class ShowArticlesListCommand implements Command {
         pageOfArticles = articlesOfPeriodical.getOrDefault(Integer.parseInt(page), new ArrayList<>());
 
         if (!purchasedArticles.containsAll(pageOfArticles)) { //FIXME user without subscription can access page if periodical has no articles
-            return "/WEB-INF/view/403_error.jsp";
+            return Pages.ERROR_403;
         }
         req.setAttribute(Attributes.PAGES, articlesOfPeriodical.keySet());
         req.setAttribute(Attributes.CURRENT_PAGE, page);
@@ -56,7 +57,7 @@ public class ShowArticlesListCommand implements Command {
 
         req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, "/periodical?periodical_id=" + periodicalId + "&articles_page=" + page);
 
-        return "/WEB-INF/view/articles.jsp";
+        return Pages.ARTICLES;
     }
 }
 

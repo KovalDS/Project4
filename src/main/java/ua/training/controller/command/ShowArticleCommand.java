@@ -7,6 +7,7 @@ import ua.training.model.entity.UserArticle;
 import ua.training.model.service.ArticleService;
 import ua.training.model.service.strategy.StrategyFactory;
 import ua.training.util.constants.Attributes;
+import ua.training.util.constants.Pages;
 import ua.training.util.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +35,7 @@ public class ShowArticleCommand implements Command {
         article = articleService.getArticleById(articleId);
 
         if (!availableArticles.contains(article)) {
-            return "/WEB-INF/view/403_error.jsp";
+            return Pages.ERROR_403;
         }
 
         List<Article> unreadArticles = (List<Article>) req.getSession().getAttribute(Attributes.UNREAD_ARTICLES);
@@ -50,6 +51,6 @@ public class ShowArticleCommand implements Command {
 
         req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, "/periodical/article?article_id=" + articleId);
 
-        return "/WEB-INF/view/article.jsp";
+        return Pages.ARTICLE;
     }
 }

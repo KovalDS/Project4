@@ -7,13 +7,14 @@ import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.strategy.StrategyFactory;
 import ua.training.util.constants.Attributes;
 import ua.training.util.constants.Commands;
+import ua.training.util.constants.Pages;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class MySubscriptionsCommand implements Command {
-    PeriodicalService periodicalService;
+    private PeriodicalService periodicalService;
 
     public MySubscriptionsCommand(PeriodicalService periodicalService) {
         this.periodicalService = periodicalService;
@@ -33,6 +34,6 @@ public class MySubscriptionsCommand implements Command {
 
         req.getSession().setAttribute(Attributes.PREVIOUS_PAGE, Commands.MY_SUBSCRIPTIONS);
 
-        return "/WEB-INF/view/periodicals.jsp";
+        return Pages.PERIODICALS;
     }
 }
