@@ -4,8 +4,8 @@ import ua.training.controller.util.Util;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.exception.NotUniqueEmailException;
-import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.UserService;
+import ua.training.util.Localization;
 import ua.training.util.constants.Attributes;
 import ua.training.util.constants.Messages;
 import ua.training.util.constants.Parameteres;
@@ -28,10 +28,10 @@ public class RegisterCommand implements Command {
         String secondName = req.getParameter(Parameteres.SECOND_NAME); //TODO choose role while register (add publisher role first)
 
         if (!Util.emailIsValid(email)) { //FIXME you can register without first and last name.
-            setErrorMessage(req, Messages.INVALID_EMAIL);
+            setErrorMessage(req, Localization.getMessage(Messages.INVALID_EMAIL));
             return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
         } else if (!Util.passwordIsValid(password)) {
-            setErrorMessage(req, Messages.INVALID_PASSWORD);
+            setErrorMessage(req, Localization.getMessage(Messages.INVALID_PASSWORD));
             return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
         }
 
@@ -45,11 +45,11 @@ public class RegisterCommand implements Command {
                     .buildRole(Role.USER)
                     .buildUser());
         } catch (NotUniqueEmailException e) {
-            setErrorMessage(req, Messages.NOT_UNIQUE_EMAIL);
+            setErrorMessage(req, Localization.getMessage(Messages.NOT_UNIQUE_EMAIL));
             return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
         }
 
-        req.setAttribute(Attributes.MESSAGE, Messages.REGISTER_SUCCESFUL);
+        req.setAttribute(Attributes.MESSAGE, Localization.getMessage(Messages.REGISTER_SUCCESSFUL));
         return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
 
     }

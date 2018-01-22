@@ -3,6 +3,7 @@ package ua.training.controller.command;
 import ua.training.controller.util.Util;
 import ua.training.model.entity.User;
 import ua.training.model.service.UserService;
+import ua.training.util.Localization;
 import ua.training.util.constants.Attributes;
 import ua.training.util.constants.Messages;
 import ua.training.util.constants.Pages;
@@ -27,7 +28,7 @@ public class ReplenishAccountCommand implements Command {  //TODO make this comm
         String amountStr = req.getParameter(Parameteres.AMOUNT);
 
         if (!Util.priceIsValid(amountStr)) {
-            req.setAttribute(Attributes.MESSAGE, Messages.WRONG_PRICE_FORMAT_MESSAGE);
+            req.setAttribute(Attributes.MESSAGE, Localization.getMessage(Messages.WRONG_PRICE_FORMAT_MESSAGE));
             return Pages.MY_ACCOUNT;
         }
 

@@ -33,7 +33,7 @@ public class Util {
     }
 
     public static boolean emailIsValid(String email) {
-        return Pattern.matches("^[a-z0-9_-]+(\\.[a-z0-9_-]+)*@[a-z]+\\.[a-z]{2,6}$", email);
+        return Pattern.matches("^[a-zA-Z0-9_-]+(\\.[a-z0-9_-]+)*@[a-z]+\\.[a-z]{2,6}$", email);
     }
 
     public static boolean passwordIsValid(String password) {

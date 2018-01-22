@@ -4,6 +4,7 @@ import ua.training.model.entity.Role;
 import ua.training.model.exception.NotEnoughBalanceException;
 import ua.training.model.exception.SubscriptionDuplicationException;
 import ua.training.model.service.OrderService;
+import ua.training.util.Localization;
 import ua.training.util.constants.Attributes;
 import ua.training.util.constants.Messages;
 
@@ -23,7 +24,7 @@ public class SubscribeCommand implements Command {
         Role role = (Role) req.getSession().getAttribute(Attributes.USER_ROLE);
 
         if (role.equals(Role.GUEST)) {
-            req.setAttribute(Attributes.MESSAGE, Messages.NOT_AUTHORIZED);
+            req.setAttribute(Attributes.MESSAGE, Localization.getMessage(Messages.NOT_AUTHORIZED));
             return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
         }
 
@@ -33,9 +34,9 @@ public class SubscribeCommand implements Command {
             req.getSession().removeAttribute(Attributes.BASKET_PRICE);
             req.getSession().removeAttribute(Attributes.BASKET);
         } catch (NotEnoughBalanceException e) {
-            req.setAttribute(Attributes.MESSAGE, Messages.NOT_ENOUGH_MONEY);
+            req.setAttribute(Attributes.MESSAGE, Localization.getMessage(Messages.NOT_ENOUGH_MONEY));
         } catch (SubscriptionDuplicationException e) {
-            req.setAttribute(Attributes.MESSAGE, Messages.ALREADY_SUBSCRIBED);
+            req.setAttribute(Attributes.MESSAGE, Localization.getMessage(Messages.ALREADY_SUBSCRIBED));
         }
 
         return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
