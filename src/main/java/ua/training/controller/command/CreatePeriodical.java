@@ -3,16 +3,14 @@ package ua.training.controller.command;
 import ua.training.controller.util.Util;
 import ua.training.model.entity.Periodical;
 import ua.training.model.service.AdminService;
-import ua.training.model.service.PeriodicalService;
-import ua.training.util.Localization;
-import ua.training.util.constants.Attributes;
-import ua.training.util.constants.Messages;
-import ua.training.util.constants.Pages;
-import ua.training.util.constants.Parameteres;
+import ua.training.util.text.Localization;
+import ua.training.util.text.constants.Attributes;
+import ua.training.util.text.constants.Messages;
+import ua.training.util.text.constants.Pages;
+import ua.training.util.text.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.regex.Pattern;
 
 public class CreatePeriodical implements Command{
     private AdminService adminService;

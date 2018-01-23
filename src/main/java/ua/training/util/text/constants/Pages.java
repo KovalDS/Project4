@@ -1,4 +1,4 @@
-package ua.training.util.constants;
+package ua.training.util.text.constants;
 
 public interface Pages {
     String ADD_ARTICLE = "/WEB-INF/view/add_article.jsp";

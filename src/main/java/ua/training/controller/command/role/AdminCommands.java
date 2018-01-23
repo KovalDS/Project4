@@ -2,7 +2,7 @@ package ua.training.controller.command.role;
 
 import ua.training.controller.command.*;
 import ua.training.model.service.*;
-import ua.training.util.constants.Commands;
+import ua.training.util.text.constants.Commands;
 
 import java.util.HashMap;
 

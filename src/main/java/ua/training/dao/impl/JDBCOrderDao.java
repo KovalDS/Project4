@@ -9,6 +9,7 @@ import ua.training.model.entity.Order;
 import ua.training.model.entity.Periodical;
 import ua.training.model.exception.NotEnoughBalanceException;
 import ua.training.model.exception.SubscriptionDuplicationException;
+import ua.training.util.text.constants.Queries;
 
 import java.sql.*;
 import java.util.List;
@@ -24,11 +25,15 @@ public class JDBCOrderDao implements OrderDao {
 
     @Override
     public void create(Order entity) {
-        try (PreparedStatement insertOrderStatement = connection.prepareStatement("INSERT INTO project4db.order (status, total_price, date, iduser) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-                        PreparedStatement insertOrderHasPeriodicalStatement = connection.prepareStatement("INSERT INTO order_has_periodical (idorder, idperiodical) VALUES (?, ?)");
-                        PreparedStatement insertUserHasPeriodicalStatement = connection.prepareStatement("INSERT INTO user_has_periodical (iduser, idperiodical) VALUE (?, ?)");
-                        PreparedStatement updateUserBalance = connection.prepareStatement("UPDATE project4db.user SET balance = balance - (?) WHERE iduser = (?)");
-                        PreparedStatement updateOrderStatus = connection.prepareStatement("UPDATE project4db.order SET status = (?) WHERE idorder = (?)")) {
+        try (PreparedStatement insertOrderStatement = connection
+                     .prepareStatement(Queries.INSERT_INTO_ORDER, Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement insertOrderHasPeriodicalStatement = connection
+                     .prepareStatement(Queries.INSERT_INTO_ORDER_HAS_PERIODICAL);
+             PreparedStatement insertUserHasPeriodicalStatement = connection
+                     .prepareStatement(Queries.INSERT_INTO_USER_HAS_PERIODICAL);
+             PreparedStatement updateUserBalance = connection.prepareStatement(Queries.UPDATE_USER_BALANCE);
+             PreparedStatement updateOrderStatus = connection.prepareStatement(Queries.UPDATE_ORDER_STATUS)) {
+
             int orderId;
             Set<Periodical> periodicals = entity.getPeriodicals();
 

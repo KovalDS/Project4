@@ -4,9 +4,9 @@ import ua.training.controller.util.Util;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 import ua.training.model.service.AdminService;
-import ua.training.util.constants.Attributes;
-import ua.training.util.constants.Pages;
-import ua.training.util.constants.Parameteres;
+import ua.training.util.text.constants.Attributes;
+import ua.training.util.text.constants.Pages;
+import ua.training.util.text.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

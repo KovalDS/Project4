@@ -7,6 +7,7 @@ import ua.training.dao.mapper.UserMapper;
 import ua.training.dao.util.ConnectionUtil;
 import ua.training.model.entity.User;
 import ua.training.model.exception.NotUniqueEmailException;
+import ua.training.util.text.constants.Queries;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public void create(User entity) {
-        try (PreparedStatement insertUserStatement = connection.prepareStatement("INSERT INTO project4db.user (email, password, first_name, second_name, balance, role) VALUES (?, ?, ?, ?, ?, ?)")) {
+        try (PreparedStatement insertUserStatement = connection.prepareStatement(Queries.INSERT_INTO_USER)) {
             insertUserStatement.setString(1, entity.getEmail());
             insertUserStatement.setString(2, entity.getPassword());
             insertUserStatement.setString(3, entity.getFirstName());
@@ -52,7 +53,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public void update(User entity) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET password = (?), first_name = (?), second_name = (?), balance = (?) WHERE iduser = (?)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_USER)) {
             preparedStatement.setString(1, entity.getPassword());
             preparedStatement.setString(2, entity.getFirstName());
             preparedStatement.setString(3, entity.getSecondName());
@@ -72,7 +73,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public User findByEmail(String email) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM project4db.user WHERE email = (?)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(Queries.FIND_USER_BY_EMAIL)) {
             User user = null;
             UserMapper userMapper = new UserMapper();
 
@@ -94,7 +95,7 @@ public class JDBCUserDao implements UserDao {
         List<User> users = new ArrayList<>();
         UserMapper userMapper = new UserMapper();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM project4db.user LEFT JOIN user_has_periodical USING (iduser) WHERE idperiodical = (?)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(Queries.FIND_USERS_BY_PERIODICAL)) {
             preparedStatement.setInt(1, periodicalId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {

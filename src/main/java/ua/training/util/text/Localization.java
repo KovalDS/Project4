@@ -1,4 +1,4 @@
-package ua.training.util;
+package ua.training.util.text;
 
 import java.util.HashMap;
 import java.util.Locale;

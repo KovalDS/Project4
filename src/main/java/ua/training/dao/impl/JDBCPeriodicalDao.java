@@ -9,6 +9,7 @@ import ua.training.dao.util.ConnectionUtil;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 import ua.training.model.exception.PeriodicalNotFoundException;
+import ua.training.util.text.constants.Queries;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,8 +27,7 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
 
     @Override
     public void create(Periodical entity) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO periodical " +
-                "(name, description, price) VALUES (?, ?, ?)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(Queries.INSERT_INTO_PERIODICAL)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getDescription());
             preparedStatement.setInt(3, entity.getPrice());
@@ -45,7 +45,7 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
         PeriodicalMapper periodicalMapper = new PeriodicalMapper();
         ArticleMapper articleMapper = new ArticleMapper();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM project4db.periodical LEFT JOIN article USING (idperiodical) WHERE idperiodical = (?) ORDER BY date_of_publication DESC")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(Queries.SELECT_PERIODICAL_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if(!rs.next()) {
@@ -72,12 +72,12 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
     @Override
     public List<Periodical> findAll() {
         Map<Integer, Periodical> periodicalMap = new HashMap<>();
-        Map<Integer, Article> articleMap = new HashMap();
+        Map<Integer, Article> articleMap = new HashMap<>();
         PeriodicalMapper periodicalMapper = new PeriodicalMapper();
         ArticleMapper articleMapper = new ArticleMapper();
 
         try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery("SELECT * FROM periodical LEFT JOIN article USING (idperiodical)");
+            ResultSet rs = statement.executeQuery(Queries.SELECT_ALL_PERIODICALS);
             while (rs.next()) {
                 Article article = null;
                 Periodical periodical = periodicalMapper.extractFromResultSet(rs);
@@ -110,11 +110,11 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
     @Override
     public List<Periodical> findByUser(int userId) {
         Map<Integer, Periodical> periodicalMap = new HashMap<>();
-        Map<Integer, Article> articleMap = new HashMap();
+        Map<Integer, Article> articleMap = new HashMap<>();
         PeriodicalMapper periodicalMapper = new PeriodicalMapper();
         ArticleMapper articleMapper = new ArticleMapper();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM project4db.periodical LEFT JOIN user_has_periodical USING (idperiodical) LEFT JOIN project4db.user USING (iduser) LEFT JOIN article USING (idperiodical) WHERE iduser = (?)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(Queries.FIND_PERIODICALS_OF_USER)) {
             preparedStatement.setInt(1, userId);
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -139,11 +139,11 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
     @Override
     public List<Periodical> findFixedNumberOfPeriodicals(int limit, int offset) {
         Map<Integer, Periodical> periodicalMap = new HashMap<>();
-        Map<Integer, Article> articleMap = new HashMap();
+        Map<Integer, Article> articleMap = new HashMap<>();
         PeriodicalMapper periodicalMapper = new PeriodicalMapper();
         ArticleMapper articleMapper = new ArticleMapper();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM (SELECT * FROM periodical LIMIT ? OFFSET ?) AS periodicals_page LEFT JOIN article USING (idperiodical)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(Queries.SELECT_PERIODICALS_LIMIT)) {
             preparedStatement.setInt(1, limit);
             preparedStatement.setInt(2, offset);
             ResultSet rs = preparedStatement.executeQuery();

@@ -1,15 +1,13 @@
 package ua.training.model.service;
 
 import ua.training.dao.OrderDao;
-import ua.training.dao.PeriodicalDao;
 import ua.training.dao.UserArticleDao;
 import ua.training.dao.factory.DaoFactory;
 import ua.training.model.entity.*;
-import ua.training.util.constants.Attributes;
+import ua.training.util.text.constants.Attributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 

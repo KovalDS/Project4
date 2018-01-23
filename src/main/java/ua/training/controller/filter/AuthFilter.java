@@ -5,7 +5,7 @@ import ua.training.controller.command.role.CommandHolder;
 import ua.training.controller.command.role.GuestCommands;
 import ua.training.controller.command.role.UserCommands;
 import ua.training.model.entity.Role;
-import ua.training.util.constants.Attributes;
+import ua.training.util.text.constants.Attributes;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

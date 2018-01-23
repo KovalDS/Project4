@@ -4,9 +4,9 @@ import ua.training.model.entity.Role;
 import ua.training.model.exception.NotEnoughBalanceException;
 import ua.training.model.exception.SubscriptionDuplicationException;
 import ua.training.model.service.OrderService;
-import ua.training.util.Localization;
-import ua.training.util.constants.Attributes;
-import ua.training.util.constants.Messages;
+import ua.training.util.text.Localization;
+import ua.training.util.text.constants.Attributes;
+import ua.training.util.text.constants.Messages;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -4,7 +4,7 @@ import ua.training.controller.command.*;
 import ua.training.model.service.OrderService;
 import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.UserService;
-import ua.training.util.constants.Commands;
+import ua.training.util.text.constants.Commands;
 
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package ua.training.util.constants;
+package ua.training.util.text.constants;
 
 public interface Messages {
 

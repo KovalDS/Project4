@@ -3,8 +3,8 @@ package ua.training.controller.filter;
 import ua.training.model.entity.Article;
 import ua.training.model.entity.User;
 import ua.training.model.service.ArticleService;
-import ua.training.util.constants.Attributes;
-import ua.training.util.constants.Messages;
+import ua.training.util.text.constants.Attributes;
+import ua.training.util.text.constants.Messages;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

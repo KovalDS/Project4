@@ -12,5 +12,6 @@
 	<li>Создать базу данных запустив скрипт \src\main\resources</li>
 	<li>Скомпилировать проект командой mvn compile</li>
 	<li>Запустить приложение командой mvn tomcat7:run</li>
+	<li>Если появляется ошика 404, необходимо изменить пароль подключения к базе данних в классе ua.training.dao.impl.ConnectionPoolHolder</li>
 	<li>Сайт доступен по адресу <a href "http://localhost:8888">http://localhost:8888<a></li>
 </ol>

@@ -4,15 +4,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.dao.ArticleDao;
 import ua.training.dao.mapper.ArticleMapper;
-import ua.training.dao.mapper.PeriodicalMapper;
 import ua.training.dao.util.ConnectionUtil;
 import ua.training.model.entity.Article;
-import ua.training.model.entity.Periodical;
+import ua.training.util.text.constants.Queries;
 
-import java.security.interfaces.RSAKey;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class JDBCArticleDao implements ArticleDao {
     private Connection connection;
@@ -24,7 +23,9 @@ public class JDBCArticleDao implements ArticleDao {
 
     @Override
     public void create(Article entity) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO article (article_name, text, date_of_publication, idperiodical) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement preparedStatement = connection
+                .prepareStatement(Queries.INSERT_INTO_ARTICLE, Statement.RETURN_GENERATED_KEYS)) {
+
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getText());
             preparedStatement.setDate(3, Date.valueOf(entity.getDateOfPublication()));
@@ -45,7 +46,9 @@ public class JDBCArticleDao implements ArticleDao {
         Article result = null;
         ArticleMapper articleMapper = new ArticleMapper();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM article WHERE idarticle = (?)")) {
+        try (PreparedStatement preparedStatement = connection
+                .prepareStatement(Queries.SELECT_ARTICLE_BY_ID)) {
+
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
@@ -64,7 +67,7 @@ public class JDBCArticleDao implements ArticleDao {
         ArticleMapper articleMapper = new ArticleMapper();
 
         try (Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery("SELECT * FROM article");
+            ResultSet rs = statement.executeQuery(Queries.SELECT_ALL_ARTICLES);
             while (rs.next()) {
                 articles.add(articleMapper.extractFromResultSet(rs));
             }
@@ -90,7 +93,9 @@ public class JDBCArticleDao implements ArticleDao {
         List<Article> articles = new ArrayList<>();
         ArticleMapper articleMapper = new ArticleMapper();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM article LEFT JOIN user_has_article USING (idarticle) LEFT JOIN user USING (iduser) WHERE iduser = (?)")) {
+        try (PreparedStatement preparedStatement = connection
+                .prepareStatement(Queries.SELECT_ARTICLES_OF_USER)) {
+
             preparedStatement.setInt(1, userId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -108,7 +113,9 @@ public class JDBCArticleDao implements ArticleDao {
         List<Article> articles = new ArrayList<>();
         ArticleMapper articleMapper = new ArticleMapper();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM article LEFT JOIN user_has_article USING (idarticle) LEFT JOIN user USING (iduser) WHERE iduser = (?) AND is_read = 0")) {
+        try (PreparedStatement preparedStatement = connection
+                .prepareStatement(Queries.SELECT_UNREAD_ARTICLES)) {
+
             preparedStatement.setInt(1, userId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -124,9 +131,11 @@ public class JDBCArticleDao implements ArticleDao {
     @Override
     public List<Article> findFixedNumberOfArticlesOfPeriodical(int periodicalId, int limit, int offset) {
         List<Article> articles = new ArrayList<>();
-        ArticleMapper articleMapper = new ArticleMapper();;
+        ArticleMapper articleMapper = new ArticleMapper();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM article WHERE idperiodical = (?) ORDER BY date_of_publication DESC LIMIT ? OFFSET ?")) {
+        try (PreparedStatement preparedStatement = connection
+                .prepareStatement(Queries.SELECT_ARTICLES_BY_PERIODICAL)) {
+
             preparedStatement.setInt(1, periodicalId);
             preparedStatement.setInt(2, limit);
             preparedStatement.setInt(3, offset);

@@ -1,10 +1,9 @@
 package ua.training.controller;
 
 import ua.training.controller.command.role.CommandHolder;
-import ua.training.util.constants.Attributes;
-import ua.training.util.constants.Pages;
+import ua.training.util.text.constants.Attributes;
+import ua.training.util.text.constants.Pages;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

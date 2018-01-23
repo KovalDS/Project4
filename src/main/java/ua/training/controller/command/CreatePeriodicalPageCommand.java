@@ -1,8 +1,8 @@
 package ua.training.controller.command;
 
-import ua.training.util.constants.Attributes;
-import ua.training.util.constants.Commands;
-import ua.training.util.constants.Pages;
+import ua.training.util.text.constants.Attributes;
+import ua.training.util.text.constants.Commands;
+import ua.training.util.text.constants.Pages;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

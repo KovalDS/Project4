@@ -3,7 +3,9 @@ package ua.training.dao.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.dao.UserArticleDao;
+import ua.training.dao.util.ConnectionUtil;
 import ua.training.model.entity.UserArticle;
+import ua.training.util.text.constants.Queries;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +22,7 @@ public class JDBCUserArticleDao implements UserArticleDao {
 
     @Override
     public void create(UserArticle entity) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user_has_article (iduser, idarticle, is_read) VALUES (?, ?, ?)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(Queries.INSERT_INTO_USER_HAS_ARTICLE)) {
             preparedStatement.setInt(1, entity.getUser().getId());
             preparedStatement.setInt(2, entity.getArticle().getId());
             preparedStatement.setBoolean(3, entity.isRead());
@@ -43,7 +45,7 @@ public class JDBCUserArticleDao implements UserArticleDao {
 
     @Override
     public void update(UserArticle entity) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user_has_article SET is_read = (?) WHERE iduser = (?) AND idarticle = (?)")){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(Queries.USER_HAS_ARTICLE)){
             preparedStatement.setBoolean(1, entity.isRead());
             preparedStatement.setInt(2, entity.getUser().getId());
             preparedStatement.setInt(3, entity.getArticle().getId());
@@ -61,6 +63,6 @@ public class JDBCUserArticleDao implements UserArticleDao {
 
     @Override
     public void close() {
-
+        ConnectionUtil.close(connection);
     }
 }

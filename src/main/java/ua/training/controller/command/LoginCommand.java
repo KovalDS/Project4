@@ -2,10 +2,10 @@ package ua.training.controller.command;
 
 import ua.training.model.entity.User;
 import ua.training.model.service.UserService;
-import ua.training.util.Localization;
-import ua.training.util.constants.Attributes;
-import ua.training.util.constants.Messages;
-import ua.training.util.constants.Parameteres;
+import ua.training.util.text.Localization;
+import ua.training.util.text.constants.Attributes;
+import ua.training.util.text.constants.Messages;
+import ua.training.util.text.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

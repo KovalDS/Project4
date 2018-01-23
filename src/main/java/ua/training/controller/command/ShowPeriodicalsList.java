@@ -2,20 +2,18 @@ package ua.training.controller.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.training.model.entity.Article;
 import ua.training.model.entity.Periodical;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.service.PeriodicalService;
 import ua.training.model.service.strategy.StrategyFactory;
-import ua.training.util.constants.Attributes;
-import ua.training.util.constants.Commands;
-import ua.training.util.constants.Pages;
-import ua.training.util.constants.Parameteres;
+import ua.training.util.text.constants.Attributes;
+import ua.training.util.text.constants.Commands;
+import ua.training.util.text.constants.Pages;
+import ua.training.util.text.constants.Parameteres;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

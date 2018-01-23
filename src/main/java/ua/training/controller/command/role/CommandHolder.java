@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 public abstract class CommandHolder {
-    Map<String, Command> commands;
+    protected Map<String, Command> commands;
     private static final Logger logger = LogManager.getLogger(JDBCUserArticleDao.class);
 
     public String executeCommand(HttpServletRequest req, HttpServletResponse resp) {
