@@ -14,6 +14,16 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+--
+-- Schema project4db
+--
+DROP SCHEMA IF EXISTS project4db ;
+
+-- -----------------------------------------------------
+-- Schema student_inspector
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS project4db DEFAULT CHARACTER SET utf8 ;
+USE project4db ;
 
 --
 -- Table structure for table `article`
@@ -220,4 +230,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-23 15:17:47
+-- Dump completed on 2018-01-23 15:55:17
