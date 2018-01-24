@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ArticleService {
-    private Strategy strategy; //TODO think about better name
+    private Strategy strategy;
 
     public List<Article> getArticlesOfUser(int userId) {
         return strategy.getAvailableArticles(userId);
@@ -38,7 +38,7 @@ public class ArticleService {
         }
     }
 
-    public Map<Integer, List<Article>> getArticlesOfPeriodicalDividedOnPages(int periodicalId, int articlesPerPage) { //TODO same method in PeriodicalService
+    public Map<Integer, List<Article>> getArticlesOfPeriodicalDividedOnPages(int periodicalId, int articlesPerPage) {
         try (ArticleDao articleDao = DaoFactory.getInstance().createArticleDao()) {
             Map<Integer, List<Article>> result = new HashMap<>();
             List<Article> pageOfArticles = articleDao.findFixedNumberOfArticlesOfPeriodical(periodicalId, articlesPerPage, 0);

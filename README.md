@@ -9,9 +9,9 @@
 <h3>Инструкции по установке и запуску</h3>
 <ol>
 	<li>Загрузить данный репозиторий</li>
-	<li>Создать базу данных запустив скрипт \src\main\resources</li>
+	<li>Создать базу данных запустив скрипт \src\main\resources\create_db.sql</li>
 	<li>Скомпилировать проект командой mvn compile</li>
 	<li>Запустить приложение командой mvn tomcat7:run</li>
-	<li>Если появляется ошика 404, необходимо изменить пароль подключения к базе данних в классе ua.training.dao.impl.ConnectionPoolHolder</li>
+	<li>Если появляется ошибка 404, необходимо изменить пароль подключения к базе данних в классе ua.training.dao.impl.ConnectionPoolHolder</li>
 	<li>Сайт доступен по адресу <a href "http://localhost:8888">http://localhost:8888<a></li>
 </ol>

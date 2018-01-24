@@ -25,9 +25,9 @@ public class RegisterCommand implements Command {
         String email = req.getParameter(Parameteres.EMAIL);
         String password = req.getParameter(Parameteres.PASSWORD);
         String firstName = req.getParameter(Parameteres.FIRST_NAME);
-        String secondName = req.getParameter(Parameteres.SECOND_NAME); //TODO choose role while register (add publisher role first)
+        String secondName = req.getParameter(Parameteres.SECOND_NAME);
 
-        if (!Util.emailIsValid(email)) { //FIXME you can register without first and last name.
+        if (!Util.emailIsValid(email)) {
             setErrorMessage(req, Localization.getMessage(Messages.INVALID_EMAIL));
             return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
         } else if (!Util.passwordIsValid(password)) {

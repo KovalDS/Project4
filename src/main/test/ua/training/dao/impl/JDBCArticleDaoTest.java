@@ -2,15 +2,12 @@ package ua.training.dao.impl;
 
 import org.junit.Test;
 import ua.training.dao.ArticleDao;
-import ua.training.dao.factory.DaoFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -26,13 +23,9 @@ public class JDBCArticleDaoTest {
         when(connection.createStatement()).thenReturn(statement);
         when(statement.executeQuery(anyString())).thenReturn(resultSet);
 
-
         ArticleDao articleDao = new JDBCArticleDao(connection);
         articleDao.findAll();
         verify(connection, times(1)).createStatement();
         verify(statement, times(1)).executeQuery(anyString());
-
-
     }
-
 }

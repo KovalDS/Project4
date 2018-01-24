@@ -30,7 +30,7 @@ public class LoginCommand implements Command {
         }
 
         req.setAttribute(Attributes.SHOW_LOGIN_MODAL, Messages.SHOW_LOGIN_MODAL);
-        req.setAttribute(Attributes.LOGIN_MESSAGE, Localization.getMessage(Messages.NO_SUCH_USER));  //TODO i18n
+        req.setAttribute(Attributes.LOGIN_MESSAGE, Localization.getMessage(Messages.NO_SUCH_USER));
         return (String) req.getSession().getAttribute(Attributes.PREVIOUS_PAGE);
     }
 }

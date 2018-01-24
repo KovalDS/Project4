@@ -12,7 +12,7 @@ import ua.training.util.text.constants.Parameteres;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ReplenishAccountCommand implements Command {  //TODO make this command update all user fields depending on what data has been passed in request
+public class ReplenishAccountCommand implements Command {
     private UserService userService;
 
     public ReplenishAccountCommand(UserService userService) {

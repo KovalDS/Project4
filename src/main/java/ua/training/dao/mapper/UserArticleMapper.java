@@ -15,7 +15,7 @@ public class UserArticleMapper implements ObjectMapper<UserArticle> {
     }
 
     @Override
-    public UserArticle makeUnique(Map<Integer, UserArticle> cache, UserArticle object) {  //TODO total shit here
+    public UserArticle makeUnique(Map<Integer, UserArticle> cache, UserArticle object) {
         cache.putIfAbsent(Integer.parseInt(object.getArticle().getId() + "" + object.getUser().getId()), object);
         return cache.get(Integer.parseInt(object.getArticle().getId() + "" + object.getUser().getId()));
     }

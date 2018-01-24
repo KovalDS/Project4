@@ -46,7 +46,7 @@ public class ShowArticlesListCommand implements Command {
 
         pageOfArticles = articlesOfPeriodical.getOrDefault(Integer.parseInt(page), new ArrayList<>());
 
-        if (!purchasedArticles.containsAll(pageOfArticles)) { //FIXME user without subscription can access page if periodical has no articles
+        if (!purchasedArticles.containsAll(pageOfArticles)) {
             return Pages.ERROR_403;
         }
         req.setAttribute(Attributes.PAGES, articlesOfPeriodical.keySet());
